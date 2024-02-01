@@ -1,0 +1,27 @@
+name: Package tests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - dev
+  push:
+    branches-ignore:
+      - main
+      - master
+      - dev
+
+permissions:
+  contents: read
+
+jobs:
+  tools-tests:
+    name: Call workflow from image-tools
+    if: github.repository == 'polusai/tabular-tools'
+    uses: polusai/image-tools/.github/workflows/tests.yml
+    with:
+      repo_name: "tabular-tools"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}

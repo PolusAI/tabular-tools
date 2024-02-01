@@ -1,0 +1,22 @@
+name: Tool Release
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - dev
+
+permissions:
+  contents: write
+
+jobs:
+  tools-release:
+    name: Call workflow from image-tools
+    if: github.repository == 'polusai/tabular-tools'
+    uses: polusai/image-tools/.github/workflows/package-release.yml
+    with:
+      repo_name: "tabular-tools"
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
