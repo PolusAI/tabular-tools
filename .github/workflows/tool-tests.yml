@@ -18,10 +18,4 @@ permissions:
 jobs:
   tools-tests:
     name: Call workflow from image-tools
-    if: github.repository == 'polusai/tabular-tools'
-    uses: polusai/image-tools/.github/workflows/tests.yml
-    with:
-      repo_name: "tabular-tools"
-    secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
+    uses: polusai/image-tools/.github/workflows/package-tests.yml@master
