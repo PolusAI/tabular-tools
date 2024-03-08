@@ -50,10 +50,11 @@ class Generatedata:
         """Create Pandas dataframe."""
         df_size = 100 if self.same_rows else 200
         rng = np.random.default_rng()
+        letters = list(string.ascii_lowercase)
 
         diction_1 = {
             "A": list(range(df_size)),
-            "B": [rng.choice(string.ascii_letters) for i in range(df_size)],
+            "B": [rng.choice(letters) for i in range(df_size)],
             "C": rng.integers(low=1, high=100, size=df_size),
             "D": rng.normal(0.0, 1.0, size=df_size),
         }
