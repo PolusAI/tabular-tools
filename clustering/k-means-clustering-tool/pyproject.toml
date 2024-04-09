@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "polus-tabular-clustering-k-means"
-version = "version = "0.3.5-dev1""
-description = ""
+version = "0.3.5-dev1"
+description = "K-means clustering"
 authors = [
 "Jayapriya Nagarajan <jayapriya.nagarajan@nih.gov>",
 "Kelechi Nina Mezu <nina.mezu@nih.gov>",
-"hamshkhawar <hamdahshafqat.abbasi@nih.gov>"
+"Hamdah Shafqat Abbasi <hamdahshafqat.abbasi@nih.gov>"
 ]
 readme = "README.md"
 packages = [{include = "polus", from = "src"}]
