@@ -16,7 +16,7 @@ logging.basicConfig(
     datefmt="%d-%b-%y %H:%M:%S",
 )
 POLUS_LOG = getattr(logging, environ.get("POLUS_LOG", "INFO"))
-logger = logging.getLogger("polus.plugins.package1.package2.awesome_function")
+logger = logging.getLogger("polus.tabular.package1.package2.awesome_function")
 logger.setLevel(POLUS_LOG)
 
 POLUS_IMG_EXT = environ.get("POLUS_IMG_EXT", ".ome.tif")

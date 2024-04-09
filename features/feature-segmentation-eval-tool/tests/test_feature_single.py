@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 from typing import Union
 
-import polus.images.features.feature_segmentation_eval.feature_evaluation as fs
+import polus.tabular.features.feature_segmentation_eval.feature_evaluation as fs
 import pytest
 import vaex
 

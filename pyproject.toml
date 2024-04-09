@@ -3,10 +3,10 @@ authors = ["Nicholas Schaub <nick.schaub@nih.gov>", "Camilo Velez <camilo.velez@
 description = "Python API to configure and run Polus Plugins."
 license = "License :: OSI Approved :: MIT License"
 maintainers = ["Camilo Velez <camilo.velez@axleinfo.com>"]
-name = "polus-plugins"
+name = "polus-tabular"
 packages = [{include = "polus", from = "src"}]
 readme = "README.md"
-repository = "https://github.com/polusai/tabular-tools"
+repository = "https://github.com/PolusAI/tabular-tools"
 version = "0.1.1"
 
 [tool.poetry.dependencies]

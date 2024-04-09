@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 from typing import Union
 
-from polus.images.features.feature_segmentation_eval.__main__ import app
+from polus.tabular.features.feature_segmentation_eval.__main__ import app
 from typer.testing import CliRunner
 
 

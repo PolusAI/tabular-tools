@@ -17,9 +17,9 @@ def create_repository_directories(source_dir):
     """ Buid the correct directories inside polus-plugins.
     The directory structure must conforms to the plugin's spec :
         - dash-separated word in identifier.
-        - folder hierarchy matches package namespace minus "polus.plugins"
+        - folder hierarchy matches package namespace minus "polus.tabular"
         - plugin's folder name reflects the plugin package name but ends with "-plugin"
-    Ex: polus.plugins.package1.package2.awesome_function becomes
+    Ex: polus.tabular.package1.package2.awesome_function becomes
     package1/package2/awesome-function-plugin
     """
 
@@ -38,8 +38,8 @@ def create_repository_directories(source_dir):
     # make sure we replace underscores
     new_dirs = "{{cookiecutter.plugin_package}}".replace("_", "-")
     new_dirs = new_dirs.split(".")
-    # remove polus.plugins so we only keep intermediary directories
-    # Ex: polus.plugins.package1.package2.awesome_function creates
+    # remove polus.tabular so we only keep intermediary directories
+    # Ex: polus.tabular.package1.package2.awesome_function creates
     # package1/package2/
     new_dirs = new_dirs[2:-1]
     if len(new_dirs) != 0:

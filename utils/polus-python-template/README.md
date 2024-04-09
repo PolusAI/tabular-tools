@@ -1,20 +1,20 @@
-# WIPP Plugin Cookie Cutter (for Python) (1.1.0-dev0)
+# WIPP Plugin Cookie Cutter (for Python) (v1.1.0-dev1)
 
 This repository is a cookie cutter template that creates the basic scaffold structure of a
 polus plugin and add it to the polus plugins directory structure.
 
 ## How to use
-1. Clone `polus-plugins` and change to the polus-plugins directory
+1. Clone `tabular-tools` and change to the tabular-tools directory
 2. `cd /utils/polus-python-template/`
 3. (optional) Install poetry if not available.
 4. (optional) Create a dedicated environment with conda or venv.
 5.  Install the dependencies: `poetry install`
 6. Ignore changes to `cookiecutter.json` using: `git update-index --assume-unchanged cookiecutter.json`
-7. Modify `cookiecutter.json` to include author and plugin information.`plugin_package` should always start with `polus.plugins`. 
+7. Modify `cookiecutter.json` to include author and plugin information.`plugin_package` should always start with `polus.tabular`. 
 ** NOTE: ** Do not edit values in brackets ({}) as they are edited by cookiecutter directly.
 Those are automatically generated from the previous entries. If your plugin is called 
 "Awesome Function", then the plugin folder and docker container will have the name `awesome-function-plugin`.
-8. Create your plugin skeleton: ` python -m cookiecutter . --no-input`
+8. Create your plugin skeleton: `python -m cookiecutter . --no-input`
 
 
 ## Plugin Standard
@@ -40,14 +40,14 @@ To install the package :
 The skeleton code can be run this way :
 From the plugin's top directory (with the default values):
 
-`python -m polus.plugins1.package1.package2.awesome_function -i /tmp/inp -o /tmp/out`
+`python -m polus.tabular.package1.package2.awesome_function -i /tmp/inp -o /tmp/out`
 
 This should print some logs with the provided inputs and outputs and return.
 
 ## Running tests
 Plugin's developer should use `pytest`.
 Some simple tests have been added to the template as examples.
-Before submitting a PR to `polus-plugins`, other unit tests should be created and added to the `tests`
+Before submitting a PR to `tabular-tools`, other unit tests should be created and added to the `tests`
 directory.
 
 To run tests :

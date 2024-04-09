@@ -24,7 +24,7 @@ outputs:
     type: Directory
 requirements:
   DockerRequirement:
-    dockerPull: polusai/rxiv-download-tool:0.1.0-dev0
+    dockerPull: polusai/rxiv-download-tool:0.1.0-dev1
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)

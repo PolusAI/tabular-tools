@@ -1,7 +1,7 @@
 """Test Command line Tool."""
 
 from pathlib import Path
-import polus.images.utils.rxiv_download.fetch as ft
+import polus.tabular.utils.rxiv_download.fetch as ft
 from .conftest import clean_directories
 import time
 import pytest

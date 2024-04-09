@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import pytest
 import vaex
-from polus.images.transforms.tabular.tabular_thresholding import (
+from polus.tabular.transforms.tabular_thresholding import (
     tabular_thresholding as tt,
 )
 

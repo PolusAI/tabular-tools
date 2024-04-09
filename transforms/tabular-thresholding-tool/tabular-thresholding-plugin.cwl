@@ -52,7 +52,7 @@ outputs:
     type: Directory
 requirements:
   DockerRequirement:
-    dockerPull: polusai/tabular-thresholding-tool:0.1.6-dev0
+    dockerPull: polusai/tabular-thresholding-tool:0.1.6-dev1
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)

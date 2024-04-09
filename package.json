@@ -1,17 +1,17 @@
 {
   "name": "@polusai/tabular-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Monorepo for generic WIPP plugins",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/polusai/tabular-tools.git"
+    "url": "git+https://github.com/polusAI/tabular-tools.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/polusai/tabular-tools/issues"
+    "url": "https://github.com/polusAI/tabular-tools/issues"
   },
-  "homepage": "https://github.com/polusai/tabular-tools#readme",
+  "homepage": "https://github.com/polusAI/tabular-tools#readme",
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",

@@ -1,18 +1,18 @@
 {
   "name": "Tabular Merger",
-  "version": "0.1.3-dev2",
+  "version": "0.1.3-dev3",
   "title": "Tabular Merger",
   "description": "Merge vaex supported tabular file format into a single merged file.",
   "author": "Nicholas Schaub (nick.schaub@nih.gov), Hamdah Shafqat Abbasi (hamdahshafqat.abbasi@nih.gov)",
   "institution": "National Center for Advancing Translational Sciences, National Institutes of Health",
-  "repository": "https://github.com/PolusAI/polus-plugins",
+  "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
-  "containerId": "polusai/tabular-merger-tool:0.1.3-dev2",
+  "containerId": "polusai/tabular-merger-tool:0.1.3-dev3",
   "baseCommand": [
     "python3",
     "-m",
-    "polus.images.transforms.tabular.tabular_merger"
+    "polus.tabular.transforms.tabular_merger"
   ],
   "inputs": [
     {

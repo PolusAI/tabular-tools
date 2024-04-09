@@ -1,18 +1,18 @@
 {
   "name": "tabular-thresholding-plugin",
-  "version": "0.1.6-dev0",
+  "version": "0.1.6-dev1",
   "title": "tabular-thresholding-plugin",
   "description": "This plugin computes thresholds using three methods and apply thresholds on each labelled data to produce binary outputs",
   "author": "Hamdah Shafqat Abbasi (hamdahshafqat.abbasi@nih.gov), Najib Ishaq (najib.ishaq@nih.gov)",
   "institution": "National Center for Advancing Translational Sciences, National Institutes of Health",
-  "repository": "https://github.com/PolusAI/polus-plugins",
+  "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
-  "containerId": "polusai/tabular-thresholding-tool:0.1.6-dev0",
+  "containerId": "polusai/tabular-thresholding-tool:0.1.6-dev1",
   "baseCommand": [
     "python3",
     "-m",
-    "polus.images.transforms.tabular.tabular_thresholding"
+    "polus.tabular.transforms.tabular_thresholding"
   ],
   "inputs": [
     {

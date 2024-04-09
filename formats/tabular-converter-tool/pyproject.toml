@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "polus-images-formats-tabular-converter"
-version = "0.1.2-dev0"
+name = "polus-tabular-formats-tabular-converter"
+version = "0.1.2-dev1"
 description = "This plugins allows to convert tabular data conversion into arrow file format and vice versa."
 authors = [
 "Kelechi Nina Mezu <nina.mezu@nih.gov>",
@@ -17,9 +17,6 @@ tqdm = "^4.64.1"
 pyarrow = "^11.0.0"
 blake3 = "^0.3.3"
 fcsparser = "^0.2.4"
-llvmlite = "^0.39.1"
-fastapi = "^0.92.0"
-astropy = "5.2.1"
 vaex = "^4.7.0"
 
 

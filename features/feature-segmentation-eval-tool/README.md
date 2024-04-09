@@ -1,4 +1,4 @@
-# Feature segmentation eval (v0.2.3)
+# Feature segmentation eval (v0.2.6-dev1)
 
 Plugin to generate evaluation metrics for feature comparison of ground truth and predicted images. Contact [Vishakha Goyal](mailto:vishakha.goyal@nih.gov), [Hamdah Shafqat Abbasi](mailto:hamdahshafqat.abbasi@nih.gov) for more information.
 

@@ -2,10 +2,10 @@ author:
 - Kelechi Nina
 - Hamdah Shafqat
 contact: nina.mezu@nih.gov
-container: polusai/tabular-converter-tool:0.1.2-dev0
+container: polusai/tabular-converter-tool:0.1.2-dev1
 description: WIPP plugin allows tabular data conversion arrow file format and vice
   versa.
-entrypoint: python3 -m polus.images.formats.tabular_converter
+entrypoint: python3 -m polus.tabular.formats.tabular_converter
 inputs:
 - description: Input data collection to be processed by this plugin
   format:
@@ -33,7 +33,7 @@ outputs:
   name: outDir
   required: true
   type: path
-repository: https://github.com/PolusAI/polus-plugins
+repository: https://github.com/PolusAI/tabular-tools
 specVersion: 1.0.0
 title: Tabular Converter
 ui:
@@ -58,4 +58,4 @@ ui:
   key: inputs.fileExtension
   title: FileExtension
   type: select
-version: 0.1.2-dev0
+version: 0.1.2-dev1

@@ -3,7 +3,7 @@
 from typer.testing import CliRunner
 from pathlib import Path
 import pytest
-from polus.images.utils.rxiv_download.__main__ import app
+from polus.tabular.utils.rxiv_download.__main__ import app
 from .conftest import clean_directories
 import time
 

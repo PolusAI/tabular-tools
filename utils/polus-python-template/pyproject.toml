@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus-python-template"
-version = "1.1.0-dev0"
+version = "1.1.0-dev1"
 description = ""
 authors = ["Nick Schaub <nick.schaub@nih.gov>", "Antoine Gerardin <antoine.gerardin@nih.gov>"]
 readme = "README.md"

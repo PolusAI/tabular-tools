@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "polus-images-features-feature-segmentation-eval"
-version = "0.2.6-dev0"
+name = "polus-tabular-features-feature-segmentation-eval"
+version = "0.2.6-dev1"
 description = "Feature segmentation eval"
 authors = [
            "Vishakha Goyal <vishakha.goyal@nih.gov>",
@@ -17,9 +17,6 @@ scikit-learn="^1.4.0"
 pandas = "^1.2.4"
 scipy = "^1.6.2"
 typer = "^0.7.0"
-blake3 = "^0.3.3"
-llvmlite = "^0.39.1"
-fastapi = "^0.92.0"
 vaex = "^4.7.0"
 
 [tool.poetry.group.dev.dependencies]

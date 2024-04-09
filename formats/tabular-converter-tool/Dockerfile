@@ -1,4 +1,4 @@
-FROM polusai/bfio:2.1.9
+FROM polusai/bfio:2.3.6
 
 # environment variables defined in polusai/bfio
 ENV EXEC_DIR="/opt/executables"
@@ -16,5 +16,5 @@ COPY src ${EXEC_DIR}/src
 
 RUN pip3 install ${EXEC_DIR} --no-cache-dir
 
-ENTRYPOINT ["python3", "-m", "polus.images.formats.tabular_converter"]
+ENTRYPOINT ["python3", "-m", "polus.tabular.formats.tabular_converter"]
 CMD ["--help"]

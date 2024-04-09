@@ -33,7 +33,7 @@ outputs:
   name: outDir
   required: true
   type: path
-repository: https://github.com/labshare/polus-plugins
+repository: https://github.com/PolusAI/tabular-tools
 specVersion: 1.0.0
 title: Graph Pyramid Building
 ui:

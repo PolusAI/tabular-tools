@@ -16,5 +16,5 @@ COPY src ${EXEC_DIR}/src
 
 RUN pip3 install ${EXEC_DIR} --no-cache-dir
 
-ENTRYPOINT ["python3", "-m", "polus.images.utils.rxiv_download"]
+ENTRYPOINT ["python3", "-m", "polus.tabular.utils.rxiv_download"]
 CMD ["--help"]

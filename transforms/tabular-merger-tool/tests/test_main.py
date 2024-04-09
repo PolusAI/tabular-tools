@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import pytest
 import vaex
-from polus.images.transforms.tabular.tabular_merger import tabular_merger as tm
+from polus.tabular.transforms.tabular_merger import tabular_merger as tm
 
 
 class Generatedata:

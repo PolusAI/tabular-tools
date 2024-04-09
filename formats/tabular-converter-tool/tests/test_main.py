@@ -12,7 +12,7 @@ import pandas as pd
 import pytest
 import vaex
 from astropy.table import Table
-from polus.images.formats.tabular_converter import tabular_converter as tc
+from polus.tabular.formats.tabular_converter import tabular_converter as tc
 
 
 class Generatedata:
