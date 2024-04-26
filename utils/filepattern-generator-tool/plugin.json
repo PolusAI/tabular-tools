@@ -1,42 +1,50 @@
 {
   "name": "Filepattern Generator",
-  "version": "0.2.1",
-  "containerId": "polusai/filepattern-generator-plugin:0.2.1",
+  "version": "0.2.2-dev0",
   "title": "Filepattern Generator",
   "description": "Filepattern Generator plugin creates a csv or feather file containing a number of new filepatterns, where each filepattern will subset the data in the directory",
-  "author": "Nick Schaub (nick.schaub@nih.gov), Hamdah Shafqat Abbasi (hamdah.abbasi@axleinfo.com), Kevin Hannon",
+  "author": "Nick Schaub (nick.schaub@nih.gov), Hamdah Shafqat Abbasi (hamdahshafqat.abbasi@nih.gov), Kevin Hannon",
   "institution": "National Center for Advancing Translational Sciences, National Institutes of Health",
-  "repository": "https://github.com/PolusAI/polus-plugins",
+  "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
+  "containerId": "polusai/filepattern-generator-tool:0.2.2-dev0",
+  "baseCommand": [
+    "python3",
+    "-m",
+    "polus.tabular.utils.filepattern_generator"
+  ],
   "inputs": [
     {
       "name": "inpDir",
       "description": "Input image collection to be processed by this plugin",
       "type": "collection",
-      "options": null,
       "required": true
     },
     {
-      "name": "pattern",
+      "name": "filePattern",
       "description": "Filepattern to parse image files",
       "type": "string",
-      "options": null,
       "required": false
     },
     {
       "name": "chunkSize",
       "description": "Number of images to generate collective filepattern",
-      "type": "number",
-      "options": null,
+      "type": "integer",
       "required": false
     },
     {
       "name": "groupBy",
       "description": "Select a parameter to generate filepatterns in specific order",
       "type": "string",
-      "options": null,
       "required": false
+    },
+    {
+      "name": "preview",
+      "type": "boolean",
+      "title": "Preview",
+      "description": "Generate an output preview.",
+      "required": "False"
     }
   ],
   "outputs": [
@@ -44,7 +52,6 @@
       "name": "outDir",
       "description": "Output collection",
       "type": "genericData",
-      "options": null,
       "required": true
     }
   ],
@@ -55,8 +62,8 @@
       "description": "Input image collection"
     },
     {
-      "key": "inputs.pattern",
-      "title": "Pattern",
+      "key": "inputs.filePattern",
+      "title": "filePattern",
       "description": "Filepattern to parse image files"
     },
     {
@@ -68,7 +75,13 @@
       "key": "inputs.groupBy",
       "title": "groupBy",
       "description": "Select a parameter to generate filepatterns in specific order"
+    },
+    {
+      "key": "inputs.preview",
+      "type": "boolean",
+      "title": "Preview example output of this plugin",
+      "description": "Generate an output preview.",
+      "required": "False"
     }
-  ],
-  "validators": null
+  ]
 }

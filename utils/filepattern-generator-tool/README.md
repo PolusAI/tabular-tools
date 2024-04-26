@@ -1,9 +1,9 @@
-# Filepattern Generator
+# Filepattern Generator (v0.2.2-dev0)
 
 
 Filepattern Generator plugin creates a json containing a number of new filepatterns, where each filepattern will subset the image data in the directory
 
-Contact [Nick Schaub , Hamdah Shafqat Abbasi](mailto:nick.schaub@nih.gov, hamdah.abbasi@axleinfo.com) for more information.
+Contact [Nick Schaub , Hamdah Shafqat Abbasi](mailto:nick.schaub@nih.gov, hamdahshafqat.abbasi@nih.gov) for more information.
 
 For more information on WIPP, visit the [official WIPP page](https://isg.nist.gov/deepzoomweb/software/wipp).
 
@@ -26,7 +26,7 @@ This plugin takes 5 input arguments and
 | Name          | Description                                                   | I/O    | Type          |
 |---------------|---------------------------------------------------------------|--------|---------------|
 | `--inpDir`    | Input image directory                                         | Input  | collection    |
-| `--pattern`   | Filepattern to parse image files                              | Input  | string        |
+| `--filePattern`   | Filepattern to parse image files                              | Input  | string        |
 | `--chunkSize` | Number of images to generate collective filepattern           | Input  | number        |
 | `--groupBy`   | Select a parameter to generate filepatterns in specific order | Input  | string        |
 | `--outDir`    | Output generic collection                                     | Output | genericData    |

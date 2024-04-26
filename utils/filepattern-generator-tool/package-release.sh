@@ -10,7 +10,7 @@ version=$(<VERSION)
 ./build-docker.sh
 
 # Push to dockerhub
-docker push polusai/filepattern-generator-plugin:${version}
+docker push polusai/filepattern-generator-tool:${version}
 
-# Run unittests
-python -m unittest
+# Run pytest
+python -m pytest -s tests

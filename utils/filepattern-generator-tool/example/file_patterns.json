@@ -1,0 +1,20 @@
+{
+  "filePatterns": [
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x00_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x01_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x02_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x03_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x04_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x05_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x06_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x07_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x08_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x09_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x10_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x11_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x12_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x13_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x14_y{r:dd}_p0{t:d}_c1.ome.tif",
+    "/Users/abbasih2/Desktop/apply_flatfield/images_x15_y{r:dd}_p0{t:d}_c1.ome.tif"
+  ]
+}
