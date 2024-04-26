@@ -5,9 +5,9 @@ Set up all data used in tests.
 
 import shutil
 import tempfile
+from itertools import product
 from pathlib import Path
 from typing import Union
-from itertools import product
 
 import pytest
 
@@ -57,7 +57,6 @@ def get_params(request: pytest.FixtureRequest) -> pytest.FixtureRequest:
 @pytest.fixture()
 def create_data(input_directory: Path) -> Union[str, Path]:
     """Generate image files."""
-
     for x, y, p in product(range(4), range(8), range(2)):
         fname = (
             f"x0{x}".zfill(2) + f"_y0{y}".zfill(2) + f"_p0{p}".zfill(2) + "_c1.ome.tif"
