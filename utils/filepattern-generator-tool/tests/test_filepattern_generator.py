@@ -15,7 +15,7 @@ def test_generate_patterns(
     fg.generate_patterns(create_data, output_directory, pattern, chunk_size, group_by)
 
     files = []
-    with open(output_directory.joinpath("file_patterns.json"), "r") as read_file:
+    with Path.open(output_directory.joinpath("file_patterns.json"), "r") as read_file:
         data = json.load(read_file)
         file_pattern = data["filePatterns"]
         files.append(file_pattern)
