@@ -64,7 +64,7 @@
     {
       "key": "inputs.filePattern",
       "title": "filePattern",
-      "description": "Filepattern to parse image files"
+      "description": "Filepattern to parse image file"
     },
     {
       "key": "inputs.chunkSize",
