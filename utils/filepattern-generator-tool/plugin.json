@@ -19,25 +19,25 @@
       "name": "inpDir",
       "description": "Input image collection to be processed by this plugin",
       "type": "collection",
-      "required": true
+      "required": "True"
     },
     {
       "name": "filePattern",
       "description": "Filepattern to parse image files",
       "type": "string",
-      "required": false
+      "required": "False"
     },
     {
       "name": "chunkSize",
       "description": "Number of images to generate collective filepattern",
       "type": "integer",
-      "required": false
+      "required": "False"
     },
     {
       "name": "groupBy",
       "description": "Select a parameter to generate filepatterns in specific order",
       "type": "string",
-      "required": false
+      "required": "False"
     },
     {
       "name": "preview",
@@ -52,7 +52,7 @@
       "name": "outDir",
       "description": "Output collection",
       "type": "genericData",
-      "required": true
+      "required": "True"
     }
   ],
   "ui": [
