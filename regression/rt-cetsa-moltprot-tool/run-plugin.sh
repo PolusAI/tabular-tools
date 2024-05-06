@@ -4,7 +4,7 @@ datapath=$(readlink --canonicalize data)
 
 # Inputs
 inpDir=/data/input
-filePattern=".*"
+pattern=".*"
 
 # Output paths
 outDir=/data/output
@@ -16,5 +16,5 @@ docker run --mount type=bind,source=${datapath},target=/data/  \
             --env POLUS_LOG=${LOGLEVEL} \
             polusai/rt-cetsa-moltprot-tool:${version} \
             --inpDir ${inpDir} \
-            --filePattern ${filePattern} \
+            --pattern ${pattern} \
             --outDir ${outDir}

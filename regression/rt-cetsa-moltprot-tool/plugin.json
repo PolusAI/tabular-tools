@@ -18,11 +18,11 @@
     {
       "name": "inpDir",
       "type": "genericData",
-      "description": "Input data collection to be processed by this plugin",
+      "description": "Input data collection to be processed by this tool",
       "required": true
     },
     {
-      "name": "filePattern",
+      "name": "pattern",
       "type": "string",
       "description": "Pattern to parse input files",
       "default": ".+",
@@ -43,8 +43,8 @@
       "description": "Input data collection to be processed by this plugin"
     },
     {
-      "key": "inputs.filePattern",
-      "title": "filePattern",
+      "key": "inputs.pattern",
+      "title": "pattern",
       "description": "Pattern to parse input files",
       "default": ".+"
     }
