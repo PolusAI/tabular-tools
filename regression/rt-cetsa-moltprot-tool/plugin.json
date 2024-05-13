@@ -22,9 +22,9 @@
       "required": true
     },
     {
-      "name": "pattern",
+      "name": "filePattern",
       "type": "string",
-      "description": "Pattern to parse input files",
+      "description": "File Pattern to parse input files",
       "default": ".+",
       "required": false
     }
@@ -43,9 +43,9 @@
       "description": "Input data collection to be processed by this plugin"
     },
     {
-      "key": "inputs.pattern",
-      "title": "pattern",
-      "description": "Pattern to parse input files",
+      "key": "inputs.filePattern",
+      "title": "File Pattern",
+      "description": "File Pattern to parse input files",
       "default": ".+"
     }
   ]
