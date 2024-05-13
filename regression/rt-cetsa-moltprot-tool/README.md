@@ -16,9 +16,9 @@ If WIPP is running, navigate to the plugins page and add a new plugin. Paste the
 
 This plugin takes eight input argument and one output argument:
 
-| Name        | Description                                        | I/O    | Type        |
-|-------------|----------------------------------------------------|--------|-------------|
-| `--inpDir`  | Input data collection to be processed by this tool | Input  | genericData |
-| `--pattern` | Pattern to parse input files                       | Input  | string      |
-| `--outDir`  | Output file                                        | Output | genericData |
-| `--preview` | Generate JSON file with outputs                    | Output | JSON        |
+| Name            | Description                                        | I/O    | Type        |
+|-----------------|----------------------------------------------------|--------|-------------|
+| `--inpDir`      | Input data collection to be processed by this tool | Input  | genericData |
+| `--filePattern` | File Pattern to parse input files                  | Input  | string      |
+| `--outDir`      | Output file                                        | Output | genericData |
+| `--preview`     | Generate JSON file with outputs                    | Output | JSON        |

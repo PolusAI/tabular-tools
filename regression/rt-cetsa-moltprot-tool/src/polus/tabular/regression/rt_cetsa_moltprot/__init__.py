@@ -39,10 +39,4 @@ def fit_data(file_path: pathlib.Path) -> pandas.DataFrame:
     fit.PrepareData()
     fit.ProcessData()
 
-    return fit.plate_results.sort_values("BS_factor")
-
-
-def gen_out_path(file_path: pathlib.Path, out_dir: pathlib.Path) -> pathlib.Path:
-    """Generate the output path."""
-    file_name = file_path.stem + "_moltprot" + POLUS_TAB_EXT
-    return out_dir / file_name
+    return fit
