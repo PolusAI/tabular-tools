@@ -5,10 +5,18 @@ inputs:
     inputBinding:
       prefix: --inpDir
     type: Directory
-  filePattern:
+  params:
     inputBinding:
-      prefix: --filePattern
-    type: string?
+      prefix: --params
+    type: string
+  values:
+    inputBinding:
+      prefix: --values
+    type: string
+  platemap:
+    inputBinding:
+      prefix: --platemap
+    type: File
   preview:
     inputBinding:
       prefix: --preview
@@ -24,7 +32,7 @@ outputs:
     type: Directory
 requirements:
   DockerRequirement:
-    dockerPull: polusai/rt-cetsa-analysis-tool:0.1.0
+    dockerPull: polusai/rt-cetsa-analysis-simple-tool:0.1.0
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)

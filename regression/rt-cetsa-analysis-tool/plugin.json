@@ -8,7 +8,7 @@
   "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
-  "containerId": "polusai/rt-cetsa-analysis-tool:0.1.0",
+  "containerId": "polusai/rt-cetsa-analysis-simple-tool:0.1.0",
   "baseCommand": [
     "python3",
     "-m",
@@ -16,17 +16,22 @@
   ],
   "inputs": [
     {
-      "name": "inpDir",
+      "name": "params",
       "type": "genericData",
-      "description": "Input data collection to be processed by this tool",
+      "description": "Fit params csv file",
       "required": true
     },
     {
-      "name": "filePattern",
-      "type": "string",
-      "description": "File Pattern to parse input files",
-      "default": ".+",
-      "required": false
+      "name": "values",
+      "type": "genericData",
+      "description": "Baseline corrected csv files",
+      "required": true
+    },
+    {
+      "name": "platemap",
+      "type": "genericData",
+      "description": "platemap excel file",
+      "required": true
     }
   ],
   "outputs": [
