@@ -14,7 +14,7 @@ logging.basicConfig(
     format="%(asctime)s - %(name)-8s - %(levelname)-8s - %(message)s",
     datefmt="%d-%b-%y %H:%M:%S",
 )
-logger = logging.getLogger("polus.tabular.transforms.tabular_merger")
+logger = logging.getLogger(__file__)
 logger.setLevel(os.environ.get("POLUS_LOG", logging.INFO))
 
 POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".csv")

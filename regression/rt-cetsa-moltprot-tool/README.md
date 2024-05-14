@@ -1,7 +1,6 @@
-# RT_CETSA Moltprot Regression (v0.1.0)
+# RT_CETSA MoltenProt (v0.1.0)
 
-This WIPP plugin runs regression analysis for the RT-CETSA pipeline.
-The input csv file should be sorted by `Temperature` column.
+This WIPP plugin runs moltenprot regression for the RT-CETSA pipeline.
 
 ## Building
 

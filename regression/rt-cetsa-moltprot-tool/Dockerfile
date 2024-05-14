@@ -1,9 +1,9 @@
-FROM polusai/bfio:2.3.6
+FROM polusai/bfio:2.1.9
 
 # environment variables defined in polusai/bfio
 ENV EXEC_DIR="/opt/executables"
 ENV POLUS_IMG_EXT=".ome.tif"
-ENV POLUS_TAB_EXT=".arrow"
+ENV POLUS_TAB_EXT=".csv"
 ENV POLUS_LOG="INFO"
 
 # Work directory defined in the base container
@@ -16,5 +16,5 @@ COPY src ${EXEC_DIR}/src
 
 RUN pip3 install ${EXEC_DIR} --no-cache-dir
 
-ENTRYPOINT ["python3", "-m", "polus.tabular.regression.rt_cetsa_moltprot"]
+ENTRYPOINT ["python3", "-m", "polus.tabular.regression.rt_cetsa_moltenprot"]
 CMD ["--help"]
