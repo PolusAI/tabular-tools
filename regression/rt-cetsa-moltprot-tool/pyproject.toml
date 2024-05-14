@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "polus_tabular_regression_rt_cetsa_moltprot"
 version = "0.1.0"
-description = "Run regression analysis for the RT-CETSA pipeline."
+description = "Run moltenprot for the RT-CETSA pipeline."
 authors = [
     "Nick Schaub <nick.schaub@nih.gov>",
+    "Antoine Gerardin <antoine.gerardin@nih.gov>",
     "Najib Ishaq <najib.ishaq@nih.gov>",
 ]
 readme = "README.md"
