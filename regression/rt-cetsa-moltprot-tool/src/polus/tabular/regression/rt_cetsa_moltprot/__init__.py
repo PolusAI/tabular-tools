@@ -13,7 +13,10 @@ from . import models
 POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".csv")
 
 
-def fit_data(file_path: pathlib.Path) -> pandas.DataFrame:
+def fit_data(
+    file_path: pathlib.Path,
+    params: dict[str, float],
+) -> pandas.DataFrame:
     """Fit data to a model using Moltprot."""
     fit = core.MoltenProtFit(
         filename=file_path,
@@ -22,18 +25,12 @@ def fit_data(file_path: pathlib.Path) -> pandas.DataFrame:
 
     fit.SetAnalysisOptions(
         model="santoro1988",
-        baseline_fit=(95 - 37) / 4,  # One quarter of the temperature range
-        baseline_bounds=3,
-        dCp=0,
-        onset_threshold=0.01,
-        savgol=7,
         blanks=[],
         exclude=[],
         invert=False,
         mfilt=None,
         shrink=None,
-        trim_max=0,
-        trim_min=0,
+        **params,
     )
 
     fit.PrepareData()

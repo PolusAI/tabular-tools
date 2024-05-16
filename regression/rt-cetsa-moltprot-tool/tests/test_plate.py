@@ -25,4 +25,11 @@ def test_tool():
         pattern="plate.csv",
         preview=False,
         out_dir=inp_dir,
+        baseline_fit=None,
+        baseline_bounds=None,
+        dCp=None,
+        onset_threshold=None,
+        savgol=None,
+        trim_max=None,
+        trim_min=None,
     )
