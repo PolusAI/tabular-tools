@@ -22,11 +22,11 @@ def fit_data(file_path: pathlib.Path) -> pandas.DataFrame:
 
     fit.SetAnalysisOptions(
         model="santoro1988",
-        baseline_fit=3,
+        baseline_fit=(95 - 37) / 4,  # One quarter of the temperature range
         baseline_bounds=3,
         dCp=0,
         onset_threshold=0.01,
-        savgol=10,
+        savgol=7,
         blanks=[],
         exclude=[],
         invert=False,
