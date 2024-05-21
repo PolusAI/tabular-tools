@@ -8,7 +8,7 @@
   "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
-  "containerId": "polusai/rt-cetsa-moltprot-tool:0.1.0",
+  "containerId": "polusai/rt-cetsa-moltenproten-tool:0.1.0",
   "baseCommand": [
     "python3",
     "-m",
