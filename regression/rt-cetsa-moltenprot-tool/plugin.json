@@ -22,10 +22,9 @@
       "required": true
     },
     {
-      "name": "filePattern",
+      "name": "intensities",
       "type": "string",
-      "description": "File Pattern to parse input files",
-      "default": ".+",
+      "description": "Filename for the intensities file.",
       "required": false
     }
   ],
@@ -43,10 +42,9 @@
       "description": "Input data collection to be processed by this plugin"
     },
     {
-      "key": "inputs.filePattern",
-      "title": "File Pattern",
-      "description": "File Pattern to parse input files",
-      "default": ".+"
+      "key": "inputs.intensities",
+      "title": "Intensities file",
+      "description": "Intensities file"
     }
   ]
 }

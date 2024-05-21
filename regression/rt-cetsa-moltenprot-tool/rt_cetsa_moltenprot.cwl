@@ -7,7 +7,7 @@ inputs:
     type: Directory
   filePattern:
     inputBinding:
-      prefix: --filePattern
+      prefix: --intensities
     type: string?
   preview:
     inputBinding:
