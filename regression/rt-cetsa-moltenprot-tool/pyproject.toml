@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "polus_tabular_regression_rt_cetsa_moltprot"
+name = "polus_tabular_regression_rt_cetsa_moltenprot"
 version = "0.1.0"
 description = "Run moltenprot for the RT-CETSA pipeline."
 authors = [

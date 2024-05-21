@@ -15,6 +15,7 @@ COPY README.md ${EXEC_DIR}
 COPY src ${EXEC_DIR}/src
 
 RUN pip3 install ${EXEC_DIR} --no-cache-dir
+RUN pip3 install .
 
 ENTRYPOINT ["python3", "-m", "polus.tabular.regression.rt_cetsa_moltenprot"]
 CMD ["--help"]

@@ -7,7 +7,7 @@ import pathlib
 
 import filepattern
 import typer
-from polus.tabular.regression.rt_cetsa_moltprot import fit_data
+from polus.tabular.regression.rt_cetsa_moltenprot import fit_data
 
 # Initialize the logger
 logging.basicConfig(
@@ -54,7 +54,6 @@ def main(
     ),
 ) -> None:
     """CLI for rt-cetsa-moltprot-tool."""
-    # TODO: Add to docs that input csv file should be sorted by `Temperature` column.
     logger.info("Starting the CLI for rt-cetsa-moltprot-tool.")
 
     logger.info(f"Input directory: {inp_dir}")
@@ -101,6 +100,7 @@ def main(
         ).astype(int)
         fit_params = fit_params.drop(columns="_index")
         fit_params = fit_params.sort_values(["letter", "number"])
+        fit_params = fit_params.drop(columns=["letter", "number"])
         fit_params.to_csv(fit_params_path, index=True)
 
         # keep only 2 signicant digits for temperature index

@@ -82,7 +82,7 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 
 # MoltenProt is stored in a plain-text file VERSION (also used by setup.py)
 # extract and save it to a variable
-with open(os.path.join(__location__, "RT_CETSA_VERSION")) as version_file:
+with open(os.path.join(__location__, "MOLTENPROT_VERSION")) as version_file:
     __version__ = version_file.read().strip()
 
 # get scipy version (some methods may not be available in earlier versions)
