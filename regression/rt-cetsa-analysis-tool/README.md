@@ -1,4 +1,4 @@
-# RT_CETSA Analysis Tool (v0.1.0)
+# RT_CETSA Analysis Tool (v0.2.0-dev0)
 
 This WIPP plugin runs statistical analysis for the RT-CETSA pipeline.
 
