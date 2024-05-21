@@ -1,5 +1,6 @@
-"""CLI for rt-cetsa-moltprot-tool."""
+"""CLI for rt-cetsa-analysis tool."""
 
+import json
 import logging
 import os
 from pathlib import Path
@@ -33,15 +34,15 @@ def main(
         readable=True,
         resolve_path=True,
     ),
-    params_pattern: str = typer.Option(
+    params_filename: str = typer.Option(
         ...,
         "--params",
-        help="name of the molten fit params csv file in the input directory.",
+        help="name of the moltenprot fit params csv file in the input directory.",
     ),
-    values_pattern: str = typer.Option(
+    values_filename: str = typer.Option(
         ...,
         "--values",
-        help="name of the baseline corrected values csv file in the input directory.",
+        help="name of the moltenprot baseline corrected values csv file in the input directory.",
     ),
     platemap: Path = typer.Option(
         ...,
@@ -66,30 +67,47 @@ def main(
         resolve_path=True,
     ),
 ) -> None:
-    """CLI for rt-cetsa-moltprot-tool."""
-    # TODO: Add to docs that input csv file should be sorted by `Temperature` column.
-    logger.info("Starting the CLI for rt-cetsa-moltenprot-tool.")
+    """CLI for rt-cetsa-analysis tool."""
+    logger.info("Starting the CLI for rt-cetsa-analysis tool.")
 
     logger.info(f"Input directory: {inp_dir}")
-    logger.info(f"params_pattern: {params_pattern}")
-    logger.info(f"values_pattern: {values_pattern}")
+    logger.info(f"params: {params_filename}")
+    logger.info(f"values: {values_filename}")
     logger.info(f"platemap path: {platemap}")
     logger.info(f"Output directory: {out_dir}")
 
-    params = inp_dir / params_pattern
-    values = inp_dir / values_pattern
+    if params_filename:
+        params = inp_dir / params_filename
+    elif (inp_dir / "params.csv").exists():
+        params = inp_dir / "params.csv"
+    else:
+        raise ValueError(
+            f"No 'params.csv' moltenprot parameters file found in {inp_dir}.",
+        )
 
-    logger.info(f"{inp_dir}")
-
-    if preview:
-        NotImplemented  # noqa:  B018
+    if values_filename:
+        values = inp_dir / values_filename
+    elif (inp_dir / "values.csv").exists():
+        values = inp_dir / "values.csv"
+    else:
+        raise ValueError(f"No 'values.csv' moltenprot values file found in {inp_dir}.")
 
     if not params.exists():
         raise FileNotFoundError(f"params file not found : {params}")
     if not values.exists():
         raise FileNotFoundError(f"values file not found : {values}")
-    if not platemap.exists():
-        raise FileNotFoundError(f"platemap file not found : {platemap}")
+
+    logger.info(f"params filename: {params}")
+    logger.info(f"values filename: {values}")
+    logger.info(f"platemap path: {platemap}")
+    logger.info(f"Output directory: {out_dir}")
+
+    if preview:
+        outputs: list[str] = ["signif_df.csv"]
+        out_json = {"files": outputs}
+        with (out_dir / "preview.json").open("w") as f:
+            json.dump(out_json, f, indent=2)
+        return
 
     run_rscript(params, values, platemap, out_dir)
 

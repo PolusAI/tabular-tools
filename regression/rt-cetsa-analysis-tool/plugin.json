@@ -48,10 +48,19 @@
       "description": "Input data collection to be processed by this plugin"
     },
     {
-      "key": "inputs.filePattern",
-      "title": "File Pattern",
-      "description": "File Pattern to parse input files",
-      "default": ".+"
+      "key": "inputs.params",
+      "title": "Params",
+      "description": "Params"
+    },
+    {
+      "key": "inputs.values",
+      "title": "Values",
+      "description": "Values"
+    },
+    {
+      "key": "inputs.platemap",
+      "title": "Plate Map",
+      "description": "Plate Map"
     }
   ]
 }

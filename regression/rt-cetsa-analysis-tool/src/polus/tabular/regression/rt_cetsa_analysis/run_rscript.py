@@ -19,15 +19,8 @@ def run_rscript(
     out_dir: Path,
 ):
     """Run R script."""
-    print(
-        "run rscript with args: ",
-        params_filepath,
-        values_filepath,
-        platemap_filepath,
-        out_dir,
-    )
-
     cwd = Path(__file__).parent
+
     if WORKDIR:
         cwd = (
             Path(WORKDIR)
@@ -38,14 +31,7 @@ def run_rscript(
             / "rt_cetsa_analysis/"
         )
 
-    logger.info(f"################## current working directory : {cwd.as_posix()}")
-
-    #     "Rscript",
-    #     "./main.R",
-    #     "--params",
-    #     "--values",
-    #     "--platemap",
-    #     "--outdir",
+    logger.info(f"current working directory : {cwd.as_posix()}")
 
     cmd = [
         "Rscript",

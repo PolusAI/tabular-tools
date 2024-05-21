@@ -12,13 +12,13 @@ inputs:
   - params
   name: params
   required: true
-  type: path
+  type: string
 - description: Baseline corrected csv files
   format:
   - values
   name: values
   required: true
-  type: path
+  type: string
 - description: platemap excel file
   format:
   - platemap
@@ -46,11 +46,11 @@ ui:
 - description: Fit params csv file
   key: inputs.params
   title: Fit params csv file
-  type: path
+  type: string
 - description: baseline corrected csv file
   key: inputs.values
   title: baseline corrected csv file
-  type: path
+  type: string
 - description: platemap excel file
   key: inputs.platemap
   title: platemap excel file
