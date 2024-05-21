@@ -24,7 +24,7 @@ outputs:
     type: Directory
 requirements:
   DockerRequirement:
-    dockerPull: polusai/rt-cetsa-moltenprot-tool:0.1.0
+    dockerPull: polusai/rt-cetsa-moltenprot-tool:0.2.0-dev0
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)
