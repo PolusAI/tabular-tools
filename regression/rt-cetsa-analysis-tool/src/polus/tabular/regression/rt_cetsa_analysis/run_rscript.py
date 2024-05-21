@@ -6,6 +6,7 @@ import subprocess
 from pathlib import Path
 
 POLUS_LOG = os.environ.get("POLUS_LOG", logging.INFO)
+WORKDIR = os.environ.get("WORKDIR", "")
 
 logger = logging.getLogger("rt_cetsa_analysis")
 logger.setLevel(POLUS_LOG)
@@ -26,17 +27,33 @@ def run_rscript(
         out_dir,
     )
 
+    cwd = Path(__file__).parent
+    if WORKDIR:
+        cwd = (
+            Path(WORKDIR)
+            / "src"
+            / "polus"
+            / "tabular"
+            / "regression"
+            / "rt_cetsa_analysis/"
+        )
+
+    logger.info(f"################## current working directory : {cwd.as_posix()}")
+
+    #     "Rscript",
+    #     "./main.R",
+    #     "--params",
+    #     "--values",
+    #     "--platemap",
+    #     "--outdir",
+
     cmd = [
         "Rscript",
-        "./main.R",
-        "--params",
+        "./simple_main.R",
         params_filepath.as_posix(),
-        "--values",
         values_filepath.as_posix(),
-        "--platemap",
         platemap_filepath.as_posix(),
-        "--outdir",
         out_dir.as_posix(),
     ]
 
-    subprocess.run(args=cmd, cwd="src/polus/tabular/regression/rt_cetsa_analysis/")
+    subprocess.run(args=cmd, cwd=cwd)

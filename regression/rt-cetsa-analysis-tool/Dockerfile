@@ -44,17 +44,12 @@ COPY pyproject.toml ${EXEC_DIR}
 COPY README.md ${EXEC_DIR}
 RUN apt-get update && apt-get install -y python3
 RUN apt-get -y install python3-pip python3-venv
-
 COPY src/ ${EXEC_DIR}/src
-
-RUN python3 -m venv ${EXEC_DIR}/.venv
-# RUN chmod u+x ${EXEC_DIR}/.venv/bin/activate
-# RUN ${EXEC_DIR}/.venv/bin/activate
-RUN ${EXEC_DIR}/.venv/bin/pip3 install ${EXEC_DIR} --no-cache-dir
-
+RUN pip3 install ${EXEC_DIR} --no-cache-dir  --break-system-packages
 
 WORKDIR ${EXEC_DIR}
 
 # CMD ["Rscript", "main.R"]
-ENTRYPOINT ["/opt/executables/.venv/bin/python3", "-m", "polus.tabular.regression.rt_cetsa_analysis"]
-CMD ["--help"]
+CMD ["python3", "-m", "polus.tabular.regression.rt_cetsa_analysis"]
+# CMD ["--help"]
+# CMD ["bash"]

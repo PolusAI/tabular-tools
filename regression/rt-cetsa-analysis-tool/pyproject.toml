@@ -13,7 +13,7 @@ packages = [{include = "polus", from = "src"}]
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
 # filepattern = "2.0.4"
-typer = "^0.12.3"
+typer = "^0.7"
 
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
