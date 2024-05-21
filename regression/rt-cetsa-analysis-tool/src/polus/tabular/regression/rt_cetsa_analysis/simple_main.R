@@ -6,10 +6,6 @@ suppressWarnings(library(logging))
 basicConfig()
 
 args = commandArgs(trailingOnly=TRUE)
-print(args[1])
-print(args[2])
-print(args[3])
-print(args[4])
 
 params <- args[1]
 values <- args[2]
