@@ -13,10 +13,10 @@ inputs:
   name: inpDir
   required: true
   type: path
-- description: Filepattern to parse input files
+- description: intensities file
   format:
-  - pattern
-  name: pattern
+  - intensities
+  name: intensities
   required: false
   type: string
 - description: Generate an output preview.
@@ -41,9 +41,9 @@ ui:
   key: inputs.inpDir
   title: Input data collection
   type: path
-- description: Filepattern to parse input files
-  key: inputs.pattern
-  title: pattern
+- description: Intensities file
+  key: inputs.intensities
+  title: intensities
   type: text
 - description: Generate an output preview.
   key: inputs.preview

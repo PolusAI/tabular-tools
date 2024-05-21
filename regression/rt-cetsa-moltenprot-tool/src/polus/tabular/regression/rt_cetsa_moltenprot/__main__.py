@@ -5,7 +5,6 @@ import logging
 import os
 import pathlib
 
-import filepattern
 import typer
 from polus.tabular.regression.rt_cetsa_moltenprot import fit_data
 
@@ -33,15 +32,10 @@ def main(
         readable=True,
         resolve_path=True,
     ),
-    pattern: str = typer.Option(
-        ".+",
-        "--filePattern",
-        help="Pattern to match the files in the input directory.",
-    ),
-    preview: bool = typer.Option(
-        False,
-        "--preview",
-        help="Preview the files that will be processed.",
+    int_filename: str = typer.Option(
+        None,
+        "--intensities",
+        help="name of the intensities file (optional).",
     ),
     out_dir: pathlib.Path = typer.Option(
         ...,
@@ -52,61 +46,64 @@ def main(
         writable=True,
         resolve_path=True,
     ),
+    preview: bool = typer.Option(
+        False,
+        "--preview",
+        help="Preview the files that will be processed.",
+    ),
 ) -> None:
     """CLI for rt-cetsa-moltprot-tool."""
     logger.info("Starting the CLI for rt-cetsa-moltprot-tool.")
 
     logger.info(f"Input directory: {inp_dir}")
-    logger.info(f"File Pattern: {pattern}")
     logger.info(f"Output directory: {out_dir}")
 
+    # NOTE we may eventually deal with other types.
     if POLUS_TAB_EXT != ".csv":
         msg = "this tool can currently only process csv files."
         raise ValueError(msg)
 
-    fp = filepattern.FilePattern(inp_dir, pattern)
-    inp_files = [f[1][0] for f in fp()]
-
-    for f in inp_files:
-        if not f.suffix == POLUS_TAB_EXT:
-            raise ValueError(
-                f"this tool can only process {POLUS_TAB_EXT} files. Got {f}",
+    if int_filename is not None:
+        intensities_file = inp_dir / int_filename
+        if not intensities_file.exists():
+            raise FileNotFoundError(intensities_file)
+    else:
+        if len(list(inp_dir.iterdir())) != 1:
+            raise FileExistsError(
+                f"There should be a single intensities file in {inp_dir}",
             )
+        intensities_file = next(inp_dir.iterdir())
+    logger.info(f"Using intensities file: {intensities_file}")
 
     if preview:
-        outputs: list[str] = []
-        for f in inp_files:
-            fit_params_path = f.stem + "_moltenprot_params" + POLUS_TAB_EXT
-            fit_curves_path = f.stem + "_moltenprot_curves" + POLUS_TAB_EXT
-            outputs = [*outputs, fit_params_path, fit_curves_path]
+        outputs = ["params" + POLUS_TAB_EXT, "values" + POLUS_TAB_EXT]
         out_json = {"files": outputs}
         with (out_dir / "preview.json").open("w") as f:
             json.dump(out_json, f, indent=2)
         return
 
-    for f in inp_files:
-        logger.info(f"Processing plate timeserie: {f}")
-        fit = fit_data(f)
-        fit_params_path = out_dir / (f.stem + "_moltenprot_params" + POLUS_TAB_EXT)
-        fit_curves_path = out_dir / (f.stem + "_moltenprot_curves" + POLUS_TAB_EXT)
+    fit = fit_data(intensities_file)
 
-        # sort fit_params by row/column
-        fit_params = fit.plate_results
-        fit_params["_index"] = fit_params.index
-        fit_params["letter"] = fit_params.apply(lambda row: row._index[:1], axis=1)
-        fit_params["number"] = fit_params.apply(
-            lambda row: row._index[1:],
-            axis=1,
-        ).astype(int)
-        fit_params = fit_params.drop(columns="_index")
-        fit_params = fit_params.sort_values(["letter", "number"])
-        fit_params = fit_params.drop(columns=["letter", "number"])
-        fit_params.to_csv(fit_params_path, index=True)
+    fit_params_path = out_dir / ("params" + POLUS_TAB_EXT)
+    fit_curves_path = out_dir / ("values" + POLUS_TAB_EXT)
 
-        # keep only 2 signicant digits for temperature index
-        fit_curves = fit.plate_raw_corr
-        fit_curves.index = fit_curves.index.map(lambda t: round(t, 2))
-        fit_curves.to_csv(fit_curves_path, index=True)
+    # sort fit_params by row/column
+    fit_params = fit.plate_results
+    fit_params["_index"] = fit_params.index
+    fit_params["letter"] = fit_params.apply(lambda row: row._index[:1], axis=1)
+    fit_params["number"] = fit_params.apply(
+        lambda row: row._index[1:],
+        axis=1,
+    ).astype(int)
+    fit_params = fit_params.drop(columns="_index")
+    fit_params = fit_params.sort_values(["letter", "number"])
+    fit_params = fit_params.drop(columns=["letter", "number"])
+    fit_params.to_csv(fit_params_path, index=True)
+
+    # keep only 2 signicant digits for temperature index
+    fit_curves = fit.plate_raw_corr
+    fit_curves.index = fit_curves.index.map(lambda t: round(t, 2))
+    fit_curves.to_csv(fit_curves_path, index=True)
 
 
 if __name__ == "__main__":
