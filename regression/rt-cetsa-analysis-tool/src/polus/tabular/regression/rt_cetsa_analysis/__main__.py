@@ -68,7 +68,7 @@ def main(
 ) -> None:
     """CLI for rt-cetsa-moltprot-tool."""
     # TODO: Add to docs that input csv file should be sorted by `Temperature` column.
-    logger.info("Starting the CLI for rt-cetsa-moltprot-tool.")
+    logger.info("Starting the CLI for rt-cetsa-moltenprot-tool.")
 
     logger.info(f"Input directory: {inp_dir}")
     logger.info(f"params_pattern: {params_pattern}")
@@ -78,6 +78,8 @@ def main(
 
     params = inp_dir / params_pattern
     values = inp_dir / values_pattern
+
+    logger.info(f"{inp_dir}")
 
     if preview:
         NotImplemented  # noqa:  B018

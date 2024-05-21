@@ -1,12 +1,9 @@
-
-# values = "/Users/antoinegerardin/RT-CETSA-Analysis/.data/final_outputs/moltenprot/plate_(1-59)_moltenprot_curves.csv"
-
 suppressWarnings(library(logging))
 library(tidyverse)
 
 loginfo('loading moltenprot values from : %s', values)
 
-# NOTE this process creates spurious columns that should be removed
+
 exp_curve_all <- read_csv(values,
 show_col_types = FALSE
 )
@@ -17,13 +14,12 @@ col_by_row <-
   arrange(., row)
 
 
-# rename to Temperature
 exp_curve_all <- exp_curve_all %>%
 # add prefix
 mutate(., Temperature = paste('val_t_', Temperature, sep = ''))
 
 exp_curve_all <- exp_curve_all %>%
-  # pivot transform columns into row combinations (vy creating a column name)
+  # pivot transform columns into row combinations
   pivot_longer(cols = 2:ncol(exp_curve_all)) %>%
   # pivoting again to get temperature as columns
   pivot_wider(names_from = Temperature) %>%
@@ -34,9 +30,6 @@ exp_curve_all <- exp_curve_all %>%
   # remove all unused cols
   dplyr::select(-c('name', 'well', 'row', 'col'))
 
-
-# Add temperature headers to df
-# TODO REVIEW this is sketchy
 add_tempheaders <- function(df,
                             start_temp = 37,
                             end_temp = 90) {
@@ -55,10 +48,10 @@ add_tempheaders <- function(df,
   return(df)
 }
 
+# NOTE: HARDCODED VALUE INTERVAL
+# Also, this should comes from moltenprot
 start_temp = 37
 end_temp = 90
-# exp_curve_all <- add_tempheaders(exp_curve_all, start_temp, end_temp)
-curve_df <- add_tempheaders(exp_curve_all, start_temp, end_temp)
-message('Fit curves retrieved.')
 
-# write.csv(exp_curve_all, "test_exp_curve_all.csv")
+curve_df <- add_tempheaders(exp_curve_all, start_temp, end_temp)
+message('Done preparing fit curves.')

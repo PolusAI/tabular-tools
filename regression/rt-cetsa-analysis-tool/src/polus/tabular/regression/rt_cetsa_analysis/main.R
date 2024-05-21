@@ -7,21 +7,24 @@ basicConfig()
 
 # Setup the argument parsing
 addFitParams <- function(parser) {
-  print("addFitParams")
   parser$add_argument("--params", type = "character",help="Fit params csv file")
   invisible(NULL)
+  print("params arg ok ")
 }
 addBaselineCorrected <- function(parser) {
   parser$add_argument("--values", type = "character",help="Baseline corrected csv file")
   invisible(NULL)
+  print("values arg ok ")
 }
 addPlateMap <- function(parser) {
   parser$add_argument("--platemap", type = "character",help="platemap excel file")
   invisible(NULL)
+  print("platemap arg ok ")
 }
 addOutputArgs <- function(parser) {
-  parser$add_argument("--outdir", type = "character",help="Output csv file")
+  parser$add_argument("--outdir", type = "character",help="Output directory")
   invisible(NULL)
+  print("outdir arg ok ")
 }
 getAllParser <- function() {
   parser <- ArgumentParser(description="ALL PARSER")
@@ -33,8 +36,21 @@ getAllParser <- function() {
 }
 
 # Parse the arguments
+loginfo('collect all parsing routines...')
 parser <- getAllParser()
-args <- parser$parse_args()
+loginfo('parse data...')
+
+print(parser)
+
+tryCatch(
+  args <- parser$parse_args(),
+  error = function(e){
+    print("There was an error: ")
+    print(e)
+  }
+)
+
+
 
 
 #Path to csvfile directory

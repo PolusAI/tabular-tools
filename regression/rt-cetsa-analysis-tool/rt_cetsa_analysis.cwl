@@ -1,5 +1,6 @@
 class: CommandLineTool
 cwlVersion: v1.2
+baseCommand: ["python3", "-m", "polus.tabular.regression.rt_cetsa_analysis"]
 inputs:
   inpDir:
     inputBinding:
@@ -31,6 +32,9 @@ outputs:
       glob: $(inputs.outDir.basename)
     type: Directory
 requirements:
+  EnvVarRequirement:
+    envDef:
+      WORKDIR: /opt/executables/
   DockerRequirement:
     dockerPull: polusai/rt-cetsa-analysis-simple-tool:0.1.0
   InitialWorkDirRequirement:

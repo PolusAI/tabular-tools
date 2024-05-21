@@ -1,8 +1,6 @@
 suppressWarnings(library(logging))
 library(tidyverse)
 
-# params = "/Users/antoinegerardin/RT-CETSA-Analysis/.data/final_outputs/moltenprot/plate_(1-59)_moltenprot_params.csv"
-
 loginfo('loading moltenprot params from : %s', params)
 
 # create a dataframe with two columns (row, col) for plate of (16,24)
@@ -10,7 +8,6 @@ col_by_row <- expand.grid(row = sprintf('%.2d', 1:16), col = sprintf('%.2d', 1:2
 # sort by row number
 arrange(., row)
 
-# NOTE this process creates spurious columns that should be removed
 exp_param <- read_csv(params,
 show_col_types = FALSE
 )
@@ -38,7 +35,7 @@ exp_param <- exp_param %>% bind_cols(col_by_row) %>% relocate(c('row', 'col'), .
 # remove the well column
 exp_param <- exp_param %>% dplyr::select(-'well')
 
-# NOTE Basically regenerate the battleship coordinates based on the current ordering
+# NOTE Basically regenerate the alphanumerical coordinates based on the current ordering
 # Add well assignments for each plate
 well_assignment <- function(df, well_num) {
   if (well_num == 96) {
@@ -72,7 +69,4 @@ well_assignment <- function(df, well_num) {
   return(df)
 }
 
-# exp_param <- well_assignment(exp_param, 384)
 full_param <- well_assignment(exp_param, 384)
-
-# write.csv(exp_param, "test_exp_param_full.csv")

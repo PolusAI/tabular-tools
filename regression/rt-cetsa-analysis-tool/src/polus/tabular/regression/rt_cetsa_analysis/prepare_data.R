@@ -32,15 +32,7 @@ loginfo('loading platemap fit params from : %s', plate_map)
 
 source('./prepare_params.R')
 
-# full_param <- read_csv(params,
-# show_col_types = FALSE
-# )
-
 source('./prepare_values.R')
-
-# curve_df <- read_csv(values,
-# show_col_types = FALSE
-# )
 
 platemap_filepath = plate_map
 
@@ -105,9 +97,3 @@ kelToCel <- function(df) {
 # TODO move that before for each dataset
 # full_df <- full_df %>% dplyr::select(-c('...1')) %>% dplyr::select(-c('...1'))
 full_df <- kelToCel(full_df)
-
-merge_molten_filename <- "test_merged_molten_final.csv"
-output_path <- paste(outdir, merge_molten_filename, sep="/")
-loginfo('writing results to : %s', output_path)
-
-write.csv(full_df,output_path)

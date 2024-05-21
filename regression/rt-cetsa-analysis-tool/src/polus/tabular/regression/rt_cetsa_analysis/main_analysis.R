@@ -27,22 +27,17 @@ library(devtools)
 # BECAUSE OF BUG
 pdf(file = NULL)
 
-
 # EXPERIMENTAL PARAMETERS AND SETUP
 #
 # Input experiment parameters here
-
 startTemp <- 37
 endTemp <- 95
 plate_format <- 384
 control <- 'vehicle'
 pc <- 'control'
 
-# read in preprocessed data
-merge_molten_filename <- "test_merged_molten_final.csv"
-output_path <- paste(outdir, merge_molten_filename, sep="/")
-loginfo('reading preprocessed data from : %s', output_path)
 source('./functions.R')
+
 full_df <- calculate_auc(full_df)
 
 # Perform some preliminary control group analysis of variability
@@ -58,7 +53,6 @@ controlPlot <-
     output = 'plot',
     controlDF = control_var
   )
-print(controlPlot)
 
 #Calculate melting parameter difference for each well from MoltenProt
 # full_df <- calculate_meltingparams(full_df) %>%
