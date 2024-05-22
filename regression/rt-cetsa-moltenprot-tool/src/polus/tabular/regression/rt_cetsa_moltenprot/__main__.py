@@ -6,7 +6,7 @@ import os
 import pathlib
 
 import typer
-from polus.tabular.regression.rt_cetsa_moltenprot import fit_data
+from polus.tabular.regression.rt_cetsa_moltenprot import run_moltenprot_fit
 
 # Initialize the logger
 logging.basicConfig(
@@ -82,27 +82,12 @@ def main(
             json.dump(out_json, f, indent=2)
         return
 
-    fit = fit_data(intensities_file)
+    fit_params, fit_curves = run_moltenprot_fit(intensities_file)
 
     fit_params_path = out_dir / ("params" + POLUS_TAB_EXT)
     fit_curves_path = out_dir / ("values" + POLUS_TAB_EXT)
 
-    # sort fit_params by row/column
-    fit_params = fit.plate_results
-    fit_params["_index"] = fit_params.index
-    fit_params["letter"] = fit_params.apply(lambda row: row._index[:1], axis=1)
-    fit_params["number"] = fit_params.apply(
-        lambda row: row._index[1:],
-        axis=1,
-    ).astype(int)
-    fit_params = fit_params.drop(columns="_index")
-    fit_params = fit_params.sort_values(["letter", "number"])
-    fit_params = fit_params.drop(columns=["letter", "number"])
     fit_params.to_csv(fit_params_path, index=True)
-
-    # keep only 2 signicant digits for temperature index
-    fit_curves = fit.plate_raw_corr
-    fit_curves.index = fit_curves.index.map(lambda t: round(t, 2))
     fit_curves.to_csv(fit_curves_path, index=True)
 
 
