@@ -9,11 +9,11 @@ inputs:
   params:
     inputBinding:
       prefix: --params
-    type: string
+    type: string?
   values:
     inputBinding:
       prefix: --values
-    type: string
+    type: string?
   platemap:
     inputBinding:
       prefix: --platemap

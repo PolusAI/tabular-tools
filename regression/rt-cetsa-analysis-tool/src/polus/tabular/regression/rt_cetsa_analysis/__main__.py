@@ -35,12 +35,12 @@ def main(
         resolve_path=True,
     ),
     params_filename: str = typer.Option(
-        ...,
+        None,
         "--params",
         help="name of the moltenprot fit params csv file in the input directory.",
     ),
     values_filename: str = typer.Option(
-        ...,
+        None,
         "--values",
         help="name of the moltenprot baseline corrected values csv file in the input directory.",
     ),
