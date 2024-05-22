@@ -11,13 +11,13 @@ inputs:
   format:
   - params
   name: params
-  required: true
+  required: false
   type: string
 - description: Baseline corrected csv files
   format:
   - values
   name: values
-  required: true
+  required: false
   type: string
 - description: platemap excel file
   format:

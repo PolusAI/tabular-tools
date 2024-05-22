@@ -18,14 +18,12 @@
     {
       "name": "params",
       "type": "genericData",
-      "description": "Fit params csv file",
-      "required": true
+      "description": "Fit params csv file"
     },
     {
       "name": "values",
       "type": "genericData",
-      "description": "Baseline corrected csv files",
-      "required": true
+      "description": "Baseline corrected csv files"
     },
     {
       "name": "platemap",
