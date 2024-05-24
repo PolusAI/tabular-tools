@@ -26,7 +26,7 @@ jobs:
     name: Call workflow from image-tools
     uses: polusai/image-tools/.github/workflows/package-release.yml@master
     with:
-      num-commits: ${{ github.event.inputs.num-commits }}
-      ignore-missing-dev: ${{ github.event.inputs.ignore-missing-dev }}
+      num-commits: ${{ fromJson(github.event.inputs.num-commits) }}
+      ignore-missing-dev: ${{ fromJson(github.event.inputs.ignore-missing-dev) }}
       repo_name: "tabular-tools"
     secrets: inherit
