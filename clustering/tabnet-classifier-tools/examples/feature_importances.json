@@ -1,0 +1,16 @@
+{
+  "capital-gain": 0.2208,
+  "marital-status": 0.1949,
+  "educational-num": 0.1724,
+  "hours-per-week": 0.1041,
+  "age": 0.0789,
+  "gender": 0.0756,
+  "occupation": 0.0635,
+  "relationship": 0.0264,
+  "capital-loss": 0.0225,
+  "native-country": 0.0223,
+  "race": 0.0102,
+  "fnlwgt": 0.0061,
+  "education": 0.0016,
+  "workclass": 0.001
+}
