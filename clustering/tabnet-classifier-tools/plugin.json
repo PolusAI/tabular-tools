@@ -539,7 +539,7 @@
       "default": "entmax"
     },
     {
-      "key": "inputs.groupedFeature",
+      "key": "inputs.groupedFeatures",
       "type": "integer",
       "title": "groupedFeatures",
       "description": "Allow the model to share attention across features within the same group",

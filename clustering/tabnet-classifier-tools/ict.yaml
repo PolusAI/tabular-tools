@@ -1,0 +1,502 @@
+author:
+- Hamdah Shafqat
+contact: hamdahshafqat.abbasi@nih.gov
+container: polusai/pytorch-tabnet-tool:0.1.0-dev0
+description: Pytorch tabnet tool for training tabular data.
+entrypoint: python3 -m polus.tabular.clustering.pytorch_tabnet
+inputs:
+- description: Input tabular data
+  format:
+  - genericData
+  name: inpDir
+  required: true
+  type: path
+- description: Pattern to parse input files
+  format:
+  - string
+  name: filePattern
+  required: false
+  type: string
+- description: Proportion of the dataset to include in the test set
+  format:
+  - number
+  name: testSize
+  required: false
+  type: number
+- description: Width of the decision prediction layer
+  format:
+  - integer
+  name: nD
+  required: false
+  type: number
+- description: Width of the attention embedding for each mask
+  format:
+  - integer
+  name: nA
+  required: false
+  type: number
+- description: Number of steps in the architecture
+  format:
+  - integer
+  name: nSteps
+  required: false
+  type: number
+- description: Coefficient for feature reuse in the masks
+  format:
+  - number
+  name: gamma
+  required: false
+  type: number
+- description: List of embedding sizes for each categorical feature
+  format:
+  - integer
+  name: catEmbDim
+  required: false
+  type: number
+- description: Number of independent Gated Linear Unit layers at each step
+  format:
+  - integer
+  name: nIndependent
+  required: false
+  type: number
+- description: Number of shared Gated Linear Unit layers at each step
+  format:
+  - integer
+  name: nShared
+  required: false
+  type: number
+- description: Constant value
+  format:
+  - number
+  name: epsilon
+  required: false
+  type: number
+- description: Random seed for reproducibility
+  format:
+  - integer
+  name: seed
+  required: false
+  type: number
+- description: Momentum for batch normalization
+  format:
+  - number
+  name: momentum
+  required: false
+  type: number
+- description: Clipping of the gradient value
+  format:
+  - number
+  name: clipValue
+  required: false
+  type: number
+- description: Extra sparsity loss coefficient
+  format:
+  - number
+  name: lambdaSparse
+  required: false
+  type: number
+- description: Pytorch optimizer function
+  format:
+  - enum
+  name: optimizerFn
+  required: true
+  type: string
+- description: learning rate for the optimizer
+  format:
+  - number
+  name: lr
+  required: false
+  type: number
+- description: Parameters used initialize the optimizer
+  format:
+  - enum
+  name: schedulerFn
+  required: true
+  type: string
+- description: Parameter to apply to the scheduler_fn
+  format:
+  - integer
+  name: stepSize
+  required: false
+  type: number
+- description: Device used for training
+  format:
+  - enum
+  name: deviceName
+  required: true
+  type: string
+- description: A masking function for feature selection
+  format:
+  - enum
+  name: maskType
+  required: true
+  type: string
+- description: Allow the model to share attention across features within the same
+    group
+  format:
+  - integer
+  name: groupedFeatures
+  required: false
+  type: number
+- description: Number of shared GLU block in decoder
+  format:
+  - integer
+  name: nSharedDecoder
+  required: false
+  type: number
+- description: Number of independent GLU block in decoder
+  format:
+  - integer
+  name: nIndepDecoder
+  required: false
+  type: number
+- description: Metrics utilized for early stopping evaluation
+  format:
+  - enum
+  name: evalMetric
+  required: true
+  type: string
+- description: Maximum number of epochs for training
+  format:
+  - integer
+  name: maxEpochs
+  required: false
+  type: number
+- description: Consecutive epochs without improvement before early stopping
+  format:
+  - integer
+  name: patience
+  required: false
+  type: number
+- description: Sampling parameter only for TabNetClassifier
+  format:
+  - integer
+  name: weights
+  required: false
+  type: number
+- description: Loss function
+  format:
+  - enum
+  name: lossFn
+  required: true
+  type: string
+- description: Batch size
+  format:
+  - integer
+  name: batchSize
+  required: false
+  type: number
+- description: Size of mini-batches for Ghost Batch Normalization
+  format:
+  - integer
+  name: virtualBatchSize
+  required: false
+  type: number
+- description: Number or workers used in torch.utils.data.Dataloader
+  format:
+  - integer
+  name: numWorkers
+  required: false
+  type: number
+- description: Option to drop incomplete last batch during training
+  format:
+  - boolean
+  name: dropLast
+  required: false
+  type: boolean
+- description: For scikit-learn compatibility, enabling fitting the same model twice
+  format:
+  - boolean
+  name: warmStart
+  required: false
+  type: boolean
+- description: Compute feature importance?
+  format:
+  - boolean
+  name: computeImportance
+  required: false
+  type: boolean
+- description: Target feature for classification
+  format:
+  - string
+  name: targetVar
+  required: true
+  type: string
+- description: Tabnet Classifier
+  format:
+  - enum
+  name: classifier
+  required: true
+  type: string
+- description: Output a JSON preview of outputs produced by this plugin
+  format:
+  - boolean
+  name: preview
+  required: false
+  type: boolean
+name: polusai/PytorchTabnet
+outputs:
+- description: Output collection
+  format:
+  - genericData
+  name: outDir
+  required: true
+  type: path
+repository: https://github.com/polusai/tabular-tools
+specVersion: 1.0.0
+title: Pytorch Tabnet
+ui:
+- description: Input tabular data for clustering
+  key: inputs.inpDir
+  title: Input tabular data
+  type: path
+- description: Pattern to parse input files
+  key: inputs.filePattern
+  title: FilePattern
+  type: text
+- default: 0.2
+  description: Proportion of the dataset to include in the test set
+  key: inputs.testSize
+  title: FilePattern
+  type: number
+- default: 8
+  description: Width of the decision prediction layer
+  key: inputs.nD
+  title: nD
+  type: number
+- default: 8
+  description: Width of the attention embedding for each mask
+  key: inputs.nA
+  title: nA
+  type: number
+- default: 8
+  description: Number of steps in the architecture
+  key: inputs.nSteps
+  title: nSteps
+  type: number
+- default: 1.3
+  description: Coefficient for feature reuse in the masks
+  key: inputs.gamma
+  title: gamma
+  type: number
+- default: 1
+  description: List of embedding sizes for each categorical feature
+  key: inputs.catEmbDim
+  title: catEmbDim
+  type: number
+- default: 2
+  description: Number of independent Gated Linear Unit layers at each step
+  key: inputs.nIndependent
+  title: nIndependent
+  type: number
+- default: 2
+  description: Number of shared Gated Linear Unit layers at each step
+  key: inputs.nShared
+  title: nShared
+  type: number
+- default: 1.0e-15
+  description: Constant value
+  key: inputs.epsilon
+  title: epsilon
+  type: number
+- default: 0
+  description: Random seed for reproducibility
+  key: inputs.seed
+  title: seed
+  type: number
+- default: 0.02
+  description: Momentum for batch normalization
+  key: inputs.momentum
+  title: momentum
+  type: number
+- description: Clipping of the gradient value
+  key: inputs.clipValue
+  title: clipValue
+  type: number
+- default: 0.001
+  description: Extra sparsity loss coefficient
+  key: inputs.lambdaSparse
+  title: lambdaSparse
+  type: number
+- description: Pytorch optimizer function
+  fields:
+  - Adadelta
+  - Adagrad
+  - Adam
+  - AdamW
+  - SparseAdam
+  - Adamax
+  - ASGD
+  - LBFGS
+  - NAdam
+  - RAdam
+  - RMSprop
+  - Rprop
+  - SGD
+  - Default
+  key: inputs.optimizerFn
+  title: optimizerFn
+  type: select
+- default: 0.02
+  description: learning rate for the optimizer
+  key: inputs.lr
+  title: lr
+  type: number
+- description: Parameters used initialize the optimizer
+  fields:
+  - LambdaLR
+  - MultiplicativeLR
+  - StepLR
+  - MultiStepLR
+  - ConstantLR
+  - LinearLR
+  - ExponentialLR
+  - PolynomialLR
+  - CosineAnnealingLR
+  - ChainedScheduler
+  - SequentialLR
+  - CyclicLR
+  - OneCycleLR
+  - CosineAnnealingWarmRestarts
+  - Default
+  key: inputs.schedulerFn
+  title: schedulerFn
+  type: select
+- default: 10
+  description: Parameter to apply to the scheduler_fn
+  key: inputs.stepSize
+  title: stepSize
+  type: number
+- description: Device used for training
+  fields:
+  - cpu
+  - gpu
+  - auto
+  - DEFAULT
+  key: inputs.deviceName
+  title: deviceName
+  type: select
+- description: A masking function for feature selection
+  fields:
+  - sparsemax
+  - entmax
+  - DEFAULT
+  key: inputs.maskType
+  title: maskType
+  type: select
+- description: Allow the model to share attention across features within the same
+    group
+  key: inputs.groupedFeatures
+  title: groupedFeatures
+  type: number
+- default: 1
+  description: Number of shared GLU block in decoder
+  key: inputs.nSharedDecoder
+  title: nSharedDecoder
+  type: number
+- default: 1
+  description: Number of independent GLU block in decoder
+  key: inputs.nIndepDecoder
+  title: nIndepDecoder
+  type: number
+- description: Metrics utilized for early stopping evaluation
+  fields:
+  - auc
+  - accuracy
+  - balanced_accuracy
+  - logloss
+  - mse
+  - mae
+  - rmse
+  - rmsle
+  - DEFAULT
+  key: inputs.evalMetric
+  title: evalMetric
+  type: select
+- default: 200
+  description: Maximum number of epochs for training
+  key: inputs.maxEpochs
+  title: maxEpochs
+  type: number
+- default: 10
+  description: Consecutive epochs without improvement before early stopping
+  key: inputs.patience
+  title: patience
+  type: number
+- default: 10
+  description: Sampling parameter only for TabNetClassifier
+  key: inputs.weights
+  title: weights
+  type: number
+- description: Loss function
+  fields:
+  - L1Loss
+  - NLLLoss
+  - NLLLoss2d
+  - PoissonNLLLoss
+  - GaussianNLLLoss
+  - KLDivLoss
+  - MSELoss
+  - BCELoss
+  - BCEWithLogitsLoss
+  - HingeEmbeddingLoss
+  - SmoothL1Loss
+  - HuberLoss
+  - SoftMarginLoss
+  - CrossEntropyLoss
+  - MultiLabelSoftMarginLoss
+  - CosineEmbeddingLoss
+  - MarginRankingLoss
+  - MultiMarginLoss
+  - TripletMarginLoss
+  - TripletMarginWithDistanceLoss
+  - CTCLoss
+  - DEFAULT
+  key: inputs.lossFn
+  title: lossFn
+  type: select
+- default: 1024
+  description: Batch size
+  key: inputs.batchSize
+  title: batchSize
+  type: number
+- default: 128
+  description: Size of mini-batches for Ghost Batch Normalization
+  key: inputs.virtualBatchSize
+  title: virtualBatchSize
+  type: number
+- default: 0
+  description: Number or workers used in torch.utils.data.Dataloader
+  key: inputs.numWorkers
+  title: numWorkers
+  type: number
+- description: Option to drop incomplete last batch during training
+  key: inputs.dropLast
+  title: dropLast
+  type: checkbox
+- description: For scikit-learn compatibility, enabling fitting the same model twice
+  key: inputs.warmStart
+  title: warmStart
+  type: checkbox
+- description: Compute feature importance?
+  key: inputs.computeImportance
+  title: computeImportance
+  type: checkbox
+- description: Target feature for classification
+  key: inputs.targetVar
+  title: targetVar
+  type: text
+- description: Tabnet Classifier
+  fields:
+  - TabNetClassifier
+  - TabNetRegressor
+  - TabNetMultiTaskClassifier
+  - DEFAULT
+  key: inputs.classifier
+  title: classifier
+  type: select
+- description: Output a JSON preview of outputs produced by this plugin
+  key: inputs.preview
+  title: preview
+  type: checkbox
+version: 0.1.0-dev0
