@@ -36,7 +36,7 @@ requirements:
     envDef:
       WORKDIR: /opt/executables/
   DockerRequirement:
-    dockerPull: polusai/rt-cetsa-analysis-tool:0.2.0-dev0
+    dockerPull: polusai/rt-cetsa-analysis-tool:0.3.0-dev0
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)
