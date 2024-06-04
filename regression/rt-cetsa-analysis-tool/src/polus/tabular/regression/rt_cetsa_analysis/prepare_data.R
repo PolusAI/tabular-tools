@@ -73,9 +73,12 @@ plate_assignment <- function(df, platemap_file) {
 
 full_df <- full_param
 
+write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis_0.csv',sep="/"))
 
 
 full_df <- plate_assignment(full_df, platemap_filepath)
+
+write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis_1.csv',sep="/"))
 
 # Construct full data frame with curve fit and parameters for analysis
 bind_fulldf <- function(param_df, curve_df) {
@@ -87,6 +90,9 @@ bind_fulldf <- function(param_df, curve_df) {
 loginfo('concat dataframes')
 full_df <- bind_fulldf(full_df, curve_df)
 
+write.csv(x = curve_df, file = paste(outdir,'curve_df_before_analysis_2.csv',sep="/"))
+write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis_2.csv',sep="/"))
+
 #Convert any columns containing Kelvin values from MoltenProt to Celsius
 kelToCel <- function(df) {
   df <- df %>%
@@ -97,3 +103,5 @@ kelToCel <- function(df) {
 # TODO move that before for each dataset
 # full_df <- full_df %>% dplyr::select(-c('...1')) %>% dplyr::select(-c('...1'))
 full_df <- kelToCel(full_df)
+
+write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis_3.csv',sep="/"))

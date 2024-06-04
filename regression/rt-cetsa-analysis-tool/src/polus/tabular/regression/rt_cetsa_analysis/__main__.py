@@ -6,6 +6,9 @@ import os
 from pathlib import Path
 
 import typer
+from polus.tabular.regression.rt_cetsa_analysis.preprocess_data import (
+    preprocess_platemap,
+)
 from polus.tabular.regression.rt_cetsa_analysis.run_rscript import run_rscript
 
 # get env
@@ -97,9 +100,11 @@ def main(
     if not values.exists():
         raise FileNotFoundError(f"values file not found : {values}")
 
+    processed_platemap = preprocess_platemap(platemap, out_dir)
+
     logger.info(f"params filename: {params}")
     logger.info(f"values filename: {values}")
-    logger.info(f"platemap path: {platemap}")
+    logger.info(f"processed platemap path: {processed_platemap}")
     logger.info(f"Output directory: {out_dir}")
 
     if preview:
@@ -109,7 +114,7 @@ def main(
             json.dump(out_json, f, indent=2)
         return
 
-    run_rscript(params, values, platemap, out_dir)
+    run_rscript(params, values, processed_platemap, out_dir)
 
 
 if __name__ == "__main__":
