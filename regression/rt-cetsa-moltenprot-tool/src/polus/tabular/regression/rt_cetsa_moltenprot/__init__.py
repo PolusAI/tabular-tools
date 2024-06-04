@@ -18,6 +18,7 @@ POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".csv")
 
 def run_moltenprot_fit(
     file_path: pathlib.Path,
+    moltenprot_params: dict[str, int],
 ) -> tuple[pandas.DataFrame, pandas.DataFrame]:
     """Run moltenprot.
 
@@ -27,7 +28,7 @@ def run_moltenprot_fit(
     Returns:
         tuple of dataframe containing the fit_params and the curve values.
     """
-    fit = fit_data(file_path)
+    fit = fit_data(file_path, moltenprot_params)
 
     # sort fit_params by row/column
     fit_params = fit.plate_results
@@ -48,7 +49,10 @@ def run_moltenprot_fit(
     return fit_params, fit_curves
 
 
-def fit_data(file_path: pathlib.Path) -> core.MoltenProtFit:
+def fit_data(
+    file_path: pathlib.Path,
+    moltenprot_params: dict[str, int],
+) -> core.MoltenProtFit:
     """Fit data to a model using Moltprot."""
     fit = core.MoltenProtFit(
         filename=file_path,
@@ -57,18 +61,18 @@ def fit_data(file_path: pathlib.Path) -> core.MoltenProtFit:
 
     fit.SetAnalysisOptions(
         model="santoro1988",
-        baseline_fit=3,
-        baseline_bounds=3,
+        baseline_fit=moltenprot_params["baseline_fit"],
+        baseline_bounds=moltenprot_params["baseline_bounds"],
         dCp=0,
         onset_threshold=0.01,
-        savgol=10,
+        savgol=moltenprot_params["savgol"],
         blanks=[],
         exclude=[],
         invert=False,
         mfilt=None,
         shrink=None,
-        trim_max=0,
-        trim_min=0,
+        trim_max=moltenprot_params["trim_max"],
+        trim_min=moltenprot_params["trim_min"],
     )
 
     fit.PrepareData()
