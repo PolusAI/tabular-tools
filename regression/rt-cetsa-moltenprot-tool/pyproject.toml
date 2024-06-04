@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus_tabular_regression_rt_cetsa_moltenprot"
-version = "0.2.0-dev0"
+version = "0.3.0-dev0"
 description = "Run moltenprot for the RT-CETSA pipeline."
 authors = [
     "Nick Schaub <nick.schaub@nih.gov>",
