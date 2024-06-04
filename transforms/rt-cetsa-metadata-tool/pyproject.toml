@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "polus_tabular_regression_rt_cetsa_metadata"
+name = "polus_tabular_transforms_rt_cetsa_metadata"
 version = "0.3.0-dev0"
 description = "Run preprocessing for the RT-CETSA pipeline."
 authors = [

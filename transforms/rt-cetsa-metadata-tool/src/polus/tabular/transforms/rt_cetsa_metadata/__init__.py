@@ -42,7 +42,7 @@ def preprocess_metadata(metadata_file: Path, inp_dir: Path, out_dir: Path):
         temps.append(current_temp)
         previous_temp = current_temp
         # copy and renamed the images
-        new_file = str(index + 1) + ".tif"
+        new_file = str(index + 1) + "_" + str(current_temp) + ".tif"
         shutil.copyfile(inp_dir / old_file, images_path / new_file)
         new_files.append(new_file)
 
