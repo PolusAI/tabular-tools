@@ -70,3 +70,5 @@ well_assignment <- function(df, well_num) {
 }
 
 full_param <- well_assignment(exp_param, 384)
+
+write.csv(x = full_param, file = paste(outdir,'full_param_preprocessed.csv',sep="/"))

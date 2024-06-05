@@ -6,10 +6,8 @@ import os
 from pathlib import Path
 
 import typer
-from polus.tabular.regression.rt_cetsa_analysis.preprocess_data import (
-    preprocess_platemap,
-)
-from polus.tabular.regression.rt_cetsa_analysis.run_rscript import run_rscript
+from polus.tabular.regression.rt_cetsa_analysis.preprocess_data import preprocess_data
+from polus.tabular.regression.rt_cetsa_analysis.run_new_rscript import run_rscript
 
 # get env
 POLUS_LOG = os.environ.get("POLUS_LOG", logging.INFO)
@@ -47,7 +45,7 @@ def main(
         "--values",
         help="name of the moltenprot baseline corrected values csv file in the input directory.",
     ),
-    platemap: Path = typer.Option(
+    platemap_path: Path = typer.Option(
         ...,
         "--platemap",
         help="Path to the platemap file.",
@@ -76,36 +74,33 @@ def main(
     logger.info(f"Input directory: {inp_dir}")
     logger.info(f"params: {params_filename}")
     logger.info(f"values: {values_filename}")
-    logger.info(f"platemap path: {platemap}")
+    logger.info(f"platemap path: {platemap_path}")
     logger.info(f"Output directory: {out_dir}")
 
     if params_filename:
-        params = inp_dir / params_filename
+        params_path = inp_dir / params_filename
     elif (inp_dir / "params.csv").exists():
-        params = inp_dir / "params.csv"
+        params_path = inp_dir / "params.csv"
     else:
         raise ValueError(
             f"No 'params.csv' moltenprot parameters file found in {inp_dir}.",
         )
 
     if values_filename:
-        values = inp_dir / values_filename
+        values_path = inp_dir / values_filename
     elif (inp_dir / "values.csv").exists():
-        values = inp_dir / "values.csv"
+        values_path = inp_dir / "values.csv"
     else:
         raise ValueError(f"No 'values.csv' moltenprot values file found in {inp_dir}.")
 
-    if not params.exists():
-        raise FileNotFoundError(f"params file not found : {params}")
-    if not values.exists():
-        raise FileNotFoundError(f"values file not found : {values}")
+    if not params_path.exists():
+        raise FileNotFoundError(f"params file not found : {params_path}")
+    if not values_path.exists():
+        raise FileNotFoundError(f"values file not found : {values_path}")
 
-    processed_platemap = preprocess_platemap(platemap, out_dir)
+    data_path = preprocess_data(platemap_path, values_path, params_path, out_dir)
 
-    logger.info(f"params filename: {params}")
-    logger.info(f"values filename: {values}")
-    logger.info(f"processed platemap path: {processed_platemap}")
-    logger.info(f"Output directory: {out_dir}")
+    logger.info(f"combined data csv file: {data_path}")
 
     if preview:
         outputs: list[str] = ["signif_df.csv"]
@@ -114,7 +109,7 @@ def main(
             json.dump(out_json, f, indent=2)
         return
 
-    run_rscript(params, values, processed_platemap, out_dir)
+    run_rscript(data_path, out_dir)
 
 
 if __name__ == "__main__":

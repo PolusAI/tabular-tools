@@ -33,6 +33,10 @@ loginfo('loading platemap fit params from : %s', plate_map)
 source('./prepare_params.R')
 
 source('./prepare_values.R')
+# curve_df <- read_csv(values,
+# show_col_types = FALSE
+# )
+
 
 platemap_filepath = plate_map
 
@@ -73,12 +77,7 @@ plate_assignment <- function(df, platemap_file) {
 
 full_df <- full_param
 
-write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis_0.csv',sep="/"))
-
-
 full_df <- plate_assignment(full_df, platemap_filepath)
-
-write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis_1.csv',sep="/"))
 
 # Construct full data frame with curve fit and parameters for analysis
 bind_fulldf <- function(param_df, curve_df) {
@@ -90,10 +89,7 @@ bind_fulldf <- function(param_df, curve_df) {
 loginfo('concat dataframes')
 full_df <- bind_fulldf(full_df, curve_df)
 
-write.csv(x = curve_df, file = paste(outdir,'curve_df_before_analysis_2.csv',sep="/"))
-write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis_2.csv',sep="/"))
-
-#Convert any columns containing Kelvin values from MoltenProt to Celsius
+#Convert MoltenProt's Tm_fit and T_onset values to Celsius
 kelToCel <- function(df) {
   df <- df %>%
     mutate(Tm_fit = Tm_fit - 273.15) %>%
@@ -104,4 +100,6 @@ kelToCel <- function(df) {
 # full_df <- full_df %>% dplyr::select(-c('...1')) %>% dplyr::select(-c('...1'))
 full_df <- kelToCel(full_df)
 
-write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis_3.csv',sep="/"))
+write.csv(x = full_df, file = paste(outdir,'full_df_before_analysis.csv',sep="/"))
+
+exit()

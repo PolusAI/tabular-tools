@@ -13,9 +13,7 @@ logger.setLevel(POLUS_LOG)
 
 
 def run_rscript(
-    params_filepath: Path,
-    values_filepath: Path,
-    platemap_filepath: Path,
+    data_filepath: Path,
     out_dir: Path,
 ):
     """Run R script."""
@@ -36,9 +34,7 @@ def run_rscript(
     cmd = [
         "Rscript",
         "./new_main.R",
-        params_filepath.as_posix(),
-        values_filepath.as_posix(),
-        platemap_filepath.as_posix(),
+        data_filepath.as_posix(),
         out_dir.as_posix(),
     ]
 

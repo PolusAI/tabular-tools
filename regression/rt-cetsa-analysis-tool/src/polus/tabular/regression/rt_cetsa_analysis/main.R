@@ -71,5 +71,8 @@ loginfo('values (baseline corrected): %s', values)
 loginfo('platemap file (plate metadata): %s', plate_map)
 loginfo('outdir (output directory): %s', outdir)
 
-source('./prepare_data.R')
+# source('./prepare_data.R')
+full_df <- read_csv(data,
+show_col_types = FALSE
+)
 source('./main_analysis.R')

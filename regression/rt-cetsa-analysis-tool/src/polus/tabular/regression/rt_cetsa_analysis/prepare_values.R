@@ -55,3 +55,5 @@ end_temp = 90
 
 curve_df <- add_tempheaders(exp_curve_all, start_temp, end_temp)
 message('Done preparing fit curves.')
+
+write.csv(x = curve_df, file = paste(outdir,'curve_df_preprocessed.csv',sep="/"))
