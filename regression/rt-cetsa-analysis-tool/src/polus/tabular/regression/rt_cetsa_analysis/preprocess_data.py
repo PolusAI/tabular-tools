@@ -49,6 +49,7 @@ def preprocess_platemap_sample(platemap_path: Path, out_dir: Path):
     df = df.stack()
     df = df.reset_index(level=[0, 1], name="ncgc_id")
     df.rename(columns={"level_0": "row", "level_1": "col"}, inplace=True)
+    df["row"] += 1
     df.index += 1
 
     df = df.replace("empty", "vehicle")  # empty are relabed as vehicle

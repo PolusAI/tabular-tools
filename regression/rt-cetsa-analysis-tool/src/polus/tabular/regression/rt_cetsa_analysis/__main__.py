@@ -7,7 +7,7 @@ from pathlib import Path
 
 import typer
 from polus.tabular.regression.rt_cetsa_analysis.preprocess_data import preprocess_data
-from polus.tabular.regression.rt_cetsa_analysis.run_new_rscript import run_rscript
+from polus.tabular.regression.rt_cetsa_analysis.run_rscript import run_rscript
 
 # get env
 POLUS_LOG = os.environ.get("POLUS_LOG", logging.INFO)

@@ -24,6 +24,9 @@ library(ggpubr)
 library(MESS)
 library(devtools)
 
+# read in input data
+full_df <- read_csv(data, show_col_types = FALSE)
+
 # BECAUSE OF BUG
 pdf(file = NULL)
 
