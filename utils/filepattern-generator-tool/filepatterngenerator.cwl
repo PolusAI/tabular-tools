@@ -5,6 +5,10 @@ inputs:
     inputBinding:
       prefix: --chunkSize
     type: double?
+  filePattern:
+    inputBinding:
+      prefix: --filePattern
+    type: string?
   groupBy:
     inputBinding:
       prefix: --groupBy
@@ -17,10 +21,10 @@ inputs:
     inputBinding:
       prefix: --outDir
     type: Directory
-  pattern:
+  preview:
     inputBinding:
-      prefix: --pattern
-    type: string?
+      prefix: --preview
+    type: boolean?
 outputs:
   outDir:
     outputBinding:
@@ -28,7 +32,7 @@ outputs:
     type: Directory
 requirements:
   DockerRequirement:
-    dockerPull: polusai/filepattern-generator-plugin:0.2.1
+    dockerPull: polusai/filepattern-generator-tool:0.2.2-dev0
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)
