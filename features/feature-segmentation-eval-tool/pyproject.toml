@@ -18,6 +18,7 @@ pandas = "^1.2.4"
 scipy = "^1.6.2"
 typer = "^0.7.0"
 vaex = "^4.7.0"
+numpy = "<2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
