@@ -5,6 +5,7 @@ import os
 import pathlib
 
 import typer
+from polus.tabular.transforms.rt_cetsa_metadata import preprocess_from_range
 from polus.tabular.transforms.rt_cetsa_metadata import preprocess_metadata
 
 # Initialize the logger
@@ -32,9 +33,14 @@ def main(
         resolve_path=True,
     ),
     metadata: str = typer.Option(
-        "CameraData.xlsx",
+        None,
         "--metadata",
-        help="metadata file for this dataset. (default to CameraData.xlsx)",
+        help="metadata file for this dataset.",
+    ),
+    range: str = typer.Option(
+        None,
+        "--metadata",
+        help="temp range for this dataset (assume linear temp increase).",
     ),
     out_dir: pathlib.Path = typer.Option(
         ...,
@@ -62,12 +68,17 @@ def main(
         msg = "this tool can currently only process csv files."
         raise ValueError(msg)
 
-    metadata_file = inp_dir / metadata
-    if not metadata_file.exists():
-        raise FileNotFoundError(metadata_file)
-    logger.info(f"Using metadata file: {metadata_file}")
+    if metadata:
+        metadata_file = inp_dir / metadata
+        if not metadata_file.exists():
+            raise FileNotFoundError(metadata_file)
+        logger.info(f"Using metadata file: {metadata_file}")
+        return preprocess_metadata(inp_dir, out_dir, metadata_file)
 
-    preprocess_metadata(metadata_file, inp_dir, out_dir)
+    if range:
+        logger.info(f"Interpolating temp values in : {range}")
+        return preprocess_from_range(inp_dir, out_dir, range)
+    return None
 
 
 if __name__ == "__main__":

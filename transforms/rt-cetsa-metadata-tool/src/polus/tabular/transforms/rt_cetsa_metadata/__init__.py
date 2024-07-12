@@ -19,14 +19,14 @@ logger.setLevel(os.environ.get("POLUS_LOG", logging.INFO))
 POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".csv")
 
 
-def preprocess_metadata(metadata_file: Path, inp_dir: Path, out_dir: Path):
+def preprocess_metadata(inp_dir: Path, out_dir: Path, metadata_file: Path):
     """Preprocess images and metadata."""
     df = pd.read_excel(metadata_file)
     temp_col_name = "Current Temp (°C)"
 
     # create a images subdirectory
-    images_path = Path(out_dir / "images")
-    images_path.mkdir(parents=False, exist_ok=True)
+    img_out_dir = Path(out_dir / "images")
+    img_out_dir.mkdir(parents=False, exist_ok=True)
 
     new_files: list[str] = []
     temps: list[float] = []
@@ -43,8 +43,51 @@ def preprocess_metadata(metadata_file: Path, inp_dir: Path, out_dir: Path):
         previous_temp = current_temp
         # copy and renamed the images
         new_file = str(index + 1) + "_" + str(current_temp) + ".tif"
-        shutil.copyfile(inp_dir / old_file, images_path / new_file)
+        shutil.copyfile(inp_dir / old_file, img_out_dir / new_file)
         new_files.append(new_file)
 
     metadata_df = pd.DataFrame({"Temperature": temps, "FileName": new_files})
-    metadata_df.to_csv(out_dir / "metadata.csv", index=True)
+    metadata_df.to_csv(img_out_dir / "metadata.csv", index=True)
+
+    return img_out_dir
+
+
+def preprocess_from_range(inp_dir: Path, out_dir: Path, range_t: tuple[float, float]):
+    """Preprocess images and metadata."""
+    # create a images subdirectory
+    img_out_dir = Path(out_dir / "images")
+    img_out_dir.mkdir(parents=False, exist_ok=True)
+
+    new_files: list[str] = []
+    temps: list[float] = []
+
+    images = [
+        file
+        for file in inp_dir.iterdir()
+        if file.is_file() and (file.suffix == ".tif" or file.suffix == ".tiff")
+    ]
+
+    image_count = len(images)
+
+    if image_count == 0:
+        raise ValueError(f"no tif images in {inp_dir}")
+    if image_count == 1:
+        raise ValueError(
+            f"only one image found in {inp_dir}. Unable to interpolate on range {range_t}.",
+        )
+
+    min_t, max_t = range_t
+    temps = [
+        round(min_t + (index / (image_count - 1)) * (max_t - min_t), 2)
+        for index in range(image_count)
+    ]
+
+    for index, (image, temp) in enumerate(zip(images, temps)):
+        new_file = str(index + 1) + "_" + str(temp) + ".tif"
+        shutil.copyfile(image, img_out_dir / new_file)
+        new_files.append(new_file)
+
+    metadata_df = pd.DataFrame({"Temperature": temps, "FileName": new_files})
+    metadata_df.to_csv(img_out_dir / "metadata.csv", index=True)
+
+    return img_out_dir
