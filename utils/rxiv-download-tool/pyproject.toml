@@ -18,13 +18,8 @@ rxiv-types = "^0.1.0"
 tqdm = "^4.66.1"
 xmltodict = "^0.13.0"
 pydantic = "1.10.4"
+numpy = "<2.0.0"
 
-
-[[tool.poetry.source]]
-name = "test"
-url = "https://test.pypi.org/simple/"
-default = false
-secondary = true
 
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
