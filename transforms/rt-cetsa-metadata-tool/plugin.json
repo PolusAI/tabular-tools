@@ -1,6 +1,6 @@
 {
   "name": "RT-CETSA Metadata",
-  "version": "0.3.0-dev0",
+  "version": "0.4.0-dev0",
   "title": "RT-CETSA Metadata",
   "description": "Run Metadata preprocessing for the RT-CETSA pipeline.",
   "author": "Nicholas Schaub (nick.schaub@nih.gov), Antoine Gerardin (antoine.gerardin@nih.gov), Najib Ishaq (najib.ishaq@nih.gov)",
@@ -8,7 +8,7 @@
   "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
-  "containerId": "polusai/rt-cetsa-metadata-tool:0.3.0-dev0",
+  "containerId": "polusai/rt-cetsa-metadata-tool:0.4.0-dev0",
   "baseCommand": [
     "python3",
     "-m",

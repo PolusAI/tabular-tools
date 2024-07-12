@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus_tabular_transforms_rt_cetsa_metadata"
-version = "0.3.0-dev0"
+version = "0.4.0-dev0"
 description = "Run preprocessing for the RT-CETSA pipeline."
 authors = [
     "Nick Schaub <nick.schaub@nih.gov>",

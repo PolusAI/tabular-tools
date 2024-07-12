@@ -1,4 +1,4 @@
-# RT_CETSA metadata (v0.3.0-dev0)
+# RT_CETSA metadata (v0.4.0-dev0)
 
 This WIPP plugin preprocess data for the RT-CETSA pipeline.
 
