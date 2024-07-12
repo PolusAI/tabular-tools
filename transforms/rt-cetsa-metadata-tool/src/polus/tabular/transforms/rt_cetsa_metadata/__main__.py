@@ -39,7 +39,7 @@ def main(
     ),
     range: str = typer.Option(
         None,
-        "--metadata",
+        "--range",
         help="temp range for this dataset (assume linear temp increase).",
     ),
     out_dir: pathlib.Path = typer.Option(

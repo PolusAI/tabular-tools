@@ -5,7 +5,11 @@ from polus.tabular.transforms.rt_cetsa_metadata import (
     preprocess_from_range,
 )
 
-RAW_DIR = Path(__file__).parent / "data" / "images"
+# RAW_DIR = Path("/Users/antoinegerardin/RT-CETSA-Analysis/dashboard/data_use_range_temp/raw")
+RAW_DIR = Path(
+    "/Users/antoinegerardin/RT-CETSA-Analysis/dashboard/data/data_240700/240614_LDHA_01/raw"
+)
+# RAW_DIR = Path(__file__).parent / "data" / "images"
 PREPROCESSED_DIR = Path(__file__).parent / "out"
 PREPROCESSED_DIR.mkdir(exist_ok=True)
 

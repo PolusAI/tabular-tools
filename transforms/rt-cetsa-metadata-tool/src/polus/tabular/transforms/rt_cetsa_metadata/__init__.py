@@ -61,32 +61,47 @@ def preprocess_from_range(inp_dir: Path, out_dir: Path, range_t: tuple[float, fl
     new_files: list[str] = []
     temps: list[float] = []
 
+    # get tif images
     images = [
         file
         for file in inp_dir.iterdir()
         if file.is_file() and (file.suffix == ".tif" or file.suffix == ".tiff")
     ]
 
-    image_count = len(images)
+    # if image names are integers, use numerical index
+    numerical_indexing = False
+    try:
+        images = sorted(images, key=lambda img: int(img.stem))
+        numerical_indexing = True
+    except ValueError:
+        images = sorted(images)
 
+    logger.debug(f"sort base on numerical index : {numerical_indexing}")
+
+    for image in images:
+        logger.debug(f"{image}")
+
+    # determine temperature metadata for each image.
+    image_count = len(images)
     if image_count == 0:
         raise ValueError(f"no tif images in {inp_dir}")
     if image_count == 1:
         raise ValueError(
             f"only one image found in {inp_dir}. Unable to interpolate on range {range_t}.",
         )
-
     min_t, max_t = range_t
     temps = [
         round(min_t + (index / (image_count - 1)) * (max_t - min_t), 2)
         for index in range(image_count)
     ]
 
+    # save images
     for index, (image, temp) in enumerate(zip(images, temps)):
         new_file = str(index + 1) + "_" + str(temp) + ".tif"
         shutil.copyfile(image, img_out_dir / new_file)
         new_files.append(new_file)
 
+    # save corresponding metadata file
     metadata_df = pd.DataFrame({"Temperature": temps, "FileName": new_files})
     metadata_df.to_csv(img_out_dir / "metadata.csv", index=True)
 
