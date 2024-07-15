@@ -1,0 +1,59 @@
+author: Najib Ishaq
+contact: najib.ishaq@nih.gov
+container: polusai/dimension-reduction-tool:0.1.0-dev0
+description: Dimension reduction with various methods
+entrypoint: python3 -m polus.tabular.transforms.dimension_reduction
+
+inputs:
+
+- description: Input tabular data
+  format:
+  - inpDir
+  name: inpDir
+  required: true
+  type: path
+
+- description: Pattern to parse input files
+  format:
+  - filePattern
+  name: filePattern
+  required: false
+  type: string
+
+- description: Output a JSON preview of outputs produced by this plugin
+  format:
+  - preview
+  name: preview
+  required: false
+  type: boolean
+
+name: polusai/K-MeansClustering
+
+outputs:
+
+- description: Output collection
+  format:
+  - outDir
+  name: outDir
+  required: true
+  type: path
+
+repository: https://github.com/polusai/tabular-tools
+
+specVersion: 1.0.0
+
+title: Dimension Reduction
+
+ui:
+
+- description: Input tabular data for clustering
+  key: inputs.inpDir
+  title: Input tabular data
+  type: path
+
+- description: Pattern to parse input files
+  key: inputs.filePattern
+  title: FilePattern
+  type: text
+
+version: 0.1.0-dev0
