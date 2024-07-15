@@ -1,0 +1,65 @@
+{
+  "name": "Dimension Reduction",
+  "version": "0.1.0-dev0",
+  "title": "Dimension Reduction",
+  "description": "Dimension Reduction via various methods.",
+  "author": "Najib Ishaq (najib.ishaq@nih.gov)",
+  "institution": "National Center for Advancing Translational Sciences, National Institutes of Health",
+  "repository": "https://github.com/polusai/tabular-tools",
+  "website": "https://ncats.nih.gov/preclinical/core/informatics",
+  "citation": "",
+  "containerId": "polusai/dimension-reduction-tool:0.1.0-dev0",
+  "baseCommand": [
+    "python3",
+    "-m",
+    "polus.tabular.transforms.dimension_reduction"
+  ],
+  "inputs": [
+    {
+      "name": "inpDir",
+      "description": "Input tabular data",
+      "type": "genericData",
+      "required": "true"
+    },
+    {
+      "name": "filePattern",
+      "description": "Pattern to parse input files",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "preview",
+      "description": "Output a JSON preview of outputs produced by this plugin",
+      "type": "boolean",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "outDir",
+      "description": "Output collection",
+      "type": "genericData",
+      "required": true
+    }
+  ],
+  "ui": [
+    {
+      "key": "inputs.inpDir",
+      "title": "Input tabular data",
+      "description": "Input tabular data for clustering"
+    },
+    {
+      "key": "inputs.filePattern",
+      "title": "FilePattern",
+      "description": "Pattern to parse input files",
+      "default": ".*"
+    },
+    {
+      "key": "inputs.preview",
+      "title": "Preview",
+      "description": "Output a JSON preview of outputs produced by this plugin",
+      "type": "boolean",
+      "default": false
+    }
+  ]
+}
