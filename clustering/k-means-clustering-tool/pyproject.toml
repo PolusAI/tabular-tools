@@ -14,10 +14,11 @@ packages = [{include = "polus", from = "src"}]
 python = "^3.9"
 filepattern = "^2.0.0"
 typer = "^0.7.0"
-nyxus = "^0.5.0"
+nyxus = ">=0.7,<0.8"
 vaex = "^4.7.0"
 scikit_learn="^1.0.2"
 numpy = "<2.0.0"
+pyarrow = ">=16.0,<17.0"
 
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
