@@ -1,4 +1,4 @@
-# RT_CETSA MoltenProt (v0.3.0-dev0)
+# RT_CETSA MoltenProt (v0.4.0-dev0)
 
 This WIPP plugin runs moltenprot regression for the RT-CETSA pipeline.
 
