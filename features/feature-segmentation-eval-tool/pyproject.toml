@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus-tabular-features-feature-segmentation-eval"
-version = "0.2.6-dev1"
+version = "0.2.7-dev0"
 description = "Feature segmentation eval"
 authors = [
            "Vishakha Goyal <vishakha.goyal@nih.gov>",

@@ -2,7 +2,7 @@ author:
 - Nick Schaub
 - Hamdah Shafqat
 contact: nick.schaub@nih.gov
-container: polusai/rxiv-download-tool:0.1.0-dev1
+container: polusai/rxiv-download-tool:0.1.1-dev0
 description: This plugin allows to download data from Rxiv website.
 entrypoint: python3 -m polus.tabular.utils.rxiv_download
 inputs:
@@ -48,4 +48,4 @@ ui:
   key: inputs.preview
   title: Preview example output of this plugin
   type: checkbox
-version: 0.1.0-dev1
+version: 0.1.1-dev0

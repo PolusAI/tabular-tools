@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus-tabular-clustering-k-means"
-version = "0.3.5-dev1"
+version = "0.3.6-dev0"
 description = "K-means clustering"
 authors = [
 "Jayapriya Nagarajan <jayapriya.nagarajan@nih.gov>",

@@ -32,7 +32,7 @@ outputs:
     type: Directory
 requirements:
   DockerRequirement:
-    dockerPull: polusai/outlier-removal-tool:0.2.7-dev1
+    dockerPull: polusai/outlier-removal-tool:0.2.8-dev0
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)

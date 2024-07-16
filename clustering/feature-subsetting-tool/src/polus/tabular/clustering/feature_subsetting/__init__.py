@@ -1,3 +1,3 @@
 """Feature Subsetting Tool."""
 
-__version__ = "0.2.1-dev0"
+__version__ = "0.2.2-dev0"

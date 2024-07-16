@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus-tabular-clustering-hdbscan-clustering"
-version = "0.4.8-dev1"
+version = "0.4.9-dev0"
 description = "Cluster the data using HDBSCAN."
 authors = [
            "Jayapriya Nagarajan <jayapriya.nagarajan@axleinfo.com>",

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus-tabular-clustering-feature-subsetting"
-version = "0.2.1-dev0"
+version = "0.2.2-dev0"
 description = "Subset data using a given feature."
 authors = [
            "Gauhar Bains <gauhar.bains@labshare.org>",

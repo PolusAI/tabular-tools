@@ -1,7 +1,7 @@
 author:
 - Jayapriya Nagarajan
 contact: hamdahshafqat.abbasi@nih.gov
-container: polusai/outlier-removal-tool:0.2.7-dev1
+container: polusai/outlier-removal-tool:0.2.8-dev0
 description: Remove outliers from the data.
 entrypoint: python3 -m polus.tabular.clustering.outlier_removal
 inputs:
@@ -74,4 +74,4 @@ ui:
   key: inputs.preview
   title: Preview
   type: checkbox
-version: 0.2.7-dev1
+version: 0.2.8-dev0

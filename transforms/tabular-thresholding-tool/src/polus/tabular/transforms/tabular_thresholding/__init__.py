@@ -1,4 +1,4 @@
 """Tabular Thresholding."""
-__version__ = "0.1.6-dev1"
+__version__ = "0.1.7-dev0"
 
 from . import tabular_thresholding
