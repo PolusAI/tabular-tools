@@ -40,7 +40,7 @@ outputs:
     type: Directory
 requirements:
   DockerRequirement:
-    dockerPull: polusai/k-means-clustering-tool:0.3.5-dev1
+    dockerPull: polusai/k-means-clustering-tool:0.3.6-dev0
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)

@@ -1,6 +1,6 @@
 {
   "name": "Feature Segmentation Eval",
-  "version": "0.2.6-dev1",
+  "version": "0.2.7-dev0",
   "title": "Feature Segmentation Eval",
   "description": "Plugin to generate evaluation metrics for feature comparison of ground truth and predicted images.",
   "author": "Vishakha Goyal (vishakha.goyal@nih.gov), Hamdah Shafqat Abbasi (hamdahshafqat.abbasi@nih.gov)",
@@ -8,7 +8,7 @@
   "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
-  "containerId": "polusai/feature-segmentation-eval-tool:0.2.6-dev1",
+  "containerId": "polusai/feature-segmentation-eval-tool:0.2.7-dev0",
   "baseCommand": [
     "python3",
     "-m",

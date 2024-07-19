@@ -1,4 +1,4 @@
-# Tabular Merger (v0.1.3-dev3)
+# Tabular Merger (v0.1.4-dev0)
 
 This WIPP plugin merges all tabular files with vaex supported file formats into a combined file using either row or column merging.
 

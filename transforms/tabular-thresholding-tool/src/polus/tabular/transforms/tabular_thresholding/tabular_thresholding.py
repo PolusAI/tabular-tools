@@ -5,13 +5,13 @@ import logging
 import os
 import pathlib
 import warnings
-from typing import Dict, Optional, Union
+from typing import Union
 
 import numpy as np
 import vaex
 
 from .thresholding import custom_fpr
-from.thresholding import n_sigma
+from .thresholding import n_sigma
 from .thresholding import otsu
 
 logger = logging.getLogger(__name__)
@@ -40,32 +40,36 @@ class Methods(str, enum.Enum):
     Default = "all"
 
 
-def thresholding_func(
+def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
     neg_control: str,
     pos_control: str,
     var_name: str,
     threshold_type: Methods,
-    false_positive_rate: Optional[float],
-    num_bins: Optional[int],
-    n: Optional[int],
+    false_positive_rate: float,
+    num_bins: int,
+    n: int,
     out_format: Extensions,
     out_dir: pathlib.Path,
     file: pathlib.Path,
 ) -> None:
     """Compute variable threshold using negative or negative and positive control data.
 
-    Computes the variable value of each ROI if above or below threshold. The control data used for computing threshold depends on the type of thresholding methods
+    Computes the variable value of each ROI if above or below threshold. The control
+    data used for computing threshold depends on the type of thresholding methods
     https://github.com/nishaq503/thresholding.git.
+
     Args:
-        file: Filename.
         neg_control: Column name containing information of non treated wells.
-        pos_control:Column name containing information of wells with the known treatment.
-        var_name:Column name for computing thresholds.
-        threshold_type:Name of threshold method.
-        out_format: Output file extension.
+        pos_control: Column name containing information of wells with the known
+            treatment.
+        var_name: Column name for computing thresholds.
+        threshold_type: Name of threshold method.
         false_positive_rate: Tuning parameter.
         num_bins: Number of bins.
         n: Number of standard deviation away from mean value.
+        out_format: Output file extension.
+        out_dir: Output directory.
+        file: Filename.
 
     """
     chunk_size = 100_000
@@ -74,26 +78,34 @@ def thresholding_func(
     else:
         df = vaex.open(file, convert=True, progress=True)
 
-    assert any(
+    if not any(
         item in [var_name, neg_control, pos_control] for item in list(df.columns)
-    ), f"They are missing {var_name}, {neg_control}, {pos_control} column names tabular data file. Please do check variables again!!"
+    ):
+        msg = (
+            f"{file} table is missing {var_name}, {neg_control}, {pos_control} "
+            "column names tabular data file. Please check variables again!"
+        )
+        logger.error(msg)
+        raise ValueError(msg)
 
-    assert df.shape != (
-        0,
-        0,
-    ), f"File {file} is not loaded properly! Please do check input files again"
+    if df.shape == (0, 0):
+        msg = f"File {file} is not loaded properly! Please check input files again!"
+        logger.error(msg)
+        raise ValueError(msg)
 
     if pos_control is None:
-        logger.info(
-            "Otsu threshold will not be computed as it requires information of both neg_control & pos_control"
-        )
+        msg = "`pos_control` is missing. Otsu threshold will not be computed!"
+        logger.info(msg)
 
-    threshold_dict: Dict[str, Union[float, str]] = {}
+    threshold_dict: dict[str, Union[float, str]] = {}
     plate = file.stem
     threshold_dict["plate"] = plate
 
     if df[neg_control].unique() != [0.0, 1.0]:
-        warnings.warn("controls are missing. NaN value are computed for thresholds")
+        warnings.warn(
+            "controls are missing. NaN value are computed for thresholds",
+            stacklevel=1,
+        )
         nan_value = np.nan * np.arange(0, len(df[neg_control].values), 1)
         threshold_dict["fpr"] = np.nan
         threshold_dict["otsu"] = np.nan
@@ -107,16 +119,19 @@ def thresholding_func(
         neg_controls = df[df[neg_control] == 1][var_name].values
 
         if threshold_type == "fpr":
-            print(threshold_type)
+            logger.info(threshold_type)
             threshold = custom_fpr.find_threshold(
-                neg_controls, false_positive_rate=false_positive_rate
+                neg_controls,
+                false_positive_rate=false_positive_rate,
             )
             threshold_dict[threshold_type] = threshold
             df[threshold_type] = df.func.where(df[var_name] <= threshold, 0, 1)
         elif threshold_type == "otsu":
             combine_array = np.append(neg_controls, pos_controls, axis=0)
             threshold = otsu.find_threshold(
-                combine_array, num_bins=num_bins, normalize_histogram=False
+                combine_array,
+                num_bins=num_bins,
+                normalize_histogram=False,
             )
             threshold_dict[threshold_type] = threshold
             df[threshold_type] = df.func.where(df[var_name] <= threshold, 0, 1)
@@ -126,19 +141,23 @@ def thresholding_func(
             df[threshold_type] = df.func.where(df[var_name] <= threshold, 0, 1)
         elif threshold_type == "all":
             fpr_thr = custom_fpr.find_threshold(
-                neg_controls, false_positive_rate=false_positive_rate
+                neg_controls,
+                false_positive_rate=false_positive_rate,
             )
             combine_array = np.append(neg_controls, pos_controls, axis=0)
 
             if len(pos_controls) == 0:
                 warnings.warn(
-                    "controls are missing. NaN value are computed for otsu thresholds"
+                    "controls are missing. NaN value are computed for otsu thresholds",
+                    stacklevel=1,
                 )
                 threshold_dict["otsu"] = np.nan
                 df["otsu"] = np.nan * np.arange(0, len(df[var_name].values), 1)
             else:
                 otsu_thr = otsu.find_threshold(
-                    combine_array, num_bins=num_bins, normalize_histogram=False
+                    combine_array,
+                    num_bins=num_bins,
+                    normalize_histogram=False,
                 )
                 threshold_dict["otsu"] = otsu_thr
                 df["otsu"] = df.func.where(df[var_name] <= otsu_thr, 0, 1)
@@ -150,7 +169,7 @@ def thresholding_func(
             df["nsigma"] = df.func.where(df[var_name] <= nsigma_thr, 0, 1)
 
     outjson = pathlib.Path(out_dir).joinpath(f"{plate}_thresholds.json")
-    with open(outjson, "w") as outfile:
+    with outjson.open("w") as outfile:
         json.dump(threshold_dict, outfile)
     logger.info(f"Saving Thresholds in JSON fileformat {outjson}")
 
@@ -165,5 +184,3 @@ def thresholding_func(
         outname = pathlib.Path(out_dir).joinpath(f"{plate}_binary{out_format}")
         df.export(outname, progress=True)
         logger.info(f"Saving f'{plate}_binary{out_format}")
-
-    return

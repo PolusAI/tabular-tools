@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus-tabular-clustering-feature-subsetting"
-version = "0.2.1-dev0"
+version = "0.2.2-dev0"
 description = "Subset data using a given feature."
 authors = [
            "Gauhar Bains <gauhar.bains@labshare.org>",
@@ -15,6 +15,7 @@ filepattern = "^2.0.4"
 typer = "^0.7.0"
 tqdm = "^4.64.1"
 vaex = "^4.17.0"
+pyarrow = ">=16.0,<17.0"
 
 
 [tool.poetry.group.dev.dependencies]

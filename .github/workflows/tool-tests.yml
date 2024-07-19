@@ -17,5 +17,5 @@ permissions:
 
 jobs:
   tools-tests:
-    name: Call workflow from image-tools
+    name: Tool Tests
     uses: polusai/image-tools/.github/workflows/package-tests.yml@master

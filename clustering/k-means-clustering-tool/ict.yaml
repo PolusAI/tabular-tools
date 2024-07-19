@@ -3,7 +3,7 @@ author:
 - Kelechi Nina
 - Hamdah Shafqat
 contact: jayapriya.nagarajan@nih.gov
-container: polusai/k-means-clustering-tool:0.3.5-dev1
+container: polusai/k-means-clustering-tool:0.3.6-dev0
 description: Cluster the data using K-Means.
 entrypoint: python3 -m polus.tabular.clustering.k_means
 inputs:

@@ -1,6 +1,6 @@
 {
   "name": "Hdbscan Clustering",
-  "version": "0.4.8-dev1",
+  "version": "0.4.9-dev0",
   "title": "Hdbscan Clustering",
   "description": "Cluster the data using HDBSCAN.",
   "author": "Jayapriya Nagarajan (github.com/Priyaaxle), Hythem Sidky (hythem.sidky@nih.gov) and Hamdah Shafqat Abbasi (hamdahshafqat.abbasi@nih.gov)",
@@ -8,7 +8,7 @@
   "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
-  "containerId": "polusai/hdbscan-clustering-tool:0.4.8-dev1",
+  "containerId": "polusai/hdbscan-clustering-tool:0.4.9-dev0",
   "baseCommand": [
     "python3",
     "-m",

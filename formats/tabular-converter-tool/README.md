@@ -1,4 +1,4 @@
-# Tabular Converter (v0.1.2-dev1)
+# Tabular Converter (v0.1.3-dev0)
 
 This WIPP plugin allows the tabular data conversion to `arrow` file format and vice versa. Currently this plugins handles only the vaex supported file formats.
 This plugin supports the following file formats which are convertable into `arrow` file format:

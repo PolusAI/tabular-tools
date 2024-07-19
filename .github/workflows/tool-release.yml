@@ -6,27 +6,14 @@ env:
 
 on:
   workflow_dispatch:
-    inputs:
-      num-commits:
-        description: "The of commits to check for updated packages. If 0, the action will check all commits on the branch. For any larger value, the action will check the last n commits for any updated packages."
-        required: true
-        default: 1
-        type: number
-      ignore-missing-dev:
-        description: "If true, the action will ignore packages that do not have a dev version. Otherwise, the action will fail if any package does not have a dev version."
-        required: true
-        default: true
-        type: boolean
 
 permissions:
   contents: write
 
 jobs:
   tools-release:
-    name: Call workflow from image-tools
+    name: Tool Release
     uses: polusai/image-tools/.github/workflows/package-release.yml@master
     with:
-      num-commits: ${{ github.event.inputs.num-commits }}
-      ignore-missing-dev: ${{ github.event.inputs.ignore-missing-dev }}
       repo_name: "tabular-tools"
     secrets: inherit

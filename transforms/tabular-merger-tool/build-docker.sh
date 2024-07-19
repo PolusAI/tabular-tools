@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # TODO: Change the name of the tool here
-tool_dir="utils"
-tool_name="rxiv-download-tool"
+tool_dir="transforms"
+tool_name="tabular-merger-tool"
 
 # The version is read from the VERSION file
 version=$(<VERSION)

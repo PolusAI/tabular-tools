@@ -1,4 +1,4 @@
-﻿# Hierarchical Density-Based Spatial Clustering of Applications with Noise(HDBSCAN) Clustering (v0.4.8-dev1)
+﻿# Hierarchical Density-Based Spatial Clustering of Applications with Noise(HDBSCAN) Clustering (v0.4.9-dev0)
 
 The HDBSCAN Clustering plugin clusters the data using [HDBSCAN clustering](https://pypi.org/project/hdbscan/) library. The input and output for this plugin is a CSV file. Each observation (row) in the input CSV file is assigned to one of the clusters. The output CSV file contains the column `cluster` that identifies the cluster to which each observation belongs. A user can supply a regular expression with capture groups if they wish to cluster each group independently, or if they wish to average the numerical features across each group and treat them as a single observation.
 
