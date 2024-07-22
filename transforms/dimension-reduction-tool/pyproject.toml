@@ -13,6 +13,10 @@ python = ">=3.9,<3.12"
 filepattern = "^2.0.0"
 typer = "^0.7.0"
 numpy = "<2.0.0"
+scikit-learn = "^1.5.1"
+umap-learn = "^0.5.6"
+pyarrow = ">=16.0,<17.0"
+pandas = "^2.2.2"
 
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
@@ -22,3 +26,9 @@ pytest = "^7.2.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+extend = "../../ruff.toml"
+ignore = [
+    "PLR0913",  # Too many arguments to function call
+]
