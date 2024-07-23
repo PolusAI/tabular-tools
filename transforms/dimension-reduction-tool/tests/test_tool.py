@@ -1,53 +1,29 @@
 """Tests for the tools."""
 
-import copy
 import pytest
 import numpy
 import sklearn.datasets
 
 from polus.tabular.transforms.dimension_reduction import algorithms
 
-
-def gen_pca_args(
-    n_components: list[int] = [2, 3, 10],
-    whiten: list[bool] = [True, False],
-    svd_solver: list[algorithms.SvdSolver] = [
-        algorithms.SvdSolver.AUTO,
-        algorithms.SvdSolver.FULL,
-        algorithms.SvdSolver.ARPACK,
-        algorithms.SvdSolver.RANDOMIZED,
-    ],
-    tol: list[float] = [0.0, 0.1, 0.5, 1.0],
-) -> list[dict]:
-    """Generate arguments for the PCA algorithm."""
-    all_kwargs = []
-    for n in n_components:
-        for w in whiten:
-            for s in svd_solver:
-                if s == algorithms.SvdSolver.ARPACK:
-                    for t in tol:
-                        all_kwargs.append(
-                            {
-                                "n_components": n,
-                                "whiten": w,
-                                "svd_solver": s,
-                                "tol": t,
-                            }
-                        )
-                else:
-                    all_kwargs.append(
-                        {
-                            "n_components": n,
-                            "whiten": w,
-                            "svd_solver": s,
-                            "tol": 0.0,
-                        }
-                    )
-    return all_kwargs
+SVD_SOLVERS = [
+    algorithms.SvdSolver.AUTO,
+    algorithms.SvdSolver.FULL,
+    algorithms.SvdSolver.ARPACK,
+    algorithms.SvdSolver.RANDOMIZED,
+]
 
 
-@pytest.mark.parametrize("kwargs", gen_pca_args())
-def test_pca(kwargs: dict):
+@pytest.mark.parametrize("n_components", [2, 10])
+@pytest.mark.parametrize("whiten", [True, False])
+@pytest.mark.parametrize("svd_solver", SVD_SOLVERS)
+@pytest.mark.parametrize("tol", [0.0, 0.5])
+def test_pca(
+    n_components: int,
+    whiten: bool,
+    svd_solver: algorithms.SvdSolver,
+    tol: float,
+):
     """Test the PCA algorithm."""
 
     digits = sklearn.datasets.load_digits()
@@ -55,44 +31,34 @@ def test_pca(kwargs: dict):
 
     assert data.shape == (1797, 64)
 
-    reduced = algorithms.pca.reduce(data.astype(numpy.float32), **kwargs)
+    reduced = algorithms.pca.reduce(
+        data.astype(numpy.float32),
+        n_components=n_components,
+        whiten=whiten,
+        svd_solver=svd_solver,
+        tol=tol,
+    )
 
-    assert reduced.shape[0] == 1797
-    assert reduced.shape[1] == kwargs["n_components"]
+    assert reduced.ndim == data.ndim
+    assert reduced.shape[0] == data.shape[0]
+    assert reduced.shape[1] == n_components
     assert reduced.dtype == numpy.float32
 
 
-def gen_tsne_args(
-    n_components: list[int] = [2, 3],
-    perplexity: list[float] = [5.0, 50.0],
-    early_exaggeration: list[float] = [5.0, 20.0],
-    learning_rate: list[float] = [200.0, "auto"],
-    max_iter: list[int] = [250, 1000],
-    metric: list[str] = ["euclidean", "cosine"],
-) -> list[dict]:
-    """Generate arguments for testing the t-SNE algorithm."""
-    all_kwargs = []
-    for n in n_components:
-        for p in perplexity:
-            for e in early_exaggeration:
-                for l in learning_rate:
-                    for m in max_iter:
-                        for me in metric:
-                            all_kwargs.append(
-                                {
-                                    "n_components": n,
-                                    "perplexity": p,
-                                    "early_exaggeration": e,
-                                    "learning_rate": l,
-                                    "max_iter": m,
-                                    "metric": me,
-                                }
-                            )
-    return all_kwargs
-
-
-@pytest.mark.parametrize("kwargs", gen_tsne_args())
-def test_tsne(kwargs: dict):
+@pytest.mark.parametrize("n_components", [3])
+@pytest.mark.parametrize("perplexity", [5.0, 50.0])
+@pytest.mark.parametrize("early_exaggeration", [5.0, 20.0])
+@pytest.mark.parametrize("learning_rate", [200.0, "auto"])
+@pytest.mark.parametrize("max_iter", [250, 1000])
+@pytest.mark.parametrize("metric", ["euclidean", "cosine"])
+def test_tsne(
+    n_components: int,
+    perplexity: float,
+    early_exaggeration: float,
+    learning_rate: float,
+    max_iter: int,
+    metric: str,
+):
     """Test the t-SNE algorithm."""
 
     digits = sklearn.datasets.load_digits()
@@ -100,43 +66,30 @@ def test_tsne(kwargs: dict):
 
     assert data.shape == (1797, 64)
 
-    reduced = algorithms.tsne.reduce(data.astype(numpy.float32), **kwargs)
+    reduced = algorithms.tsne.reduce(
+        data.astype(numpy.float32),
+        n_components=n_components,
+        perplexity=perplexity,
+        early_exaggeration=early_exaggeration,
+        learning_rate=learning_rate,
+        max_iter=max_iter,
+        metric=metric,
+    )
 
+    assert reduced.ndim == data.ndim
     assert reduced.shape[0] == 1797
-    assert reduced.shape[1] == kwargs["n_components"]
+    assert reduced.shape[1] == n_components
     assert reduced.dtype == numpy.float32
 
 
-def gen_tsne_pca_args(
-    n_components: list[int] = [2, 3],
-    pca_n_components: list[int] = [10, 50],
-    perplexity: list[float] = [10.0, 30.0, 50.0],
-) -> list[dict]:
-    """Generate arguments for testing the t-SNE algorithm with PCA initialization."""
-    base_kwargs = {
-        "pca_n_components": 2,
-        "pca_whiten": False,
-        "pca_svd_solver": algorithms.SvdSolver.AUTO,
-        "pca_tol": 0.0,
-        "early_exaggeration": 12.0,
-        "learning_rate": "auto",
-        "max_iter": 1000,
-        "metric": "euclidean",
-    }
-    all_kwargs = []
-    for n in n_components:
-        for p in pca_n_components:
-            for pe in perplexity:
-                kwargs = copy.deepcopy(base_kwargs)
-                kwargs["n_components"] = n
-                kwargs["pca_n_components"] = p
-                kwargs["perplexity"] = pe
-                all_kwargs.append(kwargs)
-    return all_kwargs
-
-
-@pytest.mark.parametrize("kwargs", gen_tsne_pca_args())
-def test_tsne_pca(kwargs: dict):
+@pytest.mark.parametrize("n_components", [2, 3])
+@pytest.mark.parametrize("pca_n_components", [10, 50])
+@pytest.mark.parametrize("perplexity", [5.0, 50.0])
+def test_tsne_pca(
+    n_components: int,
+    pca_n_components: int,
+    perplexity: float,
+):
     """Test the t-SNE algorithm with PCA initialization."""
 
     digits = sklearn.datasets.load_digits()
@@ -144,44 +97,40 @@ def test_tsne_pca(kwargs: dict):
 
     assert data.shape == (1797, 64)
 
-    reduced = algorithms.tsne.reduce_init_pca(data.astype(numpy.float32), **kwargs)
+    reduced = algorithms.tsne.reduce_init_pca(
+        data.astype(numpy.float32),
+        pca_n_components=pca_n_components,
+        pca_whiten=False,
+        pca_svd_solver=algorithms.SvdSolver.AUTO,
+        pca_tol=0.0,
+        n_components=n_components,
+        perplexity=perplexity,
+        early_exaggeration=12.0,
+        learning_rate="auto",
+        max_iter=1000,
+        metric="euclidean",
+    )
 
+    assert reduced.ndim == data.ndim
     assert reduced.shape[0] == 1797
-    assert reduced.shape[1] == kwargs["n_components"]
+    assert reduced.shape[1] == n_components
     assert reduced.dtype == numpy.float32
 
 
-def gen_umap_args(
-    n_components: list[int] = [2, 3, 10],
-    n_neighbors: list[int] = [5, 15, 50],
-    metric: list[str] = ["euclidean", "cosine"],
-    n_epochs: list[int] = [None, 100],
-    min_dist: list[float] = [0.05, 0.1, 0.2],
-    spread: list[float] = [1.0, 2.0],
-) -> list[dict]:
-    """Generate arguments for the UMAP algorithm."""
-    all_kwargs = []
-    for n in n_components:
-        for nn in n_neighbors:
-            for m in metric:
-                for ne in n_epochs:
-                    for md in min_dist:
-                        for s in spread:
-                            all_kwargs.append(
-                                {
-                                    "n_components": n,
-                                    "n_neighbors": nn,
-                                    "metric": m,
-                                    "n_epochs": ne,
-                                    "min_dist": md,
-                                    "spread": s,
-                                }
-                            )
-    return all_kwargs
-
-
-@pytest.mark.parametrize("kwargs", gen_umap_args())
-def test_umap(kwargs: dict):
+@pytest.mark.parametrize("n_components", [3, 10])
+@pytest.mark.parametrize("n_neighbors", [10, 25])
+@pytest.mark.parametrize("metric", ["euclidean", "cosine"])
+@pytest.mark.parametrize("n_epochs", [None, 100])
+@pytest.mark.parametrize("min_dist", [0.05, 0.2])
+@pytest.mark.parametrize("spread", [1.0, 2.0])
+def test_umap(
+    n_components: int,
+    n_neighbors: int,
+    metric: str,
+    n_epochs: int,
+    min_dist: float,
+    spread: float,
+):
     """Test the UMAP algorithm."""
 
     digits = sklearn.datasets.load_digits()
@@ -189,8 +138,17 @@ def test_umap(kwargs: dict):
 
     assert data.shape == (1797, 64)
 
-    reduced = algorithms.umap.reduce(data.astype(numpy.float32), **kwargs)
+    reduced = algorithms.umap.reduce(
+        data.astype(numpy.float32),
+        n_components=n_components,
+        n_neighbors=n_neighbors,
+        metric=metric,
+        n_epochs=n_epochs,
+        min_dist=min_dist,
+        spread=spread,
+    )
 
+    assert reduced.ndim == data.ndim
     assert reduced.shape[0] == 1797
-    assert reduced.shape[1] == kwargs["n_components"]
+    assert reduced.shape[1] == n_components
     assert reduced.dtype == numpy.float32
