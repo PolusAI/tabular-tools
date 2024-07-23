@@ -208,7 +208,8 @@ def main(
     kwargs = algorithm.parse_kwargs(kwargs)
 
     fp = filepattern.FilePattern(path=inp_dir, pattern=file_pattern)
-    files: list[pathlib.Path] = list(map(pathlib.Path, fp()))
+    files = [p for _, [p] in fp()]
+
     logger.info(f"Found {len(files)} files to process.")
 
     path: pathlib.Path
@@ -225,7 +226,7 @@ def main(
                 inp_path=path,
                 out_path=out_dir / (path.stem + POLUS_TAB_EXT),
                 algorithm=algorithm,
-                inp_kwargs=kwargs,
+                kwargs=kwargs,
             )
 
 

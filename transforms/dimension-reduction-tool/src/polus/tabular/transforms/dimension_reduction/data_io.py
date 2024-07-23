@@ -23,7 +23,8 @@ class Formats(str, enum.Enum):
 
         data: numpy.ndarray
         if ext == ".csv":
-            data = pandas.read_csv(path).to_numpy(dtype=numpy.float32)
+            df = pandas.read_csv(path)
+            data = df.to_numpy(dtype=numpy.float32)
         elif ext == ".parquet":
             data = pandas.read_parquet(path).to_numpy(dtype=numpy.float32)
         elif ext == ".feather":
@@ -35,6 +36,8 @@ class Formats(str, enum.Enum):
             allowed_formats = ", ".join(Formats.__members__.keys())
             msg = f"Unsupported file format: {ext}. Must be one of: {allowed_formats}"
             raise ValueError(msg)
+
+        return data
 
     @staticmethod
     def write(data: numpy.ndarray, path: pathlib.Path) -> None:
