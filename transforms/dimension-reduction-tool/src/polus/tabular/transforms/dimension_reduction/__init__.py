@@ -16,7 +16,7 @@ from .data_io import Formats
 POLUS_LOG_LVL = os.environ.get("POLUS_LOG", logging.INFO)
 POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".feather")
 
-__version__ = "0.1.0-dev1"
+__version__ = "0.1.0-dev0"
 
 
 def reduce(
