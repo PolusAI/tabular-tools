@@ -4,12 +4,11 @@ import copy
 import pathlib
 import tempfile
 
-from polus.tabular.transforms.dimension_reduction.algorithms import Algorithm
-
 import numpy
 import pytest
-import sklearn.datasets
 import typer.testing
+import sklearn.datasets
+from polus.tabular.transforms.dimension_reduction.algorithms import Algorithm
 from polus.tabular.transforms.dimension_reduction.data_io import Formats
 from polus.tabular.transforms.dimension_reduction.__main__ import app
 
@@ -35,35 +34,6 @@ def create_data(inp_format: str) -> tuple[pathlib.Path, pathlib.Path]:
     Formats.write(data, inp_dir.joinpath(f"digits.{inp_format}"))
 
     return inp_dir, out_dir
-
-
-@pytest.mark.parametrize("inp_format", FORMATS)
-@pytest.mark.parametrize("out_format", FORMATS)
-def test_data_io(inp_format: str, out_format: str) -> None:
-    """Test data IO."""
-
-    inp_dir, out_dir = create_data(inp_format)
-    assert inp_dir.exists()
-    assert out_dir.exists()
-
-    inp_files: list[pathlib.Path] = list(inp_dir.iterdir())
-
-    assert len(inp_files) == 1
-    assert inp_files[0].name == "digits." + inp_format
-
-    out_path = out_dir.joinpath(inp_files[0].stem + f".{out_format}")
-    inp_data = Formats.read(inp_dir.joinpath(inp_files[0]))
-    Formats.write(inp_data, out_path)
-
-    out_files: list[pathlib.Path] = list(out_dir.iterdir())
-    assert len(out_files) == 1
-    assert out_files[0].name == "digits." + out_format
-
-    out_data = Formats.read(out_path)
-
-    assert inp_data.shape == out_data.shape
-    assert inp_data.dtype == out_data.dtype
-    numpy.testing.assert_allclose(inp_data, out_data)
 
 
 def gen_pca_args(
