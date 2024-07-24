@@ -68,5 +68,6 @@ __all__ = [
     "__version__",
     "SvdSolver",
     "Algorithm",
+    "Formats",
     "reduce",
 ]
