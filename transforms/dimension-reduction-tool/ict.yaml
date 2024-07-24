@@ -27,7 +27,119 @@ inputs:
   required: false
   type: boolean
 
-name: polusai/K-MeansClustering
+- description: The algorithm to use for dimension reduction
+  format:
+  - enum
+  name: algorithm
+  required: false
+  type: string
+
+- description: The number of components to keep
+  format:
+  - integer
+  name: nComponents
+  required: false
+  type: integer
+
+- description: PCA, whether to whiten the data
+  format:
+  - boolean
+  name: pcaWhiten
+  required: false
+  type: boolean
+
+- description: PCA, which SVD solver to use
+  format:
+  - enum
+  name: pcaSvdSolver
+  required: false
+  type: string
+
+- description: PCA, what tolerance to use with the arpack solver
+  format:
+  - float
+  name: pcaTol
+  required: false
+  type: float
+
+- description: t-SNE, the perplexity parameter
+  format:
+  - float
+  name: tsnePerplexity
+  required: false
+  type: float
+
+- description: t-SNE, the early exaggeration parameter
+  format:
+  - float
+  name: tsneEarlyExaggeration
+  required: false
+  type: float
+
+- description: t-SNE, the learning rate parameter
+  format:
+  - float
+  name: tsneLearningRate
+  required: false
+  type: float
+
+- description: t-SNE, the maximum number of iterations
+  format:
+  - integer
+  name: tsneMaxIter
+  required: false
+  type: integer
+
+- description: t-SNE, the distance metric to use
+  format:
+  - enum
+  name: tsneMetric
+  required: false
+  type: string
+
+- description: t-SNE, the number of components to initialize with PCA
+  format:
+  - integer
+  name: tsneInitNComponents
+  required: false
+  type: integer
+
+- description: UMAP, the number of neighbors to use
+  format:
+  - integer
+  name: umapNNeighbors
+  required: false
+  type: integer
+
+- description: UMAP, the number of epochs to use
+  format:
+  - integer
+  name: umapNEpochs
+  required: false
+  type: integer
+
+- description: UMAP, the minimum distance between points
+  format:
+  - float
+  name: umapMinDist
+  required: false
+  type: float
+
+- description: UMAP, the spread of the embedding
+  format:
+  - float
+  name: umapSpread
+  required: false
+  type: float
+
+- description: UMAP, the metric to use
+  format:
+  - enum
+  name: umapMetric
+  required: false
+  type: string
+
+name: polusai/dimension-reduction
 
 outputs:
 
@@ -46,7 +158,7 @@ title: Dimension Reduction
 
 ui:
 
-- description: Input tabular data for clustering
+- description: Input tabular data for dimension reduction
   key: inputs.inpDir
   title: Input tabular data
   type: path
@@ -55,5 +167,100 @@ ui:
   key: inputs.filePattern
   title: FilePattern
   type: text
+
+- description: Output a JSON preview of outputs produced by this plugin
+  key: inputs.preview
+  title: Preview
+  type: boolean
+
+- description: The algorithm to use for dimension reduction
+  fields:
+  - pca
+  - tsne
+  - tsne_init_pca
+  - umap
+  key: inputs.algorithm
+  title: Algorithm
+  type: string
+
+- description: The number of components to keep
+  key: inputs.nComponents
+  title: nComponents
+  type: integer
+
+- description: PCA, whether to whiten the data
+  key: inputs.pcaWhiten
+  title: pcaWhiten
+  type: boolean
+
+- description: PCA, which SVD solver to use
+  fields:
+  - auto
+  - full
+  - arpack
+  - randomized
+  key: inputs.pcaSvdSolver
+  title: pcaSvdSolver
+  type: string
+
+- description: PCA, what tolerance to use with the arpack solver
+  key: inputs.pcaTol
+  title: pcaTol
+  type: float
+
+- description: t-SNE, the perplexity parameter
+  key: inputs.tsnePerplexity
+  title: tsnePerplexity
+  type: float
+
+- description: t-SNE, the early exaggeration parameter
+  key: inputs.tsneEarlyExaggeration
+  title: tsneEarlyExaggeration
+  type: float
+
+- description: t-SNE, the learning rate parameter
+  key: inputs.tsneLearningRate
+  title: tsneLearningRate
+  type: float
+
+- description: t-SNE, the maximum number of iterations
+  key: inputs.tsneMaxIter
+  title: tsneMaxIter
+  type: integer
+
+- description: t-SNE, the distance metric to use
+  key: inputs.tsneMetric
+  title: tsneMetric
+  type: string
+
+- description: t-SNE, the number of components to initialize with PCA
+  key: inputs.tsneInitNComponents
+  title: tsneInitNComponents
+  type: integer
+
+- description: UMAP, the number of neighbors to use
+  key: inputs.umapNNeighbors
+  title: umapNNeighbors
+  type: integer
+
+- description: UMAP, the number of epochs to use
+  key: inputs.umapNEpochs
+  title: umapNEpochs
+  type: integer
+
+- description: UMAP, the minimum distance between points
+  key: inputs.umapMinDist
+  title: umapMinDist
+  type: float
+
+- description: UMAP, the spread of the embedding
+  key: inputs.umapSpread
+  title: umapSpread
+  type: float
+
+- description: UMAP, the metric to use
+  key: inputs.umapMetric
+  title: umapMetric
+  type: string
 
 version: 0.1.0-dev0
