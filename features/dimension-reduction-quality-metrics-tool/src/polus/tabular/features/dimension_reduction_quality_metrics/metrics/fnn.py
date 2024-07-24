@@ -32,14 +32,14 @@ def fnn(
     Returns:
         The FNN metric.
     """
-    original_knn = knn_search(
+    _, original_knn = knn_search(
         data=original_data,
         queries=original_data[query_indices],
         k=n_neighbors,
         metric=distance_metric,
     )
 
-    embedded_knn = knn_search(
+    _, embedded_knn = knn_search(
         data=embedded_data,
         queries=embedded_data[query_indices],
         k=n_neighbors,
@@ -61,7 +61,7 @@ def knn_search(
     queries: numpy.ndarray,
     k: int,
     metric: str,
-) -> numpy.ndarray:
+) -> tuple[numpy.ndarray, numpy.ndarray]:
     """Find the nearest neighbors of the queries in the data.
 
     Args:
@@ -71,8 +71,11 @@ def knn_search(
         metric: The distance metric to use.
 
     Returns:
-        The indices of the nearest neighbors.
+        The distances and indices of the nearest neighbors.
     """
     distances = scipy.spatial.distance.cdist(queries, data, metric)
     sorted_indices = numpy.argsort(distances, axis=1)
-    return sorted_indices[:, :k]
+
+    k_indices = sorted_indices[:, :k]
+    k_distances = numpy.take_along_axis(distances, k_indices, axis=1)
+    return k_distances, k_indices

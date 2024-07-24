@@ -1,7 +1,6 @@
 """Dimension Reduction algorithms supported by this tool."""
 
 import enum
-import typing
 
 from . import pca
 from . import tsne
