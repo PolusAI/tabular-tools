@@ -1,0 +1,135 @@
+{
+  "name": "Dimension Reduction Quality Metrics",
+  "version": "0.1.0-dev0",
+  "title": "Dimension Reduction Quality Metrics",
+  "description": "Measure the quality of dimension reduction outputs.",
+  "author": "Najib Ishaq (najib.ishaq@nih.gov)",
+  "institution": "National Center for Advancing Translational Sciences, National Institutes of Health",
+  "repository": "https://github.com/polusai/tabular-tools",
+  "website": "https://ncats.nih.gov/preclinical/core/informatics",
+  "citation": "",
+  "containerId": "polusai/dimension-reduction-quality-metrics-tool:0.1.0-dev0",
+  "baseCommand": [
+    "python3",
+    "-m",
+    "polus.tabular.features.dimension_reduction_quality_metrics"
+  ],
+  "inputs": [
+    {
+      "name": "originalDir",
+      "description": "Original data directory",
+      "required": true,
+      "type": "genericData"
+    },
+    {
+      "name": "originalPattern",
+      "description": "Pattern to parse original data files",
+      "required": false,
+      "type": "string"
+    },
+    {
+      "name": "embeddedDir",
+      "description": "Reduced data directory",
+      "required": true,
+      "type": "genericData"
+    },
+    {
+      "name": "embeddedPattern",
+      "description": "Pattern to parse reduced data files",
+      "required": false,
+      "type": "string"
+    },
+    {
+      "name": "preview",
+      "description": "Output a JSON preview of outputs produced by this plugin",
+      "required": false,
+      "type": "boolean"
+    },
+    {
+      "name": "numQueries",
+      "description": "Number of queries to use",
+      "required": false,
+      "type": "integer"
+    },
+    {
+      "name": "ks",
+      "description": "List of numbers of neighbors to use",
+      "required": false,
+      "type": "string"
+    },
+    {
+      "name": "distanceMetrics",
+      "description": "List of distance metrics",
+      "required": false,
+      "type": "string"
+    },
+    {
+      "name": "qualityMetrics",
+      "description": "List of quality metrics",
+      "required": false,
+      "type": "string"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "outDir",
+      "description": "Output collection",
+      "type": "genericData",
+      "required": true
+    }
+  ],
+  "ui": [
+    {
+      "key": "originalDir",
+      "title": "Original data directory",
+      "description": "Original data directory"
+    },
+    {
+      "key": "originalPattern",
+      "title": "Original data pattern",
+      "description": "Pattern to parse original data files",
+      "default": ".*"
+    },
+    {
+      "key": "embeddedDir",
+      "title": "Reduced data directory",
+      "description": "Reduced data directory"
+    },
+    {
+      "key": "embeddedPattern",
+      "title": "Reduced data pattern",
+      "description": "Pattern to parse reduced data files",
+      "default": ".*"
+    },
+    {
+      "key": "preview",
+      "title": "Preview",
+      "description": "Output a JSON preview of outputs produced by this plugin",
+      "default": false
+    },
+    {
+      "key": "numQueries",
+      "title": "Number of queries",
+      "description": "Number of queries to use",
+      "default": 1000
+    },
+    {
+      "key": "ks",
+      "title": "Number of neighbors",
+      "description": "List of numbers of neighbors to use",
+      "default": "10,100"
+    },
+    {
+      "key": "distanceMetrics",
+      "title": "Distance metrics",
+      "description": "List of distance metrics",
+      "default": "euclidean,cosine"
+    },
+    {
+      "key": "qualityMetrics",
+      "title": "Quality metrics",
+      "description": "List of quality metrics",
+      "default": "fnn"
+    }
+  ]
+}

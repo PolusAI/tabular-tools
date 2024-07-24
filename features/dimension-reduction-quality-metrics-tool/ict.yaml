@@ -1,0 +1,129 @@
+author: Najib Ishaq
+contact: najib.ishaq@nih.gov
+container: polusai/dimension-reduction-quality-metrics-tool:0.1.0-dev0
+description: Dimension reduction with various methods
+entrypoint: python3 -m polus.tabular.transforms.dimension_reduction_quality_metrics
+
+inputs:
+
+- description: Original tabular data
+  format:
+  - originalDir
+  name: originalDir
+  required: true
+  type: path
+
+- description: File pattern for the original data
+  format:
+  - originalPattern
+  name: originalPattern
+  required: false
+  type: string
+
+- description: Dimension reduced tabular data
+  format:
+  - embeddedDir
+  name: embeddedDir
+  required: true
+  type: path
+
+- description: File pattern for the embedded data
+  format:
+  - embeddedPattern
+  name: embeddedPattern
+  required: false
+  type: string
+
+- description: Number of queries to use
+  format:
+  - numQueries
+  name: numQueries
+  required: false
+  type: integer
+
+- description: Numbers of neighbors to use
+  format:
+  - ks
+  name: ks
+  required: false
+  type: string
+
+- description: Distance metrics to use
+  format:
+  - metrics
+  name: metrics
+  required: false
+  type: string
+
+- description: Quality metrics to use
+  format:
+  - qualityMetrics
+  name: qualityMetrics
+  required: false
+  type: string
+
+name: polusai/dimension-reduction-quality-metrics
+
+outputs:
+
+- description: Output collection
+  format:
+  - outDir
+  name: outDir
+  required: true
+  type: path
+
+repository: https://github.com/polusai/tabular-tools
+
+specVersion: 1.0.0
+
+title: Dimension Reduction Quality Metrics
+
+ui:
+
+- description: Original tabular data
+  key: inputs.originalDir
+  title: Original tabular data
+  type: path
+
+- description: Pattern to parse original files
+  key: inputs.originalPattern
+  title: OriginalPattern
+  type: text
+
+- description: Dimension reduced tabular data
+  key: inputs.embeddedDir
+  title: Dimension reduced tabular data
+  type: path
+
+- description: Pattern to parse embedded files
+  key: inputs.embeddedPattern
+  title: EmbeddedPattern
+  type: text
+
+- description: Output a JSON preview of outputs produced by this plugin
+  key: inputs.preview
+  title: Preview
+  type: boolean
+
+- description: Number of queries to use
+  key: inputs.numQueries
+  title: numQueries
+  type: integer
+
+- description: Numbers of neighbors to use
+  key: inputs.ks
+  title: ks
+  type: string
+
+- description: Distance metrics to use
+  key: inputs.metrics
+  title: metrics
+  type: string
+
+- description: Quality metrics to use
+  key: inputs.qualityMetrics
+  title: qualityMetrics
+  type: string
+
+version: 0.1.0-dev0
