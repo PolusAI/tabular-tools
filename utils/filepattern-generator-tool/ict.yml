@@ -3,11 +3,11 @@ author:
 - Hamdah Shafqat
 - Kevin Hannon
 contact: nick.schaub@nih.gov
-container: polusai/filepattern-generator-plugin:0.2.1
+container: polusai/filepattern-generator-tool:0.2.2-dev0
 description: Filepattern Generator plugin creates a csv or feather file containing
   a number of new filepatterns, where each filepattern will subset the data in the
   directory
-entrypoint: '[python3, main.py]'
+entrypoint: python3 -m polus.tabular.utils.filepattern_generator
 inputs:
 - description: Input image collection to be processed by this plugin
   format:
@@ -17,8 +17,8 @@ inputs:
   type: path
 - description: Filepattern to parse image files
   format:
-  - pattern
-  name: pattern
+  - filePattern
+  name: filePattern
   required: false
   type: string
 - description: Number of images to generate collective filepattern
@@ -33,6 +33,12 @@ inputs:
   name: groupBy
   required: false
   type: string
+- description: Generate an output preview.
+  format:
+  - preview
+  name: preview
+  required: false
+  type: boolean
 name: polusai/FilepatternGenerator
 outputs:
 - description: Output collection
@@ -41,7 +47,7 @@ outputs:
   name: outDir
   required: true
   type: path
-repository: https://github.com/PolusAI/polus-plugins
+repository: https://github.com/PolusAI/tabular-tools
 specVersion: 1.0.0
 title: Filepattern Generator
 ui:
@@ -50,8 +56,8 @@ ui:
   title: Input Image collection
   type: path
 - description: Filepattern to parse image files
-  key: inputs.pattern
-  title: Pattern
+  key: inputs.filePattern
+  title: filePattern
   type: text
 - description: Number of images to generate collective filepattern
   key: inputs.chunkSize
@@ -61,4 +67,8 @@ ui:
   key: inputs.groupBy
   title: groupBy
   type: text
-version: 0.2.1
+- description: Generate an output preview.
+  key: inputs.preview
+  title: Preview example output of this plugin
+  type: checkbox
+version: 0.2.2-dev0

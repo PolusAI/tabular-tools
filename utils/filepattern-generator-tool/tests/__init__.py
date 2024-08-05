@@ -1,0 +1,1 @@
+"""Filepattern Generator Tool."""
