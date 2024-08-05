@@ -28,7 +28,9 @@ jobs:
           # List of directories to ignore
           ignored_dirs="polus-python-template ftl-label .venv"
           # List of tools that are broken for known reasons
-          broken_tools=""
+          broken_tools="rxiv-download"
+          # Reasons:
+            # - rxiv-download: The tests intermittently fail because some of them try to download files from the internet but the requests time out.
 
           # Initialize variables
           ignored_dirs="$ignored_dirs $broken_tools"
