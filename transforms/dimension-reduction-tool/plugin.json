@@ -1,0 +1,259 @@
+{
+  "name": "Dimension Reduction",
+  "version": "0.1.0-dev0",
+  "title": "Dimension Reduction",
+  "description": "Dimension Reduction via various methods.",
+  "author": "Najib Ishaq (najib.ishaq@nih.gov)",
+  "institution": "National Center for Advancing Translational Sciences, National Institutes of Health",
+  "repository": "https://github.com/polusai/tabular-tools",
+  "website": "https://ncats.nih.gov/preclinical/core/informatics",
+  "citation": "",
+  "containerId": "polusai/dimension-reduction-tool:0.1.0-dev0",
+  "baseCommand": [
+    "python3",
+    "-m",
+    "polus.tabular.transforms.dimension_reduction"
+  ],
+  "inputs": [
+    {
+      "name": "inpDir",
+      "description": "Input tabular data",
+      "required": true,
+      "type": "genericData"
+    },
+    {
+      "name": "filePattern",
+      "description": "Pattern to parse input files",
+      "required": false,
+      "type": "string"
+    },
+    {
+      "name": "preview",
+      "description": "Output a JSON preview of outputs produced by this plugin",
+      "required": false,
+      "type": "boolean"
+    },
+    {
+      "name": "algorithm",
+      "description": "Dimension reduction algorithm",
+      "required": false,
+      "type": "enum",
+      "options": {
+        "values": [
+          "pca",
+          "tsne",
+          "tsne_init_pca",
+          "umap"
+        ]
+      }
+    },
+    {
+      "name": "nComponents",
+      "description": "Number of components to keep",
+      "required": true,
+      "type": "integer"
+    },
+    {
+      "name": "pcaWhiten",
+      "description": "Whiten PCA components",
+      "required": false,
+      "type": "boolean"
+    },
+    {
+      "name": "pcaSvdSolver",
+      "description": "SVD solver for PCA",
+      "required": false,
+      "type": "enum",
+      "options": {
+        "values": [
+          "auto",
+          "full",
+          "arpack",
+          "randomized"
+        ]
+      }
+    },
+    {
+      "name": "pcaTol",
+      "description": "Tolerance for PCA when using arpack solver",
+      "required": false,
+      "type": "float"
+    },
+    {
+      "name": "tsnePerplexity",
+      "description": "Perplexity for t-SNE",
+      "required": false,
+      "type": "float"
+    },
+    {
+      "name": "tsneEarlyExaggeration",
+      "description": "Early exaggeration for t-SNE",
+      "required": false,
+      "type": "float"
+    },
+    {
+      "name": "tsneLearningRate",
+      "description": "Learning rate for t-SNE",
+      "required": false,
+      "type": "float"
+    },
+    {
+      "name": "tsneMaxIter",
+      "description": "Maximum number of iterations for t-SNE",
+      "required": false,
+      "type": "integer"
+    },
+    {
+      "name": "tsneMetric",
+      "description": "Metric for t-SNE",
+      "required": false,
+      "type": "string"
+    },
+    {
+      "name": "tsneInitNComponents",
+      "description": "Number of PCA components to initialize t-SNE",
+      "required": false,
+      "type": "integer"
+    },
+    {
+      "name": "umapNNeighbors",
+      "description": "Number of neighbors for UMAP",
+      "required": false,
+      "type": "integer"
+    },
+    {
+      "name": "umapMinDist",
+      "description": "Minimum distance for UMAP",
+      "required": false,
+      "type": "float"
+    },
+    {
+      "name": "umapSpread",
+      "description": "Spread for UMAP",
+      "required": false,
+      "type": "float"
+    },
+    {
+      "name": "umapMetric",
+      "description": "Metric for UMAP",
+      "required": false,
+      "type": "string"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "outDir",
+      "description": "Output collection",
+      "type": "genericData",
+      "required": true
+    }
+  ],
+  "ui": [
+    {
+      "key": "inputs.inpDir",
+      "title": "Input tabular data",
+      "description": "Input tabular data for clustering"
+    },
+    {
+      "key": "inputs.filePattern",
+      "title": "FilePattern",
+      "description": "Pattern to parse input files",
+      "default": ".*"
+    },
+    {
+      "key": "inputs.preview",
+      "title": "Preview",
+      "description": "Output a JSON preview of outputs produced by this plugin",
+      "default": false
+    },
+    {
+      "key": "inputs.algorithm",
+      "title": "Algorithm",
+      "description": "Dimension reduction algorithm",
+      "default": "pca"
+    },
+    {
+      "key": "inputs.nComponents",
+      "title": "Number of components",
+      "description": "Number of components to keep"
+    },
+    {
+      "key": "inputs.pcaWhiten",
+      "title": "Whiten",
+      "description": "Whiten PCA components",
+      "default": false
+    },
+    {
+      "key": "inputs.pcaSvdSolver",
+      "title": "SVD Solver",
+      "description": "SVD solver for PCA",
+      "default": "auto"
+    },
+    {
+      "key": "inputs.pcaTol",
+      "title": "Tolerance",
+      "description": "Tolerance for PCA when using arpack solver",
+      "default": 0.0
+    },
+    {
+      "key": "inputs.tsnePerplexity",
+      "title": "Perplexity",
+      "description": "Perplexity for t-SNE",
+      "default": 30.0
+    },
+    {
+      "key": "inputs.tsneEarlyExaggeration",
+      "title": "Early Exaggeration",
+      "description": "Early exaggeration for t-SNE",
+      "default": 12.0
+    },
+    {
+      "key": "inputs.tsneLearningRate",
+      "title": "Learning Rate",
+      "description": "Learning rate for t-SNE",
+      "default": 200.0
+    },
+    {
+      "key": "inputs.tsneMaxIter",
+      "title": "Max Iterations",
+      "description": "Maximum number of iterations for t-SNE",
+      "default": 1000
+    },
+    {
+      "key": "inputs.tsneMetric",
+      "title": "Metric",
+      "description": "Metric for t-SNE",
+      "default": "euclidean"
+    },
+    {
+      "key": "inputs.tsneInitNComponents",
+      "title": "Init N Components",
+      "description": "Number of PCA components to initialize t-SNE",
+      "default": 50
+    },
+    {
+      "key": "inputs.umapNNeighbors",
+      "title": "N Neighbors",
+      "description": "Number of neighbors for UMAP",
+      "default": 15
+    },
+    {
+      "key": "inputs.umapMinDist",
+      "title": "Min Dist",
+      "description": "Minimum distance for UMAP",
+      "default": 0.1
+    },
+    {
+      "key": "inputs.umapSpread",
+      "title": "Spread",
+      "description": "Spread for UMAP",
+      "default": 1.0
+    },
+    {
+      "key": "inputs.umapMetric",
+      "title": "Metric",
+      "description": "Metric for UMAP",
+      "default": "euclidean"
+    }
+  ]
+}
