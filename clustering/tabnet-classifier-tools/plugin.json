@@ -1,0 +1,672 @@
+{
+  "name": "Pytorch Tabnet",
+  "version": "0.1.0-dev0",
+  "title": "Pytorch Tabnet",
+  "description": "Pytorch tabnet tool for training tabular data.",
+  "author": "Hamdah Shafqat Abbasi (hamdahshafqat.abbasi@nih.gov)",
+  "institution": "National Center for Advancing Translational Sciences, National Institutes of Health",
+  "repository": "https://github.com/polusai/tabular-tools",
+  "website": "https://ncats.nih.gov/preclinical/core/informatics",
+  "citation": "",
+  "containerId": "polusai/pytorch-tabnet-tool:0.1.0-dev0",
+  "baseCommand": [
+    "python3",
+    "-m",
+    "polus.tabular.clustering.pytorch_tabnet"
+  ],
+  "inputs": [
+    {
+      "name": "inpDir",
+      "type": "genericData",
+      "description": "Input tabular data",
+      "required": "True"
+    },
+    {
+      "name": "filePattern",
+      "type": "string",
+      "description": "Pattern to parse input files",
+      "required": "False"
+    },
+    {
+      "name": "testSize",
+      "type": "number",
+      "description": "Proportion of the dataset to include in the test set",
+      "required": "False",
+      "default": 0.2
+    },
+    {
+      "name": "nD",
+      "type": "integer",
+      "description": "Width of the decision prediction layer",
+      "required": "False",
+      "default": 8
+    },
+    {
+      "name": "nA",
+      "type": "integer",
+      "description": "Width of the attention embedding for each mask",
+      "required": "False",
+      "default": 8
+    },
+    {
+      "name": "nSteps",
+      "type": "integer",
+      "description": "Number of steps in the architecture",
+      "required": "False",
+      "default": 8
+    },
+    {
+      "name": "gamma",
+      "type": "number",
+      "description": "Coefficient for feature reuse in the masks",
+      "required": "False",
+      "default": 1.3
+    },
+    {
+      "name": "catEmbDim",
+      "type": "integer",
+      "description": "List of embedding sizes for each categorical feature",
+      "required": "False",
+      "default": 1
+    },
+    {
+      "name": "nIndependent",
+      "type": "integer",
+      "description": "Number of independent Gated Linear Unit layers at each step",
+      "required": "False",
+      "default": 2
+    },
+    {
+      "name": "nShared",
+      "type": "integer",
+      "description": "Number of shared Gated Linear Unit layers at each step",
+      "required": "False",
+      "default": 2
+    },
+    {
+      "name": "epsilon",
+      "type": "number",
+      "description": "Constant value",
+      "required": "False",
+      "default": 1e-15
+    },
+    {
+      "name": "seed",
+      "type": "integer",
+      "description": "Random seed for reproducibility",
+      "required": "False",
+      "default": 0
+    },
+    {
+      "name": "momentum",
+      "type": "number",
+      "description": "Momentum for batch normalization",
+      "required": "False",
+      "default": 0.02
+    },
+    {
+      "name": "clipValue",
+      "type": "number",
+      "description": "Clipping of the gradient value",
+      "required": "False"
+    },
+    {
+      "name": "lambdaSparse",
+      "type": "number",
+      "description": "Extra sparsity loss coefficient",
+      "required": "False",
+      "default": 0.001
+    },
+    {
+      "name": "optimizerFn",
+      "type": "enum",
+      "description": "Pytorch optimizer function",
+      "options": {
+        "values": [
+          "Adadelta",
+          "Adagrad",
+          "Adam",
+          "AdamW",
+          "SparseAdam",
+          "Adamax",
+          "ASGD",
+          "LBFGS",
+          "NAdam",
+          "RAdam",
+          "RMSprop",
+          "Rprop",
+          "SGD",
+          "Default"
+        ]
+      },
+      "required": "True"
+    },
+    {
+      "name": "lr",
+      "type": "number",
+      "description": "learning rate for the optimizer",
+      "required": "False",
+      "default": 0.02
+    },
+    {
+      "name": "schedulerFn",
+      "type": "enum",
+      "description": "Parameters used initialize the optimizer",
+      "options": {
+        "values": [
+          "LambdaLR",
+          "MultiplicativeLR",
+          "StepLR",
+          "MultiStepLR",
+          "ConstantLR",
+          "LinearLR",
+          "ExponentialLR",
+          "PolynomialLR",
+          "CosineAnnealingLR",
+          "ChainedScheduler",
+          "SequentialLR",
+          "CyclicLR",
+          "OneCycleLR",
+          "CosineAnnealingWarmRestarts",
+          "Default"
+        ]
+      },
+      "required": "True"
+    },
+    {
+      "name": "stepSize",
+      "type": "integer",
+      "description": "Parameter to apply to the scheduler_fn",
+      "required": "False",
+      "default": 10
+    },
+    {
+      "name": "deviceName",
+      "type": "enum",
+      "description": "Device used for training",
+      "options": {
+        "values": [
+          "cpu",
+          "gpu",
+          "auto",
+          "DEFAULT"
+        ]
+      },
+      "required": "True"
+    },
+    {
+      "name": "maskType",
+      "type": "enum",
+      "description": "A masking function for feature selection",
+      "options": {
+        "values": [
+          "sparsemax",
+          "entmax",
+          "DEFAULT"
+        ]
+      },
+      "required": "True"
+    },
+    {
+      "name": "groupedFeatures",
+      "type": "integer",
+      "description": "Allow the model to share attention across features within the same group",
+      "required": "False"
+    },
+    {
+      "name": "nSharedDecoder",
+      "type": "integer",
+      "description": "Number of shared GLU block in decoder",
+      "required": "False",
+      "default": 1
+    },
+    {
+      "name": "nIndepDecoder",
+      "type": "integer",
+      "description": "Number of independent GLU block in decoder",
+      "required": "False",
+      "default": 1
+    },
+    {
+      "name": "evalMetric",
+      "type": "enum",
+      "description": "Metrics utilized for early stopping evaluation",
+      "options": {
+        "values": [
+          "auc",
+          "accuracy",
+          "balanced_accuracy",
+          "logloss",
+          "mse",
+          "mae",
+          "rmse",
+          "rmsle",
+          "DEFAULT"
+        ]
+      },
+      "required": "True"
+    },
+    {
+      "name": "maxEpochs",
+      "type": "integer",
+      "description": "Maximum number of epochs for training",
+      "required": "False",
+      "default": 200
+    },
+    {
+      "name": "patience",
+      "type": "integer",
+      "description": "Consecutive epochs without improvement before early stopping",
+      "required": "False",
+      "default": 10
+    },
+    {
+      "name": "weights",
+      "type": "integer",
+      "description": "Sampling parameter only for TabNetClassifier",
+      "required": "False",
+      "default": 10
+    },
+    {
+      "name": "lossFn",
+      "type": "enum",
+      "description": "Loss function",
+      "options": {
+        "values": [
+          "L1Loss",
+          "NLLLoss",
+          "NLLLoss2d",
+          "PoissonNLLLoss",
+          "GaussianNLLLoss",
+          "KLDivLoss",
+          "MSELoss",
+          "BCELoss",
+          "BCEWithLogitsLoss",
+          "HingeEmbeddingLoss",
+          "SmoothL1Loss",
+          "HuberLoss",
+          "SoftMarginLoss",
+          "CrossEntropyLoss",
+          "MultiLabelSoftMarginLoss",
+          "CosineEmbeddingLoss",
+          "MarginRankingLoss",
+          "MultiMarginLoss",
+          "TripletMarginLoss",
+          "TripletMarginWithDistanceLoss",
+          "CTCLoss",
+          "DEFAULT"
+        ]
+      },
+      "required": "True"
+    },
+    {
+      "name": "batchSize",
+      "type": "integer",
+      "description": "Batch size",
+      "required": "False",
+      "default": 1024
+    },
+    {
+      "name": "virtualBatchSize",
+      "type": "integer",
+      "description": "Size of mini-batches for Ghost Batch Normalization",
+      "required": "False",
+      "default": 128
+    },
+    {
+      "name": "numWorkers",
+      "type": "integer",
+      "description": "Number or workers used in torch.utils.data.Dataloader",
+      "required": "False",
+      "default": 0
+    },
+    {
+      "name": "dropLast",
+      "type": "boolean",
+      "description": "Option to drop incomplete last batch during training",
+      "required": "False"
+    },
+    {
+      "name": "warmStart",
+      "type": "boolean",
+      "description": "For scikit-learn compatibility, enabling fitting the same model twice",
+      "required": "False"
+    },
+    {
+      "name": "computeImportance",
+      "type": "boolean",
+      "description": "Compute feature importance?",
+      "required": "False"
+    },
+    {
+      "name": "targetVar",
+      "type": "string",
+      "description": "Target feature for classification",
+      "required": "True"
+    },
+    {
+      "name": "classifier",
+      "type": "enum",
+      "description": "Tabnet Classifier",
+      "options": {
+        "values": [
+          "TabNetClassifier",
+          "TabNetRegressor",
+          "TabNetMultiTaskClassifier",
+          "DEFAULT"
+        ]
+      },
+      "required": "True"
+    },
+    {
+      "name": "preview",
+      "type": "boolean",
+      "description": "Output a JSON preview of outputs produced by this plugin",
+      "required": "False"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "outDir",
+      "description": "Output collection",
+      "type": "genericData",
+      "required": "True"
+    }
+  ],
+  "ui": [
+    {
+      "key": "inputs.inpDir",
+      "type": "genericData",
+      "title": "Input tabular data",
+      "description": "Input tabular data for clustering"
+    },
+    {
+      "key": "inputs.filePattern",
+      "type": "string",
+      "title": "FilePattern",
+      "description": "Pattern to parse input files",
+      "default": ".+"
+    },
+    {
+      "key": "inputs.testSize",
+      "type": "number",
+      "title": "FilePattern",
+      "description": "Proportion of the dataset to include in the test set",
+      "required": "False",
+      "default": 0.2
+    },
+    {
+      "key": "inputs.nD",
+      "type": "integer",
+      "title": "nD",
+      "description": "Width of the decision prediction layer",
+      "required": "False",
+      "default": 8
+    },
+    {
+      "key": "inputs.nA",
+      "type": "integer",
+      "title": "nA",
+      "description": "Width of the attention embedding for each mask",
+      "required": "False",
+      "default": 8
+    },
+    {
+      "key": "inputs.nSteps",
+      "type": "integer",
+      "title": "nSteps",
+      "description": "Number of steps in the architecture",
+      "required": "False",
+      "default": 8
+    },
+    {
+      "key": "inputs.gamma",
+      "type": "number",
+      "title": "gamma",
+      "description": "Coefficient for feature reuse in the masks",
+      "required": "False",
+      "default": 1.3
+    },
+    {
+      "key": "inputs.catEmbDim",
+      "type": "integer",
+      "title": "catEmbDim",
+      "description": "List of embedding sizes for each categorical feature",
+      "required": "False",
+      "default": 1
+    },
+    {
+      "key": "inputs.nIndependent",
+      "type": "integer",
+      "title": "nIndependent",
+      "description": "Number of independent Gated Linear Unit layers at each step",
+      "required": "False",
+      "default": 2
+    },
+    {
+      "key": "inputs.nShared",
+      "type": "integer",
+      "title": "nShared",
+      "description": "Number of shared Gated Linear Unit layers at each step",
+      "required": "False",
+      "default": 2
+    },
+    {
+      "key": "inputs.epsilon",
+      "type": "number",
+      "title": "epsilon",
+      "description": "Constant value",
+      "required": "False",
+      "default": 1e-15
+    },
+    {
+      "key": "inputs.seed",
+      "type": "integer",
+      "title": "seed",
+      "description": "Random seed for reproducibility",
+      "required": "False",
+      "default": 0
+    },
+    {
+      "key": "inputs.momentum",
+      "type": "number",
+      "title": "momentum",
+      "description": "Momentum for batch normalization",
+      "required": "False",
+      "default": 0.02
+    },
+    {
+      "key": "inputs.clipValue",
+      "type": "number",
+      "title": "clipValue",
+      "description": "Clipping of the gradient value",
+      "required": "False"
+    },
+    {
+      "key": "inputs.lambdaSparse",
+      "type": "number",
+      "title": "lambdaSparse",
+      "description": "Extra sparsity loss coefficient",
+      "required": "False",
+      "default": 0.001
+    },
+    {
+      "key": "inputs.optimizerFn",
+      "type": "enum",
+      "title": "optimizerFn",
+      "description": "Pytorch optimizer function",
+      "required": "True",
+      "default": "Adam"
+    },
+    {
+      "key": "inputs.lr",
+      "type": "number",
+      "title": "lr",
+      "description": "learning rate for the optimizer",
+      "required": "False",
+      "default": 0.02
+    },
+    {
+      "key": "inputs.schedulerFn",
+      "type": "enum",
+      "title": "schedulerFn",
+      "description": "Parameters used initialize the optimizer",
+      "required": "True",
+      "default": "StepLR"
+    },
+    {
+      "key": "inputs.stepSize",
+      "type": "integer",
+      "title": "stepSize",
+      "description": "Parameter to apply to the scheduler_fn",
+      "required": "False",
+      "default": 10
+    },
+    {
+      "key": "inputs.deviceName",
+      "type": "enum",
+      "title": "deviceName",
+      "description": "Device used for training",
+      "required": "True",
+      "default": "auto"
+    },
+    {
+      "key": "inputs.maskType",
+      "type": "enum",
+      "title": "maskType",
+      "description": "A masking function for feature selection",
+      "required": "True",
+      "default": "entmax"
+    },
+    {
+      "key": "inputs.groupedFeatures",
+      "type": "integer",
+      "title": "groupedFeatures",
+      "description": "Allow the model to share attention across features within the same group",
+      "required": "False"
+    },
+    {
+      "key": "inputs.nSharedDecoder",
+      "type": "integer",
+      "title": "nSharedDecoder",
+      "description": "Number of shared GLU block in decoder",
+      "required": "False",
+      "default": 1
+    },
+    {
+      "key": "inputs.nIndepDecoder",
+      "type": "integer",
+      "title": "nIndepDecoder",
+      "description": "Number of independent GLU block in decoder",
+      "required": "False",
+      "default": 1
+    },
+    {
+      "key": "inputs.evalMetric",
+      "type": "enum",
+      "title": "evalMetric",
+      "description": "Metrics utilized for early stopping evaluation",
+      "required": "True",
+      "default": "auc"
+    },
+    {
+      "key": "inputs.maxEpochs",
+      "type": "integer",
+      "title": "maxEpochs",
+      "description": "Maximum number of epochs for training",
+      "required": "False",
+      "default": 200
+    },
+    {
+      "key": "inputs.patience",
+      "type": "integer",
+      "title": "patience",
+      "description": "Consecutive epochs without improvement before early stopping",
+      "required": "False",
+      "default": 10
+    },
+    {
+      "key": "inputs.weights",
+      "type": "integer",
+      "title": "weights",
+      "description": "Sampling parameter only for TabNetClassifier",
+      "required": "False",
+      "default": 10
+    },
+    {
+      "key": "inputs.lossFn",
+      "type": "enum",
+      "title": "lossFn",
+      "description": "Loss function",
+      "required": "True",
+      "default": "L1Loss"
+    },
+    {
+      "key": "inputs.batchSize",
+      "type": "integer",
+      "title": "batchSize",
+      "description": "Batch size",
+      "required": "False",
+      "default": 1024
+    },
+    {
+      "key": "inputs.virtualBatchSize",
+      "type": "integer",
+      "title": "virtualBatchSize",
+      "description": "Size of mini-batches for Ghost Batch Normalization",
+      "required": "False",
+      "default": 128
+    },
+    {
+      "key": "inputs.numWorkers",
+      "type": "integer",
+      "title": "numWorkers",
+      "description": "Number or workers used in torch.utils.data.Dataloader",
+      "required": "False",
+      "default": 0
+    },
+    {
+      "key": "inputs.dropLast",
+      "type": "boolean",
+      "title": "dropLast",
+      "description": "Option to drop incomplete last batch during training",
+      "required": "False"
+    },
+    {
+      "key": "inputs.warmStart",
+      "type": "boolean",
+      "title": "warmStart",
+      "description": "For scikit-learn compatibility, enabling fitting the same model twice",
+      "required": "False"
+    },
+    {
+      "key": "inputs.computeImportance",
+      "type": "boolean",
+      "title": "computeImportance",
+      "description": "Compute feature importance?",
+      "required": "False"
+    },
+    {
+      "key": "inputs.targetVar",
+      "type": "string",
+      "title": "targetVar",
+      "description": "Target feature for classification",
+      "required": "True"
+    },
+    {
+      "key": "inputs.classifier",
+      "type": "enum",
+      "title": "classifier",
+      "description": "Tabnet Classifier",
+      "required": "True",
+      "default": "TabNetClassifier"
+    },
+    {
+      "key": "inputs.preview",
+      "type": "boolean",
+      "title": "preview",
+      "description": "Output a JSON preview of outputs produced by this plugin",
+      "required": "False"
+    }
+  ]
+}
