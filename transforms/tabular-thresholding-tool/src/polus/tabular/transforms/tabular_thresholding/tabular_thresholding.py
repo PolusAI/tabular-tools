@@ -60,8 +60,7 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
 
     Args:
         neg_control: Column name containing information of non treated wells.
-        pos_control: Column name containing information of wells with the known
-            treatment.
+        pos_control: Column name containing information of wells with the known treatment.
         var_name: Column name for computing thresholds.
         threshold_type: Name of threshold method.
         false_positive_rate: Tuning parameter.
@@ -124,12 +123,12 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
     if pos_control:
         unique_positive = df[pos_control].unique()
         if unique_positive != [0.0, 1.0]:
-         msg = (
-            f"The {pos_control} column has unique values {unique_positive}, "
-            "which are not exactly [0.0, 1.0]. Ensure proper positive controls are set."
-        )
-        logger.error(msg)
-        raise ValueError(msg)
+            msg = (
+                f"The {pos_control} column has unique values {unique_positive}, "
+                "which are not exactly [0.0, 1.0]. Ensure proper positive controls are set."
+            )
+            logger.error(msg)
+            raise ValueError(msg)
     
     if pos_control is None:
         msg = "pos_control is missing. Otsu threshold will not be computed!"
@@ -207,11 +206,9 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
 
     out_format =out_format if out_format is None else POLUS_TAB_EXT
     if out_format in [".feather", ".arrow", ".parquet", ".hdf5"]:
-        # outname = out_dir.joinpath(f"{plate}_binary{out_format}")
-        df.export(outname)
-        logger.info( f"Saving{plate}_binary{out_format}")
+        df.export(outname)   
     else:
-        # outname = out_dir.joinpath(f"{plate}_binary{out_format}")
         df.export_csv(path=outname, chunk_size=10_000)
-        logger.info( f"Saving: {plate}_binary{out_format}")
+
+    logger.info( f"Saving{plate}_binary{out_format}")
     return

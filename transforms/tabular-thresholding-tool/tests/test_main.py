@@ -47,6 +47,9 @@ class Generatedata:
             "MEAN": np.linspace(1.0, 4000.0, self.size),
             "neg_control": [random.choice("01") for i in range(self.size)],
             "pos_neutral": [random.choice("01") for i in range(self.size)],
+            "plate": ["CD_SOD1_2_E1023886__1" for i in range(self.size)],
+
+            
         }
 
         df = pd.DataFrame(diction_1)
@@ -131,14 +134,14 @@ def test_tabular_thresholding(poly):
 
             assert i in [f.suffix for f in d.get_out_dir().iterdir()]
 
+            file = [f for f in d.get_out_dir().iterdir() if ".json" not in f.name][0]
+            json_file = [f.name for f in d.get_out_dir().iterdir() if ".json" in f.name][0]
+
             df = vaex.open(
-                pathlib.Path(d.get_out_dir(), file[1][0].stem + "_binary" + i),
+                file
             )
             threshold_methods = ["fpr", "otsu", "nsigma"]
             assert (all(item in list(df.columns) for item in threshold_methods)) is True
             assert np.allclose(np.unique(df[threshold_methods]), [0, 1]) is True
-            assert file[1][0].stem + "_thresholds.json" in [
-                f.name for f in d.get_out_dir().iterdir()
-            ]
-
+   
         d.clean_directories()
