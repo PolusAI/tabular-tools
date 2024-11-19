@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "polus-tabular-transforms-tabular-thresholding"
-version = "0.1.7-dev0"
+version = "0.1.8-dev0"
 description = "This plugin computes thresholds using three methods and apply thresholds on each labelled data to produce binary outputs."
 authors = [
 "Hamdah Shafqat Abbasi <hamdahshafqat.abbasi@nih.gov>",

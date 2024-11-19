@@ -2,7 +2,7 @@ author:
 - Hamdah Shafqat
 - Najib Ishaq
 contact: hamdahshafqat.abbasi@nih.gov
-container: polusai/tabular-thresholding-tool:0.1.7-dev0
+container: polusai/tabular-thresholding-tool:0.1.8-dev0
 description: This plugin computes thresholds using three methods and apply thresholds
   on each labelled data to produce binary outputs
 entrypoint: python3 -m polus.tabular.transforms.tabular_thresholding
@@ -143,4 +143,4 @@ ui:
   key: inputs.outFormat
   title: outFormat
   type: select
-version: 0.1.7-dev0
+version: 0.1.8-dev0
