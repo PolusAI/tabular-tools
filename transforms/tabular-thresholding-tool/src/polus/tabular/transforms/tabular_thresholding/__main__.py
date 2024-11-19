@@ -47,8 +47,8 @@ def main(
         "--negControl",
         help="Column name containing information of the position of non treated wells",
     ),
-    pos_control: str = typer.Option(
-        ...,
+    pos_control: Optional[str] = typer.Option(
+        None,
         "--posControl",
         help="Column name containing information of the position of wells with known treatment outcome",
     ),
@@ -118,36 +118,44 @@ def main(
     num_workers = max(multiprocessing.cpu_count() // 2, 2)
 
     flist = [f[1][0] for f in fps]
+
     logger.info(f"Number of tabular files detected: {len(flist)}, filenames: {flist}")
     assert len(flist) != 0, f"No tabular file is detected: {flist}"
 
-    with multiprocessing.Pool(processes=num_workers) as executor:
-        executor.map(
-            partial(
-                tt.thresholding_func,
-                neg_control,
-                pos_control,
-                var_name,
-                threshold_type,
-                false_positive_rate,
-                num_bins,
-                n,
-                out_format,
-                out_dir,
-            ),
-            flist,
+    if len(flist) == 1:
+        tt.thresholding_func(
+            neg_control,
+            pos_control,
+            var_name,
+            threshold_type,
+            false_positive_rate,
+            num_bins,
+            n,
+            out_format,
+            out_dir,
+            flist[0],
         )
-        executor.close()
-        executor.join()
+    else:
+        # Otherwise, use multiprocessing for parallel processing
+        with multiprocessing.Pool(processes=num_workers) as executor:
+            executor.map(
+                partial(
+                    tt.thresholding_func,
+                    neg_control,
+                    pos_control,
+                    var_name,
+                    threshold_type,
+                    false_positive_rate,
+                    num_bins,
+                    n,
+                    out_format,
+                    out_dir,
+                ),
+                flist,
+            )
+            executor.close()
+            executor.join()
 
-    # Deleting intermediate files from input directory
-    for f in inp_dir.iterdir():
-        if f.is_file() and file_pattern != ".*.hdf5":
-            if f.suffix in [".hdf5", ".yaml"]:
-                os.remove(f)
-        else:
-            if ".hdf5.hdf5" in f.name or f.suffix == ".yaml":
-                os.remove(f)
 
     endtime = round((time.time() - starttime) / 60, 3)
     logger.info(f"Time taken to process binary threhold CSVs: {endtime} minutes!!!")
