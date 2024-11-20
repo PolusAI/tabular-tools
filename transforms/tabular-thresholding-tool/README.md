@@ -30,7 +30,7 @@ contents of `plugin.json` into the pop-up window and submit.
 
 ## Options
 
-This plugin takes 10 input arguments and one output argument:
+This plugin takes 9 input arguments and one output argument:
 
 | Name                    | Description                                         | I/O    | Type          |
 |-------------------------|-----------------------------------------------------|--------|---------------|
@@ -43,5 +43,4 @@ This plugin takes 10 input arguments and one output argument:
 | `--falsePositiverate`   | Area to the right of the threshold                  | Input  | float         |
 | `--numBins`             | Number of bins for histogram                        | Input  | number        |
 | `--n`                   | Number of standard deviation                        | Input  | number        |
-| `--outFormat`           | Output file format                                  | Input  | enum          |
 | `--outDir`              | Output collection                                   | Output | genericData   |

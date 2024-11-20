@@ -19,7 +19,6 @@ thresholdType='all'
 numBins=512
 falsePositiverate=0.1
 n=4
-outFormat=".arrow"
 
 
 # Log level, must be one of ERROR, CRITICAL, WARNING, INFO, DEBUG
@@ -27,7 +26,7 @@ LOGLEVEL=INFO
 docker run --mount type=bind,source=${datapath},target=/data/ \
             --user $(id -u):$(id -g) \
             --env POLUS_LOG=${LOGLEVEL} \
-            polusai/tabular-thresholding-plugin:${version} \
+            polusai/tabular-thresholding-tool:${version} \
             --inpDir ${inpDir} \
             --filePattern ${filePattern} \
             --negControl ${negControl} \
@@ -37,5 +36,4 @@ docker run --mount type=bind,source=${datapath},target=/data/ \
             --falsePositiverate ${falsePositiverate} \
             --numBins ${numBins} \
             --n ${n} \
-            --outFormat ${outFormat} \
             --outDir ${outDir}

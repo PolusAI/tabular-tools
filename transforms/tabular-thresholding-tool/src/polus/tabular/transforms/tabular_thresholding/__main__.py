@@ -7,14 +7,13 @@ import pathlib
 import time
 from functools import partial
 from multiprocessing import cpu_count
-from typing import Any, List, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import filepattern as fp
 import typer
-
-from polus.tabular.transforms.tabular_thresholding import (
-    tabular_thresholding as tt,
-)
+from polus.tabular.transforms.tabular_thresholding import tabular_thresholding as tt
 
 # Initialize the logger
 logging.basicConfig(
@@ -31,7 +30,7 @@ max_workers = max(1, cpu_count() // 2)
 
 
 @app.command()
-def main(
+def main(  # noqa:PLR0913
     inp_dir: pathlib.Path = typer.Option(
         ...,
         "--inpDir",
@@ -50,24 +49,29 @@ def main(
     pos_control: Optional[str] = typer.Option(
         None,
         "--posControl",
-        help="Column name containing information of the position of wells with known treatment outcome",
+        help="Column indicating the position of wells with known treatment outcomes",
     ),
     var_name: str = typer.Option(
-        tt.Methods.Default, "--varName", help="Column name for computing thresholds"
+        tt.Methods.Default,
+        "--varName",
+        help="Column name for computing thresholds",
     ),
     threshold_type: tt.Methods = typer.Option(
-        ..., "--thresholdType", help="Name of the threshold method"
+        ...,
+        "--thresholdType",
+        help="Name of the threshold method",
     ),
     false_positive_rate: float = typer.Option(
-        0.1, "--falsePositiverate", help="False positive rate threshold value"
+        0.1,
+        "--falsePositiverate",
+        help="False positive rate threshold value",
     ),
     num_bins: int = typer.Option(
-        512, "--numBins", help="Number of Bins for otsu threshold"
+        512,
+        "--numBins",
+        help="Number of Bins for otsu threshold",
     ),
     n: int = typer.Option(4, "--n", help="Number of Standard deviation"),
-    out_format: tt.Extensions = typer.Option(
-        tt.Extensions.Default, "--outFormat", help="Output format"
-    ),
     out_dir: pathlib.Path = typer.Option(..., "--outDir", help="Output collection"),
     preview: Optional[bool] = typer.Option(
         False,
@@ -102,20 +106,20 @@ def main(
     fps = fp.FilePattern(inp_dir, file_pattern)
 
     if preview:
-        with open(pathlib.Path(out_dir, "preview.json"), "w") as jfile:
-            out_json: dict[Union[str, List], Any] = {
+        with pathlib.Path.open(pathlib.Path(out_dir, "preview.json"), "w") as jfile:
+            out_json: dict[Union[str, list], Any] = {
                 "filepattern": file_pattern,
                 "outDir": [],
             }
             for file in fps:
-                out_name = str(file[1][0].name.split(".")[0]) + "_binary" + out_format
+                out_name = str(file[1][0].name.split(".")[0]) + "_binary" + tt.POLUS_TAB_EXT
                 thr_json = str(file[1][0].name.split(".")[0]) + "_thresholds.json"
                 out_json["outDir"].append(out_name)
                 out_json["outDir"].append(thr_json)
 
             json.dump(out_json, jfile, indent=2)
 
-    num_workers = max(multiprocessing.cpu_count() // 2, 2)
+    num_workers = max(multiprocessing.cpu_count() // 2, 1)
 
     flist = [f[1][0] for f in fps]
 
@@ -131,7 +135,6 @@ def main(
             false_positive_rate,
             num_bins,
             n,
-            out_format,
             out_dir,
             flist[0],
         )
@@ -148,7 +151,6 @@ def main(
                     false_positive_rate,
                     num_bins,
                     n,
-                    out_format,
                     out_dir,
                 ),
                 flist,
@@ -156,10 +158,8 @@ def main(
             executor.close()
             executor.join()
 
-
     endtime = round((time.time() - starttime) / 60, 3)
     logger.info(f"Time taken to process binary threhold CSVs: {endtime} minutes!!!")
-    return
 
 
 if __name__ == "__main__":

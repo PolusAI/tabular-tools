@@ -29,10 +29,6 @@ inputs:
     inputBinding:
       prefix: --outDir
     type: Directory
-  outFormat:
-    inputBinding:
-      prefix: --outFormat
-    type: string
   posControl:
     inputBinding:
       prefix: --posControl

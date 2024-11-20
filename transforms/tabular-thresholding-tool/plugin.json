@@ -84,22 +84,6 @@
       "type": "number",
       "options": null,
       "required": false
-    },
-    {
-      "name": "outFormat",
-      "description": "Output format",
-      "type": "enum",
-      "options": {
-        "values": [
-          ".csv",
-          ".feather",
-          ".parquet",
-          ".hdf5",
-          ".arrow",
-          "default"
-        ]
-      },
-      "required": true
     }
   ],
   "outputs": [
@@ -166,12 +150,6 @@
       "title": "n",
       "description": "Number of Standard deviation",
       "default": 4
-    },
-    {
-      "key": "inputs.outFormat",
-      "title": "outFormat",
-      "description": "Output format",
-      "default": ".arrow"
     }
   ]
 }

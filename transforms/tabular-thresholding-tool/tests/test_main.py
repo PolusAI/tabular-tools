@@ -127,15 +127,11 @@ def test_tabular_thresholding(poly):
                 false_positive_rate=0.01,
                 num_bins=512,
                 n=4,
-                out_format=i,
                 out_dir=d.get_out_dir(),
                 file=file[1][0],
             )
 
-            assert i in [f.suffix for f in d.get_out_dir().iterdir()]
-
             file = [f for f in d.get_out_dir().iterdir() if ".json" not in f.name][0]
-            json_file = [f.name for f in d.get_out_dir().iterdir() if ".json" in f.name][0]
 
             df = vaex.open(
                 file
