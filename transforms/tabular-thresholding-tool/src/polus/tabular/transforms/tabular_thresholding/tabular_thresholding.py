@@ -16,7 +16,7 @@ from .thresholding import otsu
 
 logger = logging.getLogger(__name__)
 
-POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".arrow")
+POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".csv")
 
 
 class Methods(str, enum.Enum):

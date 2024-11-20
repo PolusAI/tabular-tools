@@ -91,7 +91,6 @@ def main(  # noqa:PLR0913
     logger.info(f"falsePositiverate = {false_positive_rate}")
     logger.info(f"numBins = {num_bins}")
     logger.info(f"n = {n}")
-    logger.info(f"outFormat = {out_format}")
 
     inp_dir = inp_dir.resolve()
     out_dir = out_dir.resolve()

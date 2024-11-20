@@ -1,4 +1,4 @@
-FROM polusai/bfio:2.3.6
+FROM polusai/bfio:2.4.5
 
 # environment variables defined in polusai/bfio
 ENV EXEC_DIR="/opt/executables"
@@ -19,7 +19,6 @@ COPY . ${EXEC_DIR}/tabular-tools
 # Install the tool
 RUN pip3 install "${EXEC_DIR}/tabular-tools/${TOOL_DIR}" --no-cache-dir
 
-# Set the entrypoint
 # TODO: Change the entrypoint to the tool entrypoint
 ENTRYPOINT ["python3", "-m", "polus.tabular.transforms.tabular_thresholding"]
 CMD ["--help"]
