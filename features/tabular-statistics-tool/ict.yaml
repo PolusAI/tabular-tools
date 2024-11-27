@@ -1,0 +1,62 @@
+author:
+- Hamdah Shafqat
+- Nick Schaub
+contact: hamdahshafqat.abbasi@nih.gov
+container: polusai/tabular-statistics-tool:0.1.0-dev0
+description: Calculating Statistics for Numeric and Floating-Point Columns in Tabular
+  Files
+entrypoint: python3 -m polus.tabular.features.tabular_statistics
+inputs:
+- description: The csv statistics to generate
+  format:
+  - array
+  name: statistics
+  required: true
+  type: array
+- description: Input tabular collection to be processed by this plugin
+  format:
+  - genericData
+  name: inpDir
+  required: true
+  type: path
+- description: Pattern to select files for grouping
+  format:
+  - string
+  name: filePattern
+  required: false
+  type: string
+- description: The variable(s) to group rows
+  format:
+  - string
+  name: groupBy
+  required: false
+  type: string
+name: polusai/TabularStatistics
+outputs:
+- description: Output collection
+  format:
+  - genericData
+  name: outDir
+  required: true
+  type: path
+repository: https://github.com/PolusAI/tabular-tools
+specVersion: 1.0.0
+title: Tabular Statistics
+ui:
+- description: Types of statistics to calculate
+  key: inputs.statistics
+  title: Statistics
+  type: text
+- description: Input tabular collection to be processed by this plugin
+  key: inputs.inpDir
+  title: Input collection
+  type: path
+- description: Pattern to select files for grouping
+  key: inputs.filePattern
+  title: Filepattern
+  type: text
+- description: The variable(s) to group rows
+  key: inputs.groupBy
+  title: Groupby Variables(s)
+  type: text
+version: 0.1.0-dev0
