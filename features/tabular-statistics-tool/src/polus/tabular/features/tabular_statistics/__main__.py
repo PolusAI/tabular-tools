@@ -4,11 +4,11 @@ import os
 import pathlib
 import time
 from typing import Optional
+
 import filepattern as fp
-import typer
 import numpy as np
 import pyarrow as pa
-
+import typer
 from polus.tabular.features.tabular_statistics import tabular_statistics as ts
 
 app = typer.Typer()
@@ -29,8 +29,7 @@ def main(  # noqa: PLR0913
         "--inpDir",
         help="Input generic data collection to be processed by this plugin",
     ),
-    file_pattern: str = typer.Option(".+", "--filePattern", help="file_pattern"),
-   
+    file_pattern: str = typer.Option(..., "--filePattern", help="file_pattern"),
     statistics: str = typer.Option(
         ...,
         "--statistics",
@@ -67,14 +66,13 @@ def main(  # noqa: PLR0913
 
     # By default it ingests all input files if not file_pattern is defined
 
-    EXTS = [".arrow", ".feather", ".csv", ".parquet"]
-
+    outformats = [".arrow", ".feather", ".csv", ".parquet"]
 
     if preview:
         ts.preview(out_dir, file_pattern)
 
     else:
-        flist = [f for f in pathlib.Path(inp_dir).iterdir() if f.suffix in EXTS]
+        flist = [f for f in pathlib.Path(inp_dir).iterdir() if f.suffix in outformats]
 
         table = ts.load_files(flist)
 
@@ -83,38 +81,41 @@ def main(  # noqa: PLR0913
 
         # Validate required column
         if file_column not in columns:
-            raise ValueError(f"Column '{file_column}' not found")
-        
-        logger.info(f"Merging files into a single table")
+            msg = f"Column '{file_column}' not found"
+            raise ValueError(msg)
+
+        logger.info("Merging files into a single table")
 
         if group_by:
             logger.info(f"Applying statistics by grouping data on: {group_by}")
-            group_by = [col.strip() for col in group_by.split(",") if col.strip()] 
-            
+            groupby = [col.strip() for col in group_by.split(",") if col.strip()]
+
             images = list(np.array(table[file_column]))
 
-            # Generate the 'groupby_columnlist' in the same order as 'images' as images are sorted in filepattern object
+            # Generate the 'groupby_columnlist' in the same order as 'images'
             groupby_columnlist = []
             for idx in range(len(images)):
                 file = images[idx]
                 fps = fp.FilePattern([file], file_pattern)
                 file_dict, _ = list(fps())[0]
-                values = [file_dict[key] for key in group_by if key in file_dict]
-                joined_string = ''.join(map(str, values))
+                values = [file_dict[key] for key in groupby if key in file_dict]
+                joined_string = "".join(map(str, values))
                 groupby_columnlist.append(joined_string)
             # Convert the list to a PyArrow Array
             groupby_column = pa.array(groupby_columnlist)
             table = table.append_column("group_by", groupby_column)
-            
+
             # Apply statistics to the grouped data
-            aggregated_df = ts.apply_statistics(table, statistics, group_by_columns="group_by")
+            aggregated_df = ts.apply_statistics(
+                table,
+                statistics,
+                group_by_columns="group_by",
+            )
         else:
-            logger.info(f"Applying statistics on data")
+            logger.info("Applying statistics on data")
             aggregated_df = ts.apply_statistics_to_group(table, statistics)
 
-
         ts.save_outputs(aggregated_df, out_dir)
-        
 
     exec_time = time.time() - start_time
     logger.info(f"Execution time: {time.strftime('%H:%M:%S', time.gmtime(exec_time))}")

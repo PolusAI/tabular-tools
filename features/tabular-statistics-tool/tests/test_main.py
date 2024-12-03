@@ -8,17 +8,13 @@ from polus.tabular.features.tabular_statistics.__main__ import app
 from polus.tabular.features.tabular_statistics import tabular_statistics as ts
 
 
-
 runner = CliRunner()
+
 
 class Generatedata:
     """Generate tabular data with several different file formats."""
 
-    def __init__(
-        self,
-        file_pattern: str,
-        out_name: str
-    ) -> None:
+    def __init__(self, file_pattern: str, out_name: str) -> None:
         """Define instance attributes."""
         self.data_dir = pathlib.Path.cwd().parent.joinpath("data")
 
@@ -33,8 +29,8 @@ class Generatedata:
         self.file_pattern = file_pattern
         self.out_name = out_name
         self.df = self.create_dataframe()
-        self.inpdir=self.get_inp_dir()
-        self.outdir=self.get_out_dir()
+        self.inpdir = self.get_inp_dir()
+        self.outdir = self.get_out_dir()
 
     def get_inp_dir(self) -> pathlib.Path:
         """Get input directory."""
@@ -84,11 +80,10 @@ class Generatedata:
         return data_ext[self.file_pattern]()
 
 
-
 def test_apply_statistics() -> None:
     """Test applying statistics on PyArrow table."""
 
-    for i in [".parquet", ".csv",  ".arrow"]:
+    for i in [".parquet", ".csv", ".arrow"]:
         d1 = Generatedata(file_pattern=i, out_name=f"data_1{i}")
         d1()
         table = pa.table(d1.df)
@@ -96,41 +91,40 @@ def test_apply_statistics() -> None:
 
         # Test applying each statistic in STATS to the table
         for statistic in statistics_list:
-
             result_table = ts.apply_statistics(table, statistics=statistic)
-            
+
             assert isinstance(result_table, pa.Table)
-            
+
             for col_name in table.column_names:
-                col = table[col_name] 
-                if not pa.types.is_string(col.type): 
+                col = table[col_name]
+                if not pa.types.is_string(col.type):
                     # Check if the new column with the statistic is present in the result table
                     expected_col_name = f"{col_name}_{statistic}"
-                    assert expected_col_name in result_table.column_names, \
-                        f"Column {expected_col_name} not found in result table"
-                    
+                    assert (
+                        expected_col_name in result_table.column_names
+                    ), f"Column {expected_col_name} not found in result table"
+
 
 def test_all_statistics() -> None:
     """Test applying all statistics in STATS to the table."""
 
-    for i in [".parquet", ".csv",  ".arrow"]:
+    for i in [".parquet", ".csv", ".arrow"]:
         d1 = Generatedata(file_pattern=i, out_name=f"data_1{i}")
         d1()
         table = pa.table(d1.df)
-        statistics = 'all'
+        statistics = "all"
         result_table = ts.apply_statistics(table, statistics=statistics)
 
         # Check that the result is a PyArrow Table
         assert isinstance(result_table, pa.Table)
 
-            # For each numeric column in the table, check if all statistics are applied
+        # For each numeric column in the table, check if all statistics are applied
         for col_name in table.column_names:
             col = table[col_name]  # Get the actual column data
             if not pa.types.is_string(col.type):  # Skip string columns
                 for stat_name in ts.STATS.keys():
                     # Check if the new column with each statistic is present in the result table
                     expected_col_name = f"{col_name}_{stat_name}"
-                    assert expected_col_name in result_table.column_names, \
-                        f"Column {expected_col_name} not found in result table"
-                    
-
+                    assert (
+                        expected_col_name in result_table.column_names
+                    ), f"Column {expected_col_name} not found in result table"

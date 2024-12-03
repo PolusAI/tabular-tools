@@ -41,4 +41,4 @@ This plugin takes two input argument and one output argument:
 | `--inpDir`      | Input csv collection to be processed by this plugin | Input  | genericData   |
 | `--filePattern` | The filePattern of the images in represented in csv | Input  | string        |
 | `--groupBy`     | The variable(s) of how the images should be grouped | Input  | string        |
-| `--outDir`      | Output collection                                   | Output | genericData   | 
+| `--outDir`      | Output collection                                   | Output | genericData   |
