@@ -12,7 +12,9 @@ This plugin computes statistical measures on numeric and floating point data col
 6. [kurt (excess kurtosis)](https://www.itl.nist.gov/div898/handbook/eda/section3/eda35b.htm)
 7. count (number of rows sampled)
 8. [iqr (Interquartile_range)](https://en.wikipedia.org/wiki/Interquartile_range)
-9. Counts the numbers greater than 0 and divides this count by the total number of elements in the sequence
+9. prop: counts the numbers greater than 0 and divides this count by the total number of elements in the sequence
+10. min: Minimum value in the dataset.
+11. max: Maximum value in the dataset.
 
 
 ## Usage:
