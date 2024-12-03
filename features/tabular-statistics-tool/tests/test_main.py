@@ -3,8 +3,13 @@ import string
 import numpy as np
 import pandas as pd
 import pyarrow as pa
+from typer.testing import CliRunner
+from polus.tabular.features.tabular_statistics.__main__ import app
 from polus.tabular.features.tabular_statistics import tabular_statistics as ts
 
+
+
+runner = CliRunner()
 
 class Generatedata:
     """Generate tabular data with several different file formats."""
@@ -28,6 +33,8 @@ class Generatedata:
         self.file_pattern = file_pattern
         self.out_name = out_name
         self.df = self.create_dataframe()
+        self.inpdir=self.get_inp_dir()
+        self.outdir=self.get_out_dir()
 
     def get_inp_dir(self) -> pathlib.Path:
         """Get input directory."""
@@ -126,7 +133,4 @@ def test_all_statistics() -> None:
                     assert expected_col_name in result_table.column_names, \
                         f"Column {expected_col_name} not found in result table"
                     
-
-
-
 

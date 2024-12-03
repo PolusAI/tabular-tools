@@ -16,7 +16,6 @@ from typing import List
 from typing import Any
 from tqdm import tqdm
 import json
-import filepattern as fp
 
 logger = logging.getLogger(__name__)
 logger.setLevel(os.environ.get("POLUS_LOG", logging.INFO))
@@ -259,6 +258,11 @@ def apply_statistics(table: pa.Table,  statistics: str, group_by_columns:Optiona
             statistics = STATS
         else:
             statistics = statistics.split(',')
+            #Check if all keys in statistics are in the STATS dictionary
+            missing_keys = [key for key in statistics if key not in STATS]
+            if missing_keys:
+                raise KeyError(f"Invalid statistics: {', '.join(missing_keys)}")
+            
             statistics = {k: v for k, v in STATS.items() if k in statistics}
 
 
@@ -351,6 +355,8 @@ def load_files(flist: List[Path]) -> pa.Table:
                 logger.info(f"Loading CSV file: {file.name}")
                 # Read CSV with pandas and convert to PyArrow Table
                 df = pd.read_csv(file)
+                df[df.select_dtypes(include=['object']).columns] = \
+                    df.select_dtypes(include=['object']).map(str)
                 table = pa.Table.from_pandas(df)
             elif file.suffix == ".feather":
                 logger.info(f"Loading Feather file: {file.name}")

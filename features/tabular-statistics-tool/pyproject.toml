@@ -13,7 +13,7 @@ packages = [{include = "polus", from = "src"}]
 python = ">=3.9"
 typer = "^0.7.0"
 tqdm = "^4.65.0"
-filepattern = "^2.0.5"
+filepattern = "^2.1.0"
 pyarrow = "^18.0.0"
 scipy = "1.11.4"
 pandas = "^2.2.2"                     
