@@ -21,6 +21,7 @@ This plugin computes statistical measures on numeric and floating point data col
 - A directory containing one or more tabular files in the supported formats
 - Each file must include numeric and floating point data columns
 - Ensure that the `groupBy` variables are included in the file pattern
+- Please note that all features on which statistics are computed are capitalized.
 
 
 For more information on WIPP, visit the [official WIPP page](https://isg.nist.gov/deepzoomweb/software/wipp).
