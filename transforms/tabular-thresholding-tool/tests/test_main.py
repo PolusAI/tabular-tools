@@ -136,7 +136,7 @@ def test_tabular_thresholding(poly):
             df = vaex.open(
                 file
             )
-            threshold_methods = ["fpr", "otsu", "nsigma"]
+            threshold_methods = ["FPR", "OTSU", "NSIGMA"]
             assert (all(item in list(df.columns) for item in threshold_methods)) is True
             assert np.allclose(np.unique(df[threshold_methods]), [0, 1]) is True
    

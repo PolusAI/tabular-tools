@@ -114,12 +114,12 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
 
     threshold_dict: dict[str, Union[float, str]] = {}
     nan_value = np.nan * np.arange(0, len(df[neg_control].values), 1)
-    threshold_dict["fpr"] = np.nan
-    threshold_dict["otsu"] = np.nan
-    threshold_dict["nsigma"] = np.nan
-    df["fpr"] = nan_value
-    df["otsu"] = nan_value
-    df["nsigma"] = nan_value
+    threshold_dict["FPR"] = np.nan
+    threshold_dict["OTSU"] = np.nan
+    threshold_dict["NSIGMA"] = np.nan
+    df["FPR"] = nan_value
+    df["OTSU"] = nan_value
+    df["NSIGMA"] = nan_value
 
     if pos_control:
         pos_controls = df[df[pos_control] == 1][var_name].values
@@ -131,15 +131,15 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
             neg_controls,
             false_positive_rate=false_positive_rate,
         )
-        threshold_dict["fpr"] = threshold
-        df["fpr"] = df.func.where(df[var_name] <= threshold, 0, 1)
+        threshold_dict["FPR"] = threshold
+        df["FPR"] = df.func.where(df[var_name] <= threshold, 0, 1)
 
     elif threshold_type == "otsu":
         if len(pos_controls) == 0:
             msg = f"{pos_control} controls missing. NaN values for Otsu thresholds"
             logger.error(msg)
-            threshold_dict["otsu"] = np.nan
-            df["otsu"] = np.nan * np.arange(0, len(df[var_name].values), 1)
+            threshold_dict["OTSU"] = np.nan
+            df["OTSU"] = np.nan * np.arange(0, len(df[var_name].values), 1)
         else:
             combine_array = np.append(neg_controls, pos_controls, axis=0)
             threshold = otsu.find_threshold(
@@ -147,12 +147,12 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
                 num_bins=num_bins,
                 normalize_histogram=False,
             )
-            threshold_dict["otsu"] = threshold
-            df["otsu"] = df.func.where(df[var_name] <= threshold, 0, 1)
+            threshold_dict["OTSU"] = threshold
+            df["OTSU"] = df.func.where(df[var_name] <= threshold, 0, 1)
     elif threshold_type == "nsigma":
         threshold = n_sigma.find_threshold(neg_controls, n=n)
-        threshold_dict["nsigma"] = threshold
-        df["nsigma"] = df.func.where(df[var_name] <= threshold, 0, 1)
+        threshold_dict["NSIGMA"] = threshold
+        df["NSIGMA"] = df.func.where(df[var_name] <= threshold, 0, 1)
     elif threshold_type == "all":
         fpr_thr = custom_fpr.find_threshold(
             neg_controls,
@@ -164,22 +164,22 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
             warnings.warn(  # noqa: B028
                 f"{pos_control} missing; NaN values computed for Otsu thresholds",
             )
-            threshold_dict["otsu"] = np.nan
-            df["otsu"] = np.nan * np.arange(0, len(df[var_name].values), 1)
+            threshold_dict["OTSU"] = np.nan
+            df["OTSU"] = np.nan * np.arange(0, len(df[var_name].values), 1)
         else:
             otsu_thr = otsu.find_threshold(
                 combine_array,
                 num_bins=num_bins,
                 normalize_histogram=False,
             )
-            threshold_dict["otsu"] = otsu_thr
-            df["otsu"] = df.func.where(df[var_name] <= otsu_thr, 0, 1)
+            threshold_dict["OTSU"] = otsu_thr
+            df["OTSU"] = df.func.where(df[var_name] <= otsu_thr, 0, 1)
 
             nsigma_thr = n_sigma.find_threshold(neg_controls, n=n)
-            threshold_dict["fpr"] = fpr_thr
-            threshold_dict["nsigma"] = nsigma_thr
-            df["fpr"] = df.func.where(df[var_name] <= fpr_thr, 0, 1)
-            df["nsigma"] = df.func.where(df[var_name] <= nsigma_thr, 0, 1)
+            threshold_dict["FPR"] = fpr_thr
+            threshold_dict["NSIGMA"] = nsigma_thr
+            df["FPR"] = df.func.where(df[var_name] <= fpr_thr, 0, 1)
+            df["NSIGMA"] = df.func.where(df[var_name] <= nsigma_thr, 0, 1)
 
     outjson = out_dir.joinpath(f"{plate}_thresholds.json")
     with pathlib.Path.open(outjson, "w") as outfile:
