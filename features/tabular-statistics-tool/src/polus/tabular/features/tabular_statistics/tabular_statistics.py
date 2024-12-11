@@ -277,8 +277,12 @@ def apply_statistics(
 
     df = table.to_pandas()
 
-    numeric_columns = df.select_dtypes(include="number").columns.tolist()
+    numeric_columns = [col for col in df.columns if col.isupper()]
 
+    if len(numeric_columns) == 0:
+        msg = "No features found!! Features should start with a capital letter."
+        raise ValueError(msg)
+    
     # # Step 5: Apply the statistics to each group
     aggregated_results = {}
 
