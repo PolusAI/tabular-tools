@@ -37,7 +37,7 @@ def main(  # noqa:PLR0913
         help="Path to the input data",
     ),
     file_pattern: str = typer.Option(
-        ".+",
+        ".*",
         "--filePattern",
         help="Patttern to parse file names",
     ),
@@ -100,7 +100,6 @@ def main(  # noqa:PLR0913
         out_dir.exists()
     ), f"{out_dir} doesnot exists!! Please check output path again"
     # By default it ingests all input files if not file_pattern is defined
-    file_pattern = ".*" + file_pattern
 
     fps = fp.FilePattern(inp_dir, file_pattern)
 
