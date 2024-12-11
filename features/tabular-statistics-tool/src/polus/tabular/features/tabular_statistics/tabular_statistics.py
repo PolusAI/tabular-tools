@@ -19,7 +19,7 @@ from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
 logger.setLevel(os.environ.get("POLUS_LOG", logging.INFO))
-POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".csv")
+POLUS_TAB_EXT = os.environ.get("POLUS_TAB_EXT", ".arrow")
 
 
 def mean(values: list[float]) -> float:
