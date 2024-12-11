@@ -58,9 +58,8 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
         file: Filename.
 
     """
-    chunk_size = 100_000
     if file.suffix == ".csv":
-        df = vaex.from_csv(file, convert=True, chunk_size=chunk_size)
+        df = vaex.from_csv(file)
     else:
         df = vaex.open(file, progress=True)
 
