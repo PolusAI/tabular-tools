@@ -1,4 +1,4 @@
-# Tabular Thresholding Plugin (v0.1.7-dev0)
+# Tabular Thresholding Plugin (v0.1.8-dev2)
 This plugin uses three [threshold methods](https://github.com/nishaq503/thresholding.git) to compute threshold values on a user-defined variable and then determines if each label (ROI) is above or below the calculated threshold value. A new feature column will be computed for selected threshold method with the values in  binary format (0, 1) \
 *0* `negative or below threshold`\
 *1* `positive or above threshold`
@@ -30,7 +30,7 @@ contents of `plugin.json` into the pop-up window and submit.
 
 ## Options
 
-This plugin takes 10 input arguments and one output argument:
+This plugin takes 9 input arguments and one output argument:
 
 | Name                    | Description                                         | I/O    | Type          |
 |-------------------------|-----------------------------------------------------|--------|---------------|
@@ -43,5 +43,4 @@ This plugin takes 10 input arguments and one output argument:
 | `--falsePositiverate`   | Area to the right of the threshold                  | Input  | float         |
 | `--numBins`             | Number of bins for histogram                        | Input  | number        |
 | `--n`                   | Number of standard deviation                        | Input  | number        |
-| `--outFormat`           | Output file format                                  | Input  | enum          |
 | `--outDir`              | Output collection                                   | Output | genericData   |

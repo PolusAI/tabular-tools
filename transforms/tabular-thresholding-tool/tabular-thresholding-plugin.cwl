@@ -29,10 +29,6 @@ inputs:
     inputBinding:
       prefix: --outDir
     type: Directory
-  outFormat:
-    inputBinding:
-      prefix: --outFormat
-    type: string
   posControl:
     inputBinding:
       prefix: --posControl
@@ -52,7 +48,7 @@ outputs:
     type: Directory
 requirements:
   DockerRequirement:
-    dockerPull: polusai/tabular-thresholding-tool:0.1.7-dev0
+    dockerPull: polusai/tabular-thresholding-tool:0.1.8-dev2
   InitialWorkDirRequirement:
     listing:
     - entry: $(inputs.outDir)

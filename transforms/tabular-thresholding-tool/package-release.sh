@@ -10,4 +10,4 @@ bump2version --config-file bumpversion.cfg --new-version ${version} --allow-dirt
 ./build-docker.sh
 
 # Push to dockerhub
-docker push polusai/tabular-thresholding-plugin:${version}
+docker push polusai/tabular-thresholding-tool:${version}
