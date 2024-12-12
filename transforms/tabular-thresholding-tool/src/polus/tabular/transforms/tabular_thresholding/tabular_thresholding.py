@@ -8,7 +8,10 @@ import warnings
 from typing import Union
 
 import numpy as np
-import vaex
+import pyarrow as pa
+import pyarrow.csv as pacsv
+import pyarrow.parquet as pq
+import pyarrow.feather as pf
 
 from .thresholding import custom_fpr
 from .thresholding import n_sigma
@@ -56,21 +59,29 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
         n: Number of standard deviation away from mean value.
         out_dir: Output directory.
         file: Filename.
-
     """
     if file.suffix == ".csv":
-        df = vaex.from_csv(file)
+        # Read CSV using pyarrow.csv
+        table = pacsv.read_csv(file)
     else:
-        df = vaex.open(file, progress=True)
+        # For Arrow or Parquet files, load directly as PyArrow table
+        if file.suffix == ".arrow":
+            table = pa.ipc.open_file(file).read_all()
+        elif file.suffix == ".parquet":
+            table = pq.read_table(file)
+        elif file.suffix == ".feather":
+            table = pf.read_feather(file)
+        else:
+            raise ValueError(f"Unsupported file format: {file.suffix}")
 
-    plate = df["plate"].unique()[0]
+    plate = table["plate"].unique()[0]
 
     # Check for missing columns based on whether pos_control is provided
     missing_columns = (
-        not all(item in df.columns for item in [var_name, neg_control])
+        not all(item in table.column_names for item in [var_name, neg_control])
         if pos_control is None
         else not all(
-            item in df.columns for item in [var_name, neg_control, pos_control]
+            item in table.column_names for item in [var_name, neg_control, pos_control]
         )
     )
 
@@ -83,27 +94,30 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
         logger.error(missing_msg)
         raise ValueError(missing_msg)
 
-    if df.shape == (0, 0):
+    if table.num_rows == 0:
         msg = f"File {file} is not loaded properly! Please check input files again!"
         logger.error(msg)
         raise ValueError(msg)
 
+    # Convert to Pandas for specific operations if needed
+    df = table.to_pandas()
+
     unique_neg = df[neg_control].unique()
 
-    if unique_neg != [0.0, 1.0]:
+    if not np.array_equal(np.sort(unique_neg), [0, 1]):
         msg = (
             f"The {neg_control} column has unique values {unique_neg}, "
-            "which are not exactly [0.0, 1.0]. Ensure proper negative controls are set."
+            "which are not exactly [0, 1]. Ensure proper negative controls are set."
         )
         logger.error(msg)
         raise ValueError(msg)
 
     if pos_control:
         unique_positive = df[pos_control].unique()
-        if unique_positive != [0.0, 1.0]:
+        if not np.array_equal(np.sort(unique_positive), [0, 1]):
             msg = (
                 f"The {pos_control} column has unique values {unique_positive}, "
-                "which are not exactly [0.0, 1.0]. Verify positive controls"
+                "which are not exactly [0, 1]. Verify positive controls"
             )
             logger.error(msg)
             raise ValueError(msg)
@@ -132,7 +146,7 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
             false_positive_rate=false_positive_rate,
         )
         threshold_dict["FPR"] = threshold
-        df["FPR"] = df.func.where(df[var_name] <= threshold, 0, 1)
+        df["FPR"] = np.where(df[var_name] <= threshold, 0, 1)
 
     elif threshold_type == "otsu":
         if len(pos_controls) == 0:
@@ -148,11 +162,11 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
                 normalize_histogram=False,
             )
             threshold_dict["OTSU"] = threshold
-            df["OTSU"] = df.func.where(df[var_name] <= threshold, 0, 1)
+            df["OTSU"] = np.where(df[var_name] <= threshold, 0, 1)
     elif threshold_type == "nsigma":
         threshold = n_sigma.find_threshold(neg_controls, n=n)
         threshold_dict["NSIGMA"] = threshold
-        df["NSIGMA"] = df.func.where(df[var_name] <= threshold, 0, 1)
+        df["NSIGMA"] = np.where(df[var_name] <= threshold, 0, 1)
     elif threshold_type == "all":
         fpr_thr = custom_fpr.find_threshold(
             neg_controls,
@@ -173,26 +187,39 @@ def thresholding_func(  # noqa: PLR0915, PLR0912, PLR0913, C901
                 normalize_histogram=False,
             )
             threshold_dict["OTSU"] = otsu_thr
-            df["OTSU"] = df.func.where(df[var_name] <= otsu_thr, 0, 1)
+            df["OTSU"] = np.where(df[var_name] <= otsu_thr, 0, 1)
 
             nsigma_thr = n_sigma.find_threshold(neg_controls, n=n)
             threshold_dict["FPR"] = fpr_thr
             threshold_dict["NSIGMA"] = nsigma_thr
-            df["FPR"] = df.func.where(df[var_name] <= fpr_thr, 0, 1)
-            df["NSIGMA"] = df.func.where(df[var_name] <= nsigma_thr, 0, 1)
+            df["FPR"] = np.where(df[var_name] <= fpr_thr, 0, 1)
+            df["NSIGMA"] = np.where(df[var_name] <= nsigma_thr, 0, 1)
 
     outjson = out_dir.joinpath(f"{plate}_thresholds.json")
     with pathlib.Path.open(outjson, "w") as outfile:
         json.dump(threshold_dict, outfile)
     logger.info(f"Saving Thresholds in JSON fileformat {outjson}")
     
-
     out_format = POLUS_TAB_EXT
     outname = out_dir.joinpath(f"{plate}_binary{POLUS_TAB_EXT}")
 
-    if out_format in [".feather", ".arrow", ".parquet", ".hdf5"]:
-        df.export(outname)
-    else:
-        df.export_csv(path=outname, chunk_size=10_000)
+    if out_format in [".feather", ".arrow", ".parquet"]:
+        # Convert back to PyArrow Table if output is .arrow or .parquet
+        output_table = pa.Table.from_pandas(df)
+        
+        if out_format == ".arrow":
+            with pa.OSFile(str(outname), "wb") as sink:
+                writer = pa.ipc.new_file(sink, output_table.schema)
+                writer.write_table(output_table)
+                writer.close()
+        
+        elif out_format == ".parquet":
+            pq.write_table(output_table, outname)
+        
+    elif out_format == ".feather":
+        pf.write_feather(output_table, outname)
 
-    logger.info(f"Saving{plate}_binary{out_format}")
+    else:
+        pacsv.write_csv(output_table, outname)
+
+    logger.info(f"Saving {plate}_binary{out_format}")
