@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "polus-tabular-features-tabular-statistics"
+version = "0.1.0-dev0"
+description = "Calculating Statistics for Numeric and Floating-Point Columns in Tabular Files"
+authors = [
+"Hamdah Shafqat abbasi <hamdahshafqat.abbasi@nih.gov>",
+"Nick Schaub <nick.schaub@nih.gov>",
+]
+readme = "README.md"
+packages = [{include = "polus", from = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+typer = "^0.7.0"
+tqdm = "^4.65.0"
+filepattern = "^2.1.0"
+pyarrow = "^18.0.0"
+scipy = "1.11.4"
+pandas = "^2.2.2"
+
+
+[tool.poetry.group.dev.dependencies]
+bump2version = "^1.0.1"
+pre-commit = "^3.1.0"
+black = "^23.1.0"
+flake8 = "^6.0.0"
+mypy = "^1.0.1"
+pytest = "^7.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

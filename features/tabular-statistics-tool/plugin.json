@@ -1,14 +1,19 @@
 {
-  "name": "CSV Statistics",
-  "version": "0.2.1",
-  "title": "CSV Statistics",
-  "description": "Calculate simple statistics to groups of data in a csv file.",
-  "author": "Nick Schaub (nick.schaub@nih.gov)",
+  "name": "Tabular Statistics",
+  "version": "0.1.0-dev0",
+  "title": "Tabular Statistics",
+  "description": "Calculating Statistics for Numeric and Floating-Point Columns in Tabular Files",
+  "author": "Hamdah Shafqat abbasi (hamdahshafqat.abbasi@nih.gov), Nick Schaub (nick.schaub@nih.gov)",
   "institution": "National Center for Advancing Translational Sciences, National Institutes of Health",
-  "repository": "https://github.com/labshare/polus-plugins",
+  "repository": "https://github.com/PolusAI/tabular-tools",
   "website": "https://ncats.nih.gov/preclinical/core/informatics",
   "citation": "",
-  "containerId": "polusai/csv-statistics-plugin:0.2.1",
+  "containerId": "polusai/tabular-statistics-tool:0.1.0-dev0",
+  "baseCommand": [
+    "python3",
+    "-m",
+    "polus.tabular.features.tabular_statistics"
+  ],
   "inputs": [
     {
       "name": "statistics",
@@ -18,7 +23,7 @@
         "items": {
           "type": "string",
           "title": "Select statistic",
-          "description": "Csv Statistics",
+          "description": "Tabular Statistics",
           "required": true,
           "oneOf": [
             {
@@ -82,6 +87,12 @@
               ]
             },
             {
+              "description": "Proportion",
+              "enum": [
+                "prop"
+              ]
+            },
+            {
               "description": "All parameters",
               "enum": [
                 "all"
@@ -97,27 +108,27 @@
     },
     {
       "name": "inpDir",
-      "type": "csvCollection",
-      "description": "Input csv collection to be processed by this plugin",
+      "type": "genericData",
+      "description": "Input tabular collection to be processed by this plugin",
       "required": true
     },
     {
       "name": "filePattern",
       "type": "string",
-      "description": "The filepattern of the images represented in the csv files",
+      "description": "Pattern to select files for grouping",
       "required": false
     },
     {
       "name": "groupBy",
       "type": "string",
-      "description": "The variable(s) to group the images by",
+      "description": "The variable(s) to group rows",
       "required": false
     }
   ],
   "outputs": [
     {
       "name": "outDir",
-      "type": "csvCollection",
+      "type": "genericData",
       "description": "Output collection"
     }
   ],
@@ -130,17 +141,17 @@
     {
       "key": "inputs.inpDir",
       "title": "Input collection",
-      "description": "Input csv collection to be processed by this plugin"
+      "description": "Input tabular collection to be processed by this plugin"
     },
     {
       "key": "inputs.filePattern",
       "title": "Filepattern",
-      "description": "The filepattern of the images represented in the csv files"
+      "description": "Pattern to select files for grouping"
     },
     {
       "key": "inputs.groupBy",
       "title": "Groupby Variables(s)",
-      "description": "The variable(s) to group the images by"
+      "description": "The variable(s) to group rows"
     }
   ]
 }
