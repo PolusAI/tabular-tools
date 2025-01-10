@@ -87,7 +87,9 @@ def test_apply_statistics() -> None:
         d1 = Generatedata(file_pattern=i, out_name=f"data_1{i}")
         d1()
         table = pa.table(d1.df)
-        numeric_table = table.drop([col for col in table.column_names if pa.types.is_string(table[col].type)])
+        numeric_table = table.drop(
+            [col for col in table.column_names if pa.types.is_string(table[col].type)]
+        )
         statistics_list = list(ts.STATS.keys())
 
         # Test applying each statistic in STATS to the table
@@ -113,7 +115,9 @@ def test_all_statistics() -> None:
         d1 = Generatedata(file_pattern=i, out_name=f"data_1{i}")
         d1()
         table = pa.table(d1.df)
-        numeric_table = table.drop([col for col in table.column_names if pa.types.is_string(table[col].type)])
+        numeric_table = table.drop(
+            [col for col in table.column_names if pa.types.is_string(table[col].type)]
+        )
         statistics = "all"
         result_table = ts.apply_statistics(numeric_table, statistics=statistics)
 

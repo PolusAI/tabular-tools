@@ -411,6 +411,7 @@ def preview(out_dir: Path, file_pattern: str) -> None:
     out_json: dict[str, Any] = {
         "filepattern": file_pattern,
         "outDir": str(out_name),
+        
     }
     with Path(out_dir, "preview.json").open("w") as jfile:
         json.dump(out_json, jfile, indent=2)
