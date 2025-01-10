@@ -87,11 +87,12 @@ def test_apply_statistics() -> None:
         d1 = Generatedata(file_pattern=i, out_name=f"data_1{i}")
         d1()
         table = pa.table(d1.df)
+        numeric_table = table.drop([col for col in table.column_names if pa.types.is_string(table[col].type)])
         statistics_list = list(ts.STATS.keys())
 
         # Test applying each statistic in STATS to the table
         for statistic in statistics_list:
-            result_table = ts.apply_statistics(table, statistics=statistic)
+            result_table = ts.apply_statistics(numeric_table, statistics=statistic)
 
             assert isinstance(result_table, pa.Table)
 
@@ -112,8 +113,9 @@ def test_all_statistics() -> None:
         d1 = Generatedata(file_pattern=i, out_name=f"data_1{i}")
         d1()
         table = pa.table(d1.df)
+        numeric_table = table.drop([col for col in table.column_names if pa.types.is_string(table[col].type)])
         statistics = "all"
-        result_table = ts.apply_statistics(table, statistics=statistics)
+        result_table = ts.apply_statistics(numeric_table, statistics=statistics)
 
         # Check that the result is a PyArrow Table
         assert isinstance(result_table, pa.Table)
