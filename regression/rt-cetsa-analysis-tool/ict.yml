@@ -1,0 +1,62 @@
+author:
+- Nick Schaub
+- Antoine Gerardin
+- Najib Ishaq
+contact: nick.schaub@nih.gov
+container: polusai/rt-cetsa-analysis-simple-tool:0.5.0-dev0
+description: Run statisical analysis for the RT-CETSA pipeline.
+entrypoint: python3 -m polus.tabular.regression.rt_cetsa_analysis
+inputs:
+- description: Fit params csv file
+  format:
+  - params
+  name: params
+  required: false
+  type: string
+- description: Baseline corrected csv files
+  format:
+  - values
+  name: values
+  required: false
+  type: string
+- description: platemap excel file
+  format:
+  - platemap
+  name: platemap
+  required: true
+  type: path
+- description: Generate an output preview.
+  format:
+  - preview
+  name: preview
+  required: false
+  type: boolean
+name: polusai/RTCETSAAnalysis
+outputs:
+- description: Output collection
+  format:
+  - outDir
+  name: outDir
+  required: true
+  type: path
+repository: https://github.com/PolusAI/tabular-tools
+specVersion: 1.0.0
+title: RT-CETSA Analysis
+ui:
+- description: Fit params csv file
+  key: inputs.params
+  title: Fit params csv file
+  type: string
+- description: baseline corrected csv file
+  key: inputs.values
+  title: baseline corrected csv file
+  type: string
+- description: platemap excel file
+  key: inputs.platemap
+  title: platemap excel file
+  type: path
+- description: Generate an output preview.
+  key: inputs.preview
+  title: Preview example output of this plugin
+  type: checkbox
+version: 0.5.0-dev0

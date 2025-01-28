@@ -1,0 +1,6 @@
+install.packages('readxl')
+install.packages('stringr')
+install.packages('ggthemes')
+install.packages('cowplot')
+install.packages('ggpubr')
+install.packages('MESS')
