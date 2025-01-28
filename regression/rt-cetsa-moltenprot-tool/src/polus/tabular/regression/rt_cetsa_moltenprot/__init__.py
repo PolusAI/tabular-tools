@@ -1,6 +1,6 @@
 """RT_CETSA Moltprot Regression Tool."""
 
-__version__ = "0.4.0-dev0"
+__version__ = "0.5.0-dev0"
 
 import os
 import pathlib
