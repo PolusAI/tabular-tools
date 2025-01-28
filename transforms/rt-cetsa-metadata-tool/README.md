@@ -3,7 +3,7 @@
 This WIPP plugin preprocess data for the RT-CETSA pipeline.
 It generates temperature metadata and generate new image files which
 names encode the metadata (1.tif will become 1_37.0.tif).
-This metadata can be generated from a range provided as parameters or 
+This metadata can be generated from a range provided as parameters or
 extracted from a camera data file.
 
 ## Building
@@ -22,5 +22,5 @@ This plugin takes eight input argument and one output argument:
 | Name            | Description                                        | I/O    | Type        |
 |-----------------|----------------------------------------------------|--------|-------------|
 | `--inpDir`      | Input data collection to be processed by this tool | Input  | genericData |
-| `--outDir`      | Output file                                        | Output | genericData |
-| `--preview`     | Generate JSON file with outputs                    | Output | JSON        |
+| `--outDir`      | Output file                                         | Output | genericData |
+| `--preview`     | Generate JSON file with outputs                     | Output | JSON        |
