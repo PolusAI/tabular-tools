@@ -17,7 +17,9 @@ This plugin takes eight input argument and one output argument:
 
 | Name            | Description                                        | I/O    | Type        |
 |-----------------|----------------------------------------------------|--------|-------------|
-| `--inpDir`      | Input data collection to be processed by this tool | Input  | genericData |
-| `--filePattern` | File Pattern to parse input files                  | Input  | string      |
+| `--inpDir` | Input directory containing the all data files | Input  | genericData |
+| `--params` | name of the moltenprot fit params csv file in the input directory | Input  | string      |
+| `--values` | name of the moltenprot baseline corrected values csv file in the input directory
+| `--platemap` | Path to the platemap file | Input | genericData |
 | `--outDir`      | Output file                                        | Output | genericData |
 | `--preview`     | Generate JSON file with outputs                    | Output | JSON        |
