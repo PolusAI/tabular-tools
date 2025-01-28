@@ -1,0 +1,17 @@
+name: base
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - r-base
+  - r-tidyverse
+  - r-drc
+  - r-stringr
+  - r-readxl
+  - r-stringr
+  - r-ggthemes
+  - r-cowplot
+  - r-hrbrthemes
+  - r-ggpubr
+  - r-MESS
+  - r-devtools

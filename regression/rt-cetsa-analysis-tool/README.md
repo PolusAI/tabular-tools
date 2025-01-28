@@ -23,3 +23,9 @@ This plugin takes eight input argument and one output argument:
 | `--platemap` | Path to the platemap file | Input | genericData |
 | `--outDir`      | Output file                                        | Output | genericData |
 | `--preview`     | Generate JSON file with outputs                    | Output | JSON        |
+
+## Build options
+
+By default `./build-docker` will build the image using `Dockerfile`, which install R with conda.
+In regression are noticed, this file can be swapped with `Dockerfile-original` which is the original version
+of the dockerfile that is using apt to install all dependencies and is known to work correctly.
