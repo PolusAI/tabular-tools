@@ -1,6 +1,10 @@
 # RT_CETSA metadata (v0.4.0-dev0)
 
 This WIPP plugin preprocess data for the RT-CETSA pipeline.
+It generates temperature metadata and generate new image files which
+names encode the metadata (1.tif will become 1_37.0.tif).
+This metadata can be generated from a range provided as parameters or 
+extracted from a camera data file.
 
 ## Building
 
